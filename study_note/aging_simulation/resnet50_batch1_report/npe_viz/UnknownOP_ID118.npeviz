@@ -1,0 +1,1947 @@
+{
+  "chips": {
+    "0": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "common_info": {
+    "arch": "blackhole",
+    "congestion_model_name": "fast",
+    "cycles_per_timestep": 32,
+    "dram_bw_util": 0.19919078742608154,
+    "link_demand": 0.0,
+    "link_util": 0.0,
+    "max_link_demand": 0.0,
+    "mcast_write_link_util": 0.0,
+    "mesh_device": "P100",
+    "noc": {
+      "NOC0": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      },
+      "NOC1": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      }
+    },
+    "num_cols": 17,
+    "num_rows": 12,
+    "version": "1.0.0"
+  },
+  "noc_transfers": [
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 1203,
+      "fabric_event_type": false,
+      "id": 0,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 1203,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              1,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            0
+          ],
+          "start_cycle": 1196
+        }
+      ],
+      "src": [
+        0,
+        1,
+        0
+      ],
+      "start_cycle": 1196,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          4,
+          0
+        ]
+      ],
+      "end_cycle": 1204,
+      "fabric_event_type": false,
+      "id": 2,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              4,
+              0
+            ]
+          ],
+          "end_cycle": 1204,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              4,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            0
+          ],
+          "start_cycle": 1197
+        }
+      ],
+      "src": [
+        0,
+        4,
+        0
+      ],
+      "start_cycle": 1197,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "end_cycle": 1197,
+      "fabric_event_type": false,
+      "id": 4,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          "end_cycle": 1197,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            1
+          ],
+          "start_cycle": 1192
+        }
+      ],
+      "src": [
+        0,
+        2,
+        1
+      ],
+      "start_cycle": 1192,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          4,
+          1
+        ]
+      ],
+      "end_cycle": 1222,
+      "fabric_event_type": false,
+      "id": 5,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              4,
+              1
+            ]
+          ],
+          "end_cycle": 1222,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            1
+          ],
+          "start_cycle": 1217
+        }
+      ],
+      "src": [
+        0,
+        4,
+        1
+      ],
+      "start_cycle": 1217,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "end_cycle": 1213,
+      "fabric_event_type": false,
+      "id": 7,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              2
+            ]
+          ],
+          "end_cycle": 1213,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            2
+          ],
+          "start_cycle": 1208
+        }
+      ],
+      "src": [
+        0,
+        2,
+        2
+      ],
+      "start_cycle": 1208,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          3
+        ]
+      ],
+      "end_cycle": 1218,
+      "fabric_event_type": false,
+      "id": 10,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              3
+            ]
+          ],
+          "end_cycle": 1218,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            3
+          ],
+          "start_cycle": 1213
+        }
+      ],
+      "src": [
+        0,
+        2,
+        3
+      ],
+      "start_cycle": 1213,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          0
+        ]
+      ],
+      "end_cycle": 1205,
+      "fabric_event_type": false,
+      "id": 1,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              0
+            ]
+          ],
+          "end_cycle": 1205,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              2,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            0
+          ],
+          "start_cycle": 1198
+        }
+      ],
+      "src": [
+        0,
+        2,
+        0
+      ],
+      "start_cycle": 1198,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "end_cycle": 1184,
+      "fabric_event_type": false,
+      "id": 3,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "end_cycle": 1184,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            1
+          ],
+          "start_cycle": 1179
+        }
+      ],
+      "src": [
+        0,
+        1,
+        1
+      ],
+      "start_cycle": 1179,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "end_cycle": 1203,
+      "fabric_event_type": false,
+      "id": 6,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "end_cycle": 1203,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            2
+          ],
+          "start_cycle": 1198
+        }
+      ],
+      "src": [
+        0,
+        1,
+        2
+      ],
+      "start_cycle": 1198,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          4,
+          2
+        ]
+      ],
+      "end_cycle": 1211,
+      "fabric_event_type": false,
+      "id": 8,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              4,
+              2
+            ]
+          ],
+          "end_cycle": 1211,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            2
+          ],
+          "start_cycle": 1206
+        }
+      ],
+      "src": [
+        0,
+        4,
+        2
+      ],
+      "start_cycle": 1206,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          3
+        ]
+      ],
+      "end_cycle": 1241,
+      "fabric_event_type": false,
+      "id": 9,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          "end_cycle": 1241,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            3
+          ],
+          "start_cycle": 1236
+        }
+      ],
+      "src": [
+        0,
+        1,
+        3
+      ],
+      "start_cycle": 1236,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          4,
+          3
+        ]
+      ],
+      "end_cycle": 1226,
+      "fabric_event_type": false,
+      "id": 11,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              4,
+              3
+            ]
+          ],
+          "end_cycle": 1226,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            3
+          ],
+          "start_cycle": 1221
+        }
+      ],
+      "src": [
+        0,
+        4,
+        3
+      ],
+      "start_cycle": 1221,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    }
+  ],
+  "timestep_data": [
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 32,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 64,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 32
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 96,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 64
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 128,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 96
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 160,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 128
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 192,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 160
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 224,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 192
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 256,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 224
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 288,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 256
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 320,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 288
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 352,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 320
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 384,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 352
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 416,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 384
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 448,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 416
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 480,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 448
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 512,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 480
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 544,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 512
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 576,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 544
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 608,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 576
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 640,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 608
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 672,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 640
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 704,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 672
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 736,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 704
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 768,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 736
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 800,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 768
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 832,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 800
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 864,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 832
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 896,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 864
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 928,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 896
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 960,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 928
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 992,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 960
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1024,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 992
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1056,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1024
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1088,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1056
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1120,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1088
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1152,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1120
+    },
+    {
+      "active_transfers": [
+        3
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1184,
+      "link_demand": [
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          9.515625
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          9.515625
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1152
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        4,
+        6,
+        7,
+        8,
+        10
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1216,
+      "link_demand": [
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          25.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          25.0
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          34.25625228881836
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          34.25625228881836
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          22.5
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          22.5
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          45.67500305175781
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          45.67500305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          15.225000381469727
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          15.225000381469727
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          5.709375381469727
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_OUT",
+          5.709375381469727
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_IN",
+          23.75
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_OUT",
+          23.75
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_IN",
+          19.03125
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_OUT",
+          19.03125
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1184
+    },
+    {
+      "active_transfers": [
+        5,
+        9,
+        10,
+        11
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1248,
+      "link_demand": [
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          22.837501525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          22.837501525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_IN",
+          58.99687576293945
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_OUT",
+          58.99687576293945
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_IN",
+          51.384376525878906
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_OUT",
+          51.384376525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1216
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 0,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    }
+  ],
+  "zones": [
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1355.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1354.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1365.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1365.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1397.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1370.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1378.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1355.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1337.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1347.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1377.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1354.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "mesh_shapes": [
+    {
+      "mesh_id": 0,
+      "shape": [
+        1,
+        1
+      ]
+    }
+  ],
+  "cluster_type": "P100",
+  "fabric_config": "DISABLED",
+  "eth_chan_to_coord": {}
+}

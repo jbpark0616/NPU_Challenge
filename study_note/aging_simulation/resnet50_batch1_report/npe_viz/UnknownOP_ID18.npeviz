@@ -1,0 +1,680 @@
+{
+  "chips": {
+    "0": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "common_info": {
+    "arch": "blackhole",
+    "congestion_model_name": "fast",
+    "cycles_per_timestep": 32,
+    "dram_bw_util": 0.0,
+    "link_demand": null,
+    "link_util": null,
+    "max_link_demand": 0.0,
+    "mcast_write_link_util": null,
+    "mesh_device": "P100",
+    "noc": {
+      "NOC0": {
+        "avg_link_demand": null,
+        "avg_link_util": null,
+        "max_link_demand": 0.0
+      },
+      "NOC1": {
+        "avg_link_demand": null,
+        "avg_link_util": null,
+        "max_link_demand": 0.0
+      }
+    },
+    "num_cols": 17,
+    "num_rows": 12,
+    "version": "1.0.0"
+  },
+  "noc_transfers": [],
+  "timestep_data": [],
+  "zones": [
+    {
+      "core": [
+        0,
+        0,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2905.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2875.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 109.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2904.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 117.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2902.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2911.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2905.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 38.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 124.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 113.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 39.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 98.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 37.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 108.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2862.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2854.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        4
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 114.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        4
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 103.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2902.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 103.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 112.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2909.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 111.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 112.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 115.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 106.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2931.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 110.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 38.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 37.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 114.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 113.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2908.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 37.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2886.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 123.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2912.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        4
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 112.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        4
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 101.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    }
+  ]
+}

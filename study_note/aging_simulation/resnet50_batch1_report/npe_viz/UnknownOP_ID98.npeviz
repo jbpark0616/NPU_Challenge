@@ -1,0 +1,6868 @@
+{
+  "chips": {
+    "0": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "common_info": {
+    "arch": "blackhole",
+    "congestion_model_name": "fast",
+    "cycles_per_timestep": 32,
+    "dram_bw_util": 2.4215086948780344,
+    "link_demand": 1.2726819191139296,
+    "link_util": 0.8081847232718545,
+    "max_link_demand": 9.85905830362441,
+    "mcast_write_link_util": 0.0,
+    "mesh_device": "P100",
+    "noc": {
+      "NOC0": {
+        "avg_link_demand": 2.545363838227859,
+        "avg_link_util": 1.616369446543709,
+        "max_link_demand": 19.71811660724882
+      },
+      "NOC1": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      }
+    },
+    "num_cols": 17,
+    "num_rows": 12,
+    "version": "1.0.0"
+  },
+  "noc_transfers": [
+    {
+      "dst": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "end_cycle": 1979,
+      "fabric_event_type": false,
+      "id": 0,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "end_cycle": 1979,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              1,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            0
+          ],
+          "start_cycle": 1721
+        }
+      ],
+      "src": [
+        0,
+        1,
+        0
+      ],
+      "start_cycle": 1721,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "end_cycle": 1961,
+      "fabric_event_type": false,
+      "id": 2,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "end_cycle": 1961,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              2,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            1
+          ],
+          "start_cycle": 1737
+        }
+      ],
+      "src": [
+        0,
+        1,
+        1
+      ],
+      "start_cycle": 1737,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          2
+        ]
+      ],
+      "end_cycle": 1961,
+      "fabric_event_type": false,
+      "id": 4,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "end_cycle": 1961,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            2
+          ],
+          "start_cycle": 1704
+        }
+      ],
+      "src": [
+        0,
+        1,
+        2
+      ],
+      "start_cycle": 1704,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "end_cycle": 1968,
+      "fabric_event_type": false,
+      "id": 5,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "end_cycle": 1968,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              2,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            2
+          ],
+          "start_cycle": 1709
+        }
+      ],
+      "src": [
+        0,
+        2,
+        2
+      ],
+      "start_cycle": 1709,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          3
+        ]
+      ],
+      "end_cycle": 1975,
+      "fabric_event_type": false,
+      "id": 7,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          "end_cycle": 1975,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            3
+          ],
+          "start_cycle": 1717
+        }
+      ],
+      "src": [
+        0,
+        2,
+        3
+      ],
+      "start_cycle": 1717,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 1949,
+      "fabric_event_type": false,
+      "id": 1,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 1949,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              2,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            0
+          ],
+          "start_cycle": 1692
+        }
+      ],
+      "src": [
+        0,
+        2,
+        0
+      ],
+      "start_cycle": 1692,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "end_cycle": 1913,
+      "fabric_event_type": false,
+      "id": 3,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "end_cycle": 1913,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              1,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            1
+          ],
+          "start_cycle": 1689
+        }
+      ],
+      "src": [
+        0,
+        2,
+        1
+      ],
+      "start_cycle": 1689,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          3
+        ]
+      ],
+      "end_cycle": 1989,
+      "fabric_event_type": false,
+      "id": 6,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              3
+            ]
+          ],
+          "end_cycle": 1989,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              3,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            3
+          ],
+          "start_cycle": 1726
+        }
+      ],
+      "src": [
+        0,
+        1,
+        3
+      ],
+      "start_cycle": 1726,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    }
+  ],
+  "timestep_data": [
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 32,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 64,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 32
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 96,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 64
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 128,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 96
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 160,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 128
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 192,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 160
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 224,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 192
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 256,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 224
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 288,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 256
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 320,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 288
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 352,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 320
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 384,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 352
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 416,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 384
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 448,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 416
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 480,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 448
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 512,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 480
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 544,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 512
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 576,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 544
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 608,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 576
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 640,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 608
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 672,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 640
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 704,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 672
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 736,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 704
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 768,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 736
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 800,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 768
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 832,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 800
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 864,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 832
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 896,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 864
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 928,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 896
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 960,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 928
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 992,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 960
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1024,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 992
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1056,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1024
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1088,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1056
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1120,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1088
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1152,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1120
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1184,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1152
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1216,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1184
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1248,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1216
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1280,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1248
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1312,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1280
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1344,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1312
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1376,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1344
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1408,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1376
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1440,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1408
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1472,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1440
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1504,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1472
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1536,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1504
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1568,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1536
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1600,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1568
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1632,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1600
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 1664,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1632
+    },
+    {
+      "active_transfers": [
+        1,
+        3
+      ],
+      "avg_link_demand": 0.40556002645959577,
+      "avg_link_util": 0.40556002645959577,
+      "end_cycle": 1696,
+      "link_demand": [
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          5.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          13.32187557220459
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          5.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          13.32187557220459
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          5.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          13.32187557220459
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.8111200529191915,
+          "avg_link_util": 0.8111200529191915,
+          "max_link_demand": 21.87500039149191
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1664
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 4.786203219286295,
+      "avg_link_util": 4.364940892136694,
+      "end_cycle": 1728,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          8.75
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          45.67500305175781
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          3.8062500953674316
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          8.75
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          45.67500305175781
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          36.15937423706055
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          3.8062500953674316
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          20.934375762939453
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          36.15937423706055
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          20.934375762939453
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          36.15937423706055
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          20.934375762939453
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          8.75
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          45.67500305175781
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          3.8062500953674316
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          48.75
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          81.83438110351563
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          24.740625381469727
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 9.57240643857259,
+          "avg_link_util": 8.729881784273388,
+          "max_link_demand": 134.37500665536248
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1696
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.479922232218703,
+      "avg_link_util": 5.763771794940612,
+      "end_cycle": 1760,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          43.77187728881836
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          43.77187728881836
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          43.77187728881836
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          104.671875
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 18.959844464437406,
+          "avg_link_util": 11.527543589881224,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1728
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.85905830362441,
+      "avg_link_util": 5.798238703544484,
+      "end_cycle": 1792,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 19.71811660724882,
+          "avg_link_util": 11.596477407088967,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1760
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.85905830362441,
+      "avg_link_util": 5.798238703544484,
+      "end_cycle": 1824,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 19.71811660724882,
+          "avg_link_util": 11.596477407088967,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1792
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.85905830362441,
+      "avg_link_util": 5.798238703544484,
+      "end_cycle": 1856,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 19.71811660724882,
+          "avg_link_util": 11.596477407088967,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1824
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.85905830362441,
+      "avg_link_util": 5.798238703544484,
+      "end_cycle": 1888,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 19.71811660724882,
+          "avg_link_util": 11.596477407088967,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1856
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 9.85905830362441,
+      "avg_link_util": 5.798238703544484,
+      "end_cycle": 1920,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 19.71811660724882,
+          "avg_link_util": 11.596477407088967,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1888
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 8.511019117740286,
+      "avg_link_util": 5.675689686645927,
+      "end_cycle": 1952,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          80.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 17.022038235480572,
+          "avg_link_util": 11.351379373291854,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1920
+    },
+    {
+      "active_transfers": [
+        0,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "avg_link_demand": 7.625607523580451,
+      "avg_link_util": 5.174627185609318,
+      "end_cycle": 1984,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          3,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          3,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          4,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          4,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          5,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          5,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          6,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          6,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          7,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          7,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          8,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          8,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          9,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          9,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          10,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          10,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          40.0
+        ],
+        [
+          0,
+          11,
+          1,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          11,
+          2,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          121.80000305175781
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 15.251215047160901,
+          "avg_link_util": 10.349254371218636,
+          "max_link_demand": 200.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1952
+    },
+    {
+      "active_transfers": [
+        6
+      ],
+      "avg_link_demand": 1.3480391858841227,
+      "avg_link_util": 1.3480391858841227,
+      "end_cycle": 2016,
+      "link_demand": [
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          3,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          4,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          5,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          6,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          7,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          8,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          9,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          10,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ],
+        [
+          0,
+          11,
+          3,
+          "NOC0_SOUTH",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 2.6960783717682455,
+          "avg_link_util": 2.6960783717682455,
+          "max_link_demand": 100.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 1984
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 0,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    }
+  ],
+  "zones": [
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2300.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 309.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2423.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 314.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2188.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2427.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 317.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 1995.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2320.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2006.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 327.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 2163.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    }
+  ]
+}

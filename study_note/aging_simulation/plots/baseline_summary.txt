@@ -1,0 +1,54 @@
+=== Baseline aging simulation summary (relative-only) ===
+Model:      Chen et al. ISOCC 2024 NBTI+HCI equations
+Platform:   Eagle-N (Blackhole class), 20 compute cores
+Workload:   ResNet50 batch=1, stage-split aggregated NoC data
+Defensible: alpha (measured), f=650MHz (measured), t (parameter)
+Unknown  :  K_NBTI, K_HCI  -> collapsed. Only RATIOS reported.
+
+NBTI vs HCI are reported SEPARATELY because their sum depends on the
+unknown ratio K_NBTI/K_HCI. Each mechanism ratio individually is K-free.
+
+axis    mech year    worst/best     mean/best
+niu     NBTI    1          1.54          1.20
+niu      HCI    1         13.08          3.82
+niu     NBTI    2          1.54          1.20
+niu      HCI    2         13.08          3.82
+niu     NBTI    3          1.54          1.20
+niu      HCI    3         13.08          3.82
+niu     NBTI    5          1.54          1.20
+niu      HCI    5         13.08          3.82
+niu     NBTI    7          1.54          1.20
+niu      HCI    7         13.08          3.82
+niu     NBTI   10          1.54          1.20
+niu      HCI   10         13.08          3.82
+
+sram    NBTI    1          2.05          1.32
+sram     HCI    1         74.14         10.42
+sram    NBTI    2          2.05          1.32
+sram     HCI    2         74.14         10.42
+sram    NBTI    3          2.05          1.32
+sram     HCI    3         74.14         10.42
+sram    NBTI    5          2.05          1.32
+sram     HCI    5         74.14         10.42
+sram    NBTI    7          2.05          1.32
+sram     HCI    7         74.14         10.42
+sram    NBTI   10          2.05          1.32
+sram     HCI   10         74.14         10.42
+
+compute  NBTI    1          1.77          1.60
+compute   HCI    1         30.35         21.25
+compute  NBTI    2          1.77          1.60
+compute   HCI    2         30.35         21.25
+compute  NBTI    3          1.77          1.60
+compute   HCI    3         30.35         21.25
+compute  NBTI    5          1.77          1.60
+compute   HCI    5         30.35         21.25
+compute  NBTI    7          1.77          1.60
+compute   HCI    7         30.35         21.25
+compute  NBTI   10          1.77          1.60
+compute   HCI   10         30.35         21.25
+
+Interpretation:
+  NBTI ratio is much softer than HCI ratio because NBTI ~ u^(1/6) while HCI ~ u.
+  Ratios are constant over time — the t^(1/6) factor is shared and cancels.
+  Absolute Vth values NOT reported — requires 6nm calibration (future work).

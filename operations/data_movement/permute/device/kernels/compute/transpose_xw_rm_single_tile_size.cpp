@@ -1,0 +1,65 @@
+// SPDX-FileCopyrightText: © 2024 Tenstorrent Inc.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+#include <cstdint>
+
+#include "compute_kernel_api/eltwise_unary/eltwise_unary.h"
+#include "compute_kernel_api/transpose_wh.h"
+#include "compute_kernel_api/tilize.h"
+#include "compute_kernel_api/untilize.h"
+#include "compute_kernel_api/pack_untilize.h"
+#define BOS_HANG_WA true
+namespace NAMESPACE {
+void MAIN {
+    constexpr uint32_t x_block_size = get_named_compile_time_arg_val("x_block_size");
+    constexpr uint32_t w_block_size = get_named_compile_time_arg_val("w_block_size");
+
+    // constexpr uint32_t x_block_size = get_compile_time_arg_val(0);
+    // constexpr uint32_t w_block_size = get_compile_time_arg_val(1);
+
+    uint32_t num_blocks = get_arg_val<uint32_t>(0);
+
+    constexpr auto cb_in = tt::CBIndex::c_0;
+    constexpr auto cb_tilize = tt::CBIndex::c_1;
+    constexpr auto cb_transpose_temp = tt::CBIndex::c_3;  // 새로운 중간 CB
+    constexpr auto cb_out = tt::CBIndex::c_2;
+
+    unary_op_init_common(cb_in, cb_out);
+
+    for (uint32_t n = 0; n < num_blocks; n++) {
+        // tilize input
+        tilize_init(cb_in, 1, cb_tilize);
+        cb_wait_front(cb_in, x_block_size);
+        cb_reserve_back(cb_tilize, 1);
+        tilize_block(cb_in, 1, cb_tilize);
+        cb_push_back(cb_tilize, 1);
+        cb_pop_front(cb_in, x_block_size);
+        tilize_uninit(cb_in, cb_tilize);
+
+        // transpose and pack to intermediate CB
+        cb_wait_front(cb_tilize, 1);
+        transpose_wh_init_short(cb_tilize);
+        cb_reserve_back(cb_transpose_temp, 1);
+
+        tile_regs_acquire();
+        transpose_wh_tile(cb_tilize, 0, 0);
+        tile_regs_commit();
+        tile_regs_wait();
+        pack_tile(0, cb_transpose_temp);  // pack to intermediate CB
+        tile_regs_release();
+
+        cb_push_back(cb_transpose_temp, 1);
+        cb_pop_front(cb_tilize, 1);
+
+        // untilize from intermediate CB to output
+        untilize_init(cb_transpose_temp);
+        cb_wait_front(cb_transpose_temp, 1);
+        cb_reserve_back(cb_out, w_block_size);
+        untilize_block(cb_transpose_temp, 1, cb_out);
+        cb_push_back(cb_out, w_block_size);
+        cb_pop_front(cb_transpose_temp, 1);
+        untilize_uninit(cb_transpose_temp);
+    }
+}
+}  // namespace NAMESPACE

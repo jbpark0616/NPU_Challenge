@@ -1,0 +1,2330 @@
+{
+  "chips": {
+    "0": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "common_info": {
+    "arch": "blackhole",
+    "congestion_model_name": "fast",
+    "cycles_per_timestep": 32,
+    "dram_bw_util": 16.101026045777427,
+    "link_demand": 0.0,
+    "link_util": 0.0,
+    "max_link_demand": 0.0,
+    "mcast_write_link_util": 0.0,
+    "mesh_device": "P100",
+    "noc": {
+      "NOC0": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      },
+      "NOC1": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      }
+    },
+    "num_cols": 17,
+    "num_rows": 12,
+    "version": "1.0.0"
+  },
+  "noc_transfers": [
+    {
+      "dst": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "end_cycle": 373,
+      "fabric_event_type": false,
+      "id": 0,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "end_cycle": 373,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              0,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            0
+          ],
+          "start_cycle": 169
+        }
+      ],
+      "src": [
+        0,
+        0,
+        0
+      ],
+      "start_cycle": 169,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          0
+        ]
+      ],
+      "end_cycle": 376,
+      "fabric_event_type": false,
+      "id": 2,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              0
+            ]
+          ],
+          "end_cycle": 376,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              2,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            0
+          ],
+          "start_cycle": 172
+        }
+      ],
+      "src": [
+        0,
+        2,
+        0
+      ],
+      "start_cycle": 172,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          1
+        ]
+      ],
+      "end_cycle": 298,
+      "fabric_event_type": false,
+      "id": 4,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "end_cycle": 298,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            1
+          ],
+          "start_cycle": 163
+        }
+      ],
+      "src": [
+        0,
+        1,
+        1
+      ],
+      "start_cycle": 163,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "end_cycle": 301,
+      "fabric_event_type": false,
+      "id": 5,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          "end_cycle": 301,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            1
+          ],
+          "start_cycle": 166
+        }
+      ],
+      "src": [
+        0,
+        2,
+        1
+      ],
+      "start_cycle": 166,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "end_cycle": 302,
+      "fabric_event_type": false,
+      "id": 7,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "end_cycle": 302,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            2
+          ],
+          "start_cycle": 167
+        }
+      ],
+      "src": [
+        0,
+        1,
+        2
+      ],
+      "start_cycle": 167,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          3
+        ]
+      ],
+      "end_cycle": 301,
+      "fabric_event_type": false,
+      "id": 10,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              3
+            ]
+          ],
+          "end_cycle": 301,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            3
+          ],
+          "start_cycle": 166
+        }
+      ],
+      "src": [
+        0,
+        1,
+        3
+      ],
+      "start_cycle": 166,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          4
+        ]
+      ],
+      "end_cycle": 304,
+      "fabric_event_type": false,
+      "id": 12,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              4
+            ]
+          ],
+          "end_cycle": 304,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              4,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              4,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            4
+          ],
+          "start_cycle": 169
+        }
+      ],
+      "src": [
+        0,
+        1,
+        4
+      ],
+      "start_cycle": 169,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 367,
+      "fabric_event_type": false,
+      "id": 1,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 367,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              1,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            0
+          ],
+          "start_cycle": 163
+        }
+      ],
+      "src": [
+        0,
+        1,
+        0
+      ],
+      "start_cycle": 163,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "end_cycle": 299,
+      "fabric_event_type": false,
+      "id": 3,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "end_cycle": 299,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              1,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            1
+          ],
+          "start_cycle": 164
+        }
+      ],
+      "src": [
+        0,
+        0,
+        1
+      ],
+      "start_cycle": 164,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          2
+        ]
+      ],
+      "end_cycle": 296,
+      "fabric_event_type": false,
+      "id": 6,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "end_cycle": 296,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            2
+          ],
+          "start_cycle": 161
+        }
+      ],
+      "src": [
+        0,
+        0,
+        2
+      ],
+      "start_cycle": 161,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          2,
+          2
+        ]
+      ],
+      "end_cycle": 300,
+      "fabric_event_type": false,
+      "id": 8,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              2,
+              2
+            ]
+          ],
+          "end_cycle": 300,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            2
+          ],
+          "start_cycle": 165
+        }
+      ],
+      "src": [
+        0,
+        2,
+        2
+      ],
+      "start_cycle": 165,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          3
+        ]
+      ],
+      "end_cycle": 308,
+      "fabric_event_type": false,
+      "id": 9,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              3
+            ]
+          ],
+          "end_cycle": 308,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            3
+          ],
+          "start_cycle": 173
+        }
+      ],
+      "src": [
+        0,
+        0,
+        3
+      ],
+      "start_cycle": 173,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          0,
+          4
+        ]
+      ],
+      "end_cycle": 301,
+      "fabric_event_type": false,
+      "id": 11,
+      "noc_event_type": "READ",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              0,
+              4
+            ]
+          ],
+          "end_cycle": 301,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              4,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              4,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            4
+          ],
+          "start_cycle": 166
+        }
+      ],
+      "src": [
+        0,
+        0,
+        4
+      ],
+      "start_cycle": 166,
+      "total_bytes": 8160,
+      "zones": "BRISC-KERNEL[0]"
+    }
+  ],
+  "timestep_data": [
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 32,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 64,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 32
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 96,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 64
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 128,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 96
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 160,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 128
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 192,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          28.75
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          28.75
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          53.28750228881836
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          53.28750228881836
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          58.99687576293945
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          58.99687576293945
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          36.15937423706055
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          36.15937423706055
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_IN",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_OUT",
+          49.48125076293945
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          36.25
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          36.25
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          55.19062805175781
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          55.19062805175781
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          47.578125
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          47.578125
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          49.48125076293945
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          49.48125076293945
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_IN",
+          43.77187728881836
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_OUT",
+          43.77187728881836
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          25.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          25.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          49.48125076293945
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          49.48125076293945
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          51.384376525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          51.384376525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 160
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 224,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 192
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 256,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 224
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 288,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 256
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 320,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          1,
+          "NOC0_OUT",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          2,
+          2,
+          "NOC0_OUT",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 288
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 352,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 320
+    },
+    {
+      "active_transfers": [
+        0,
+        1,
+        2
+      ],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 384,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          40.0
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_OUT",
+          40.0
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 352
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 0,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    }
+  ],
+  "zones": [
+    {
+      "core": [
+        0,
+        0,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 556.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 550.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 552.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 416.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 529.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 555.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        4
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 563.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 558.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 559.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 556.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 544.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 551.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 557.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+[93m[1mW: Device sync isn't turned on. This will lead to inaccurate traces for mesh device workloads! If you are tracing a workload on a mesh device, please turn on device sync by setting TT_METAL_DEVICE_PROFILER=1 and TT_METAL_PROFILER_SYNC=1 then re-collect traces[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID39936.json' (3519 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID39_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID54272.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID53_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID36864.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID36_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID11264.json' (176 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID11_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID50176.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID49_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID9216.json' (496 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID9_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID35840.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID35_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID23552.json' (3519 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID23_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID43008.json' (516 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID42_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID32768.json' (416 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID32_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID16384.json' (416 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID16_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID53248.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID52_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID10240.json' (428 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID10_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID4096.json' (296 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID4_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID22528.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID22_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID34816.json' (516 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID34_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID12288.json' (2305 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID12_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID48128.json' (3519 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID47_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID49152.json' (416 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID48_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID26624.json' (516 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID26_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID28672.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID28_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID24576.json' (416 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID24_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID14336.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID14_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID47104.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID46_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID37888.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID37_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID3072.json' (1280 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID3_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID31744.json' (3519 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID31_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID30720.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID30_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID45056.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID44_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID2048.json' (1421 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID2_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID46080.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID45_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID33792.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID33_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID20480.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID20_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID38912.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID38_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID55296.json' (1648 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID54_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID40960.json' (416 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID40_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID15360.json' (3519 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID15_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID51200.json' (516 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID50_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID19456.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID19_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID18432.json' (516 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID18_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID52224.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID51_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID1024.json' (3604 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID1_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID44032.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID43_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID8192.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID8_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID29696.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID29_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID27648.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID27_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID25600.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID25_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID21504.json' (1094 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID21_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID13312.json' (344 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID13_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID5120.json' (884 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID5_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID41984.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID41_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID17408.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID17_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID6144.json' (3746 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID6_merged.json'[0m
+I: Reading trace file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_dev0_ID7168.json' (152 noc trace events) ...[0m
+I: Applying --remove_desynchronized_events filter...[0m
+I: Writing combined trace to '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID7_merged.json'[0m
+I: Trace merging complete, running NPE next.[0m
+I: Analyzing traces...[0m
+I: Using 8 worker(s) for trace analysis[0m
+[1A[2KAnalyzing (1/54) ...
+[1A[2KAnalyzing (2/54) ...
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 47 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 128 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 209 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1A[2KAnalyzing (3/54) ...
+[1A[2KAnalyzing (4/54) ...
+[1A[2KAnalyzing (5/54) ...
+[1A[2KAnalyzing (6/54) ...
+[1A[2KAnalyzing (7/54) ...
+[1A[2KAnalyzing (8/54) ...
+[1A[2KAnalyzing (9/54) ...
+[1A[2KAnalyzing (10/54) ...
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 128 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 209 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1A[2KAnalyzing (11/54) ...
+[1A[2KAnalyzing (12/54) ...
+[1A[2KAnalyzing (13/54) ...
+[1A[2KAnalyzing (14/54) ...
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 47 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 128 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 209 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1A[2KAnalyzing (15/54) ...
+[1A[2KAnalyzing (16/54) ...
+[1A[2KAnalyzing (17/54) ...
+[1A[2KAnalyzing (18/54) ...
+[1A[2KAnalyzing (19/54) ...
+[1A[2KAnalyzing (20/54) ...
+[1A[2KAnalyzing (21/54) ...
+[1A[2KAnalyzing (22/54) ...
+MulticastCoordSet: start coord must be to the top-left of end coord
+[1m[31mE: UNDEF - TT_ASSERT @ /tt-npe/tt_npe/cpp/include/npeUtil.hpp:194: start.row <= end.row || start.col <= end.col
+info:
+MulticastCoordSet: start coord must be to the top-left of end coord
+backtrace:
+ --- /tt-npe/install/lib/../lib/libtt_npe.so.0(+0x30f88) [0x7846038e9f88]
+ --- /tt-npe/install/lib/../lib/libtt_npe.so.0(+0xa0f66) [0x784603959f66]
+ --- tt_npe::convertNocTracesToNpeWorkload(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, bool)
+ --- tt_npe::createWorkloadFromJSON(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, bool, bool)
+ --- /tt-npe/install/lib/tt_npe_pybind.cpython-310-x86_64-linux-gnu.so(+0x29879) [0x784603a3c879]
+ --- /tt-npe/install/lib/tt_npe_pybind.cpython-310-x86_64-linux-gnu.so(+0x14146) [0x784603a27146]
+ --- python3(+0x18ae32) [0x6151430f8e32]
+ --- python3(_PyObject_MakeTpCall+0x25b) [0x6151430ef89b]
+ --- python3(_PyEval_EvalFrameDefault+0x6a5b) [0x6151430e9f6b]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x6c0) [0x6151430e3bd0]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(PyObject_Call+0x122) [0x615143107392]
+ --- python3(+0x2942dc) [0x6151432022dc]
+ --- python3(_PyObject_MakeTpCall+0x25b) [0x6151430ef89b]
+ --- python3(_PyEval_EvalFrameDefault+0x286b) [0x6151430e5d7b]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x286b) [0x6151430e5d7b]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x807) [0x6151430e3d17]
+ --- python3(+0x1986f1) [0x6151431066f1]
+ --- python3(_PyEval_EvalFrameDefault+0x1992) [0x6151430e4ea2]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x807) [0x6151430e3d17]
+ --- python3(_PyObject_FastCallDictTstate+0xc4) [0x6151430eea64]
+ --- python3(+0x194a64) [0x615143102a64]
+ --- python3(_PyObject_MakeTpCall+0x1fc) [0x6151430ef83c]
+ --- python3(_PyEval_EvalFrameDefault+0x5a87) [0x6151430e8f97]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x56cb) [0x6151430e8bdb]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x807) [0x6151430e3d17]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x56cb) [0x6151430e8bdb]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x807) [0x6151430e3d17]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyObject_FastCallDictTstate+0x16d) [0x6151430eeb0d]
+ --- python3(+0x194a64) [0x615143102a64]
+ --- python3(_PyObject_MakeTpCall+0x1fc) [0x6151430ef83c]
+ --- python3(_PyEval_EvalFrameDefault+0x6a5b) [0x6151430e9f6b]
+ --- python3(+0x1986f1) [0x6151431066f1]
+ --- python3(_PyEval_EvalFrameDefault+0x1992) [0x6151430e4ea2]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x6c0) [0x6151430e3bd0]
+ --- python3(_PyFunction_Vectorcall+0x7c) [0x6151430f968c]
+ --- python3(_PyEval_EvalFrameDefault+0x6c0) [0x6151430e3bd0]
+ --- python3(+0x259d36) [0x6151431c7d36]
+ --- python3(PyEval_EvalCode+0x86) [0x6151431c7c06]
+ --- python3(+0x280678) [0x6151431ee678]
+ --- python3(+0x27accf) [0x6151431e8ccf]
+ --- python3(+0x280415) [0x6151431ee415]
+ --- python3(_PyRun_SimpleFileObject+0x1a8) [0x6151431ed958]
+ --- python3(_PyRun_AnyFileObject+0x47) [0x6151431ed637]
+ --- python3(Py_RunMain+0x2be) [0x6151431e1bfe]
+ --- python3(Py_BytesMain+0x2d) [0x6151431bbc4d]
+ --- /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x78460427dd90]
+ --- /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x78460427de40]
+ --- python3(_start+0x25) [0x6151431bbb45]
+[0m
+[91m[1mE: Error processing /tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID2_merged.json: Could not create tt-npe workload from file '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/logs/noc_trace_ID2_merged.json'; aborting ... 
+[0m
+[1A[2KAnalyzing (23/54) ...
+[1A[2KAnalyzing (24/54) ...
+[1A[2KAnalyzing (25/54) ...
+[1A[2KAnalyzing (26/54) ...
+[1A[2KAnalyzing (27/54) ...
+[1A[2KAnalyzing (28/54) ...
+[1A[2KAnalyzing (29/54) ...
+[1A[2KAnalyzing (30/54) ...
+[1A[2KAnalyzing (31/54) ...
+[1A[2KAnalyzing (32/54) ...
+[1A[2KAnalyzing (33/54) ...
+[1A[2KAnalyzing (34/54) ...
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 47 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 128 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1m[31mE: Timeline Consistency Check Failed: Transfer group ID 209 is defined in noc_transfers but never appears in active_transfers of any timestep.[0m
+[1A[2KAnalyzing (35/54) ...
+[1A[2KAnalyzing (36/54) ...
+[1A[2KAnalyzing (37/54) ...
+[1A[2KAnalyzing (38/54) ...
+[1A[2KAnalyzing (39/54) ...
+[1A[2KAnalyzing (40/54) ...
+[1A[2KAnalyzing (41/54) ...
+[1A[2KAnalyzing (42/54) ...
+[1A[2KAnalyzing (43/54) ...
+[1A[2KAnalyzing (44/54) ...
+[1A[2KAnalyzing (45/54) ...
+[1A[2KAnalyzing (46/54) ...
+[1A[2KAnalyzing (47/54) ...
+[1A[2KAnalyzing (48/54) ...
+[1A[2KAnalyzing (49/54) ...
+[1A[2KAnalyzing (50/54) ...
+[1A[2KAnalyzing (51/54) ...
+[1A[2KAnalyzing (52/54) ...
+[1A[2KAnalyzing (53/54) ...
+[1A[2KAnalyzing (54/54) ...
+[1A[2K
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[1mOpname                                     Op ID  Metal Trace ID       NoC Util   McastWr NoC Util   DRAM BW Util    Cong Impact    % Overall Cycles ETH BW Util (per core)[0m
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+UnknownOP                                      1                          0.63%              0.00%          2.73%          0.00%               5.96%  (0,1,1):2.7% (0,1,2):2.7% (0,1,3):2.7% (0,1,4):2.7%
+UnknownOP                                     23                          0.27%              0.03%          2.94%          0.00%               5.27%  (0,1,2):0.8% (0,1,3):1.3%
+UnknownOP                                     47                          0.27%              0.03%          2.95%          0.00%               5.24%  (0,1,2):0.8% (0,1,3):1.3%
+UnknownOP                                     31                          0.27%              0.03%          2.97%          0.00%               5.21%  (0,1,2):0.8% (0,1,3):1.3%
+UnknownOP                                     15                          0.27%              0.03%          2.97%          0.00%               5.21%  (0,1,2):0.8% (0,1,3):1.3%
+UnknownOP                                     39                          0.27%              0.03%          2.99%          0.00%               5.19%  (0,1,2):0.8% (0,1,3):1.3%
+UnknownOP                                     19                          0.59%              0.28%          3.88%          0.00%               4.57%  (0,1,1):3.2% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                     51                          0.61%              0.28%          3.88%          0.00%               4.57%  (0,1,1):3.2% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                     35                          0.61%              0.27%          3.89%          0.00%               4.57%  (0,1,1):3.2% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                     27                          0.63%              0.27%          3.89%          0.00%               4.56%  (0,1,1):3.3% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                      6                          0.60%              0.27%          3.89%          0.00%               4.56%  (0,1,1):3.3% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                     43                          0.60%              0.28%          3.90%          0.00%               4.55%  (0,1,1):3.3% (0,1,2):3.3% (0,1,3):3.4%
+UnknownOP                                     12                          0.85%              0.17%          3.88%          0.00%               2.77%  (0,1,1):1.5% (0,1,2):1.5% (0,1,3):1.5%
+UnknownOP                                     37                          1.61%              0.09%          4.39%          0.00%               2.33%  (0,1,1):2.1% (0,1,2):11.7% (0,1,3):13.3% (0,1,4):6.9%
+UnknownOP                                     45                          1.64%              0.09%          4.41%          0.00%               2.32%  (0,1,1):2.1% (0,1,2):11.8% (0,1,3):13.4% (0,1,4):6.9%
+UnknownOP                                      8                          1.61%              0.09%          4.43%          0.00%               2.31%  (0,1,1):2.1% (0,1,2):11.8% (0,1,3):13.4% (0,1,4):7.0%
+UnknownOP                                     21                          1.62%              0.09%          4.44%          0.00%               2.30%  (0,1,1):2.1% (0,1,2):11.9% (0,1,3):13.5% (0,1,4):7.0%
+UnknownOP                                     29                          1.67%              0.10%          4.47%          0.00%               2.29%  (0,1,1):2.1% (0,1,2):11.9% (0,1,3):13.6% (0,1,4):7.0%
+UnknownOP                                     53                          1.66%              0.09%          4.48%          0.00%               2.28%  (0,1,1):2.1% (0,1,2):12.0% (0,1,3):13.6% (0,1,4):7.0%
+UnknownOP                                     30                          1.60%              0.00%          3.88%          0.00%               2.20%  (0,1,1):2.7% (0,1,2):2.7% (0,1,3):2.7% (0,1,4):2.7%
+UnknownOP                                     22                          1.57%              0.00%          3.90%          0.00%               2.19%  (0,1,1):2.7% (0,1,2):2.7% (0,1,3):2.7% (0,1,4):2.7%
+UnknownOP                                     54                          1.63%              0.00%          4.00%          0.00%               2.14%  (0,1,1):2.7% (0,1,2):2.7% (0,1,3):2.7% (0,1,4):2.7%
+UnknownOP                                     14                          1.64%              0.00%          4.02%          0.00%               2.13%  (0,1,1):2.8% (0,1,2):2.8% (0,1,3):2.8% (0,1,4):2.8%
+UnknownOP                                     46                          1.61%              0.00%          4.05%          0.00%               2.11%  (0,1,1):2.8% (0,1,2):2.8% (0,1,3):2.8% (0,1,4):2.8%
+UnknownOP                                     38                          1.65%              0.00%          4.11%          0.00%               2.08%  (0,1,1):2.8% (0,1,2):2.8% (0,1,3):2.8% (0,1,4):2.8%
+UnknownOP                                      3                          1.65%              0.00%          4.59%          0.22%               1.25%  (0,1,1):2.1% (0,1,2):2.1% (0,1,3):2.1% (0,1,4):2.1%
+UnknownOP                                      9                          4.24%              0.00%          4.04%          0.00%               1.18%  (0,1,1):6.3% (0,1,2):6.3% (0,1,3):6.3%
+UnknownOP                                     10                          3.52%              0.00%         12.97%          0.00%               0.65%  (0,1,1):13.9% (0,1,2):13.9% (0,1,3):13.9%
+UnknownOP                                     13                          3.46%              0.00%          5.76%          0.00%               0.64%  -
+UnknownOP                                      4                          4.23%              0.00%          3.77%          0.80%               0.63%  (0,1,1):5.9% (0,1,2):5.9% (0,1,3):5.9%
+UnknownOP                                      5                          3.60%              0.00%         10.47%          0.00%               0.57%  (0,1,1):12.3% (0,1,2):12.3% (0,1,3):12.3%
+UnknownOP                                     16                          1.44%              0.00%          3.23%          0.00%               0.47%  (0,1,1):1.7% (0,1,2):1.7% (0,1,3):1.7% (0,1,4):1.1%
+UnknownOP                                     48                          1.49%              0.00%          3.27%          0.00%               0.47%  (0,1,1):1.7% (0,1,2):1.7% (0,1,3):1.7% (0,1,4):1.1%
+UnknownOP                                     40                          1.68%              0.00%          3.63%          0.52%               0.42%  (0,1,1):1.9% (0,1,2):1.9% (0,1,3):1.9% (0,1,4):1.3%
+UnknownOP                                     24                          1.79%              0.00%          3.65%          0.52%               0.42%  (0,1,1):1.9% (0,1,2):1.9% (0,1,3):1.9% (0,1,4):1.3%
+UnknownOP                                     32                          1.74%              0.00%          3.85%          0.21%               0.40%  (0,1,1):2.0% (0,1,2):2.0% (0,1,3):2.0% (0,1,4):1.3%
+UnknownOP                                     18                          2.74%              0.00%          5.93%          0.78%               0.34%  (0,1,1):5.7% (0,1,2):5.7% (0,1,3):5.7%
+UnknownOP                                     50                          2.84%              0.00%          5.93%          0.00%               0.34%  (0,1,1):5.7% (0,1,2):5.7% (0,1,3):5.7%
+UnknownOP                                     34                          2.62%              0.00%          6.03%          0.34%               0.33%  (0,1,1):5.7% (0,1,2):5.7% (0,1,3):5.7%
+UnknownOP                                     26                          2.80%              0.00%          6.04%          0.00%               0.33%  (0,1,1):5.8% (0,1,2):5.8% (0,1,3):5.8%
+UnknownOP                                     42                          2.82%              0.00%          6.07%          0.08%               0.33%  (0,1,1):5.8% (0,1,2):5.8% (0,1,3):5.8%
+UnknownOP                                     33                          2.68%              0.00%          2.70%          5.19%               0.25%  (0,1,1):4.3% (0,1,2):4.3% (0,1,3):4.3%
+UnknownOP                                     41                          2.45%              0.00%          2.84%          5.38%               0.24%  (0,1,1):4.5% (0,1,2):4.5% (0,1,3):4.5%
+UnknownOP                                     17                          2.71%              0.00%          2.90%          1.87%               0.23%  (0,1,1):4.6% (0,1,2):4.6% (0,1,3):4.6%
+UnknownOP                                     25                          2.44%              0.00%          2.91%          1.87%               0.23%  (0,1,1):4.7% (0,1,2):4.7% (0,1,3):4.7%
+UnknownOP                                     49                          2.69%              0.00%          3.05%          5.19%               0.22%  (0,1,1):4.9% (0,1,2):4.9% (0,1,3):4.9%
+UnknownOP                                     11                          7.53%              0.00%         19.31%         11.26%               0.22%  (0,1,1):27.0% (0,1,2):27.0% (0,1,3):27.0%
+UnknownOP                                      7                          2.13%              0.00%          3.92%         40.10%               0.17%  -
+UnknownOP                                     20                          2.14%              0.00%          3.98%         39.59%               0.17%  -
+UnknownOP                                     28                          2.06%              0.00%          4.46%         35.15%               0.15%  -
+UnknownOP                                     36                          2.10%              0.00%          4.49%         35.73%               0.15%  -
+UnknownOP                                     44                          2.10%              0.00%          4.58%         34.32%               0.15%  -
+UnknownOP                                     52                          2.08%              0.00%          5.42%         35.94%               0.12%  -
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+average cycle prediction error   : 13.28 
+error percentiles : 
+  25th_percentile :  2.2%
+  50th_percentile :  4.7%
+  75th_percentile : 17.0%
+  worst           : 56.5%
+average link util                : 1.9% 
+cycle-weighted overall link util : 1.0% 
+cycle-weighted dram bw util      : 3.8% 
+cycle-weighted eth bw util       : 3.5% 
+
+👉 [1m[32mttnn-visualizer files located in: '/tt-metal/generated/profiler/stage_split_20260718_151812/stage_3/npe_viz'[0m

@@ -1,0 +1,4051 @@
+{
+  "chips": {
+    "0": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "common_info": {
+    "arch": "blackhole",
+    "congestion_model_name": "fast",
+    "cycles_per_timestep": 32,
+    "dram_bw_util": 3.5164835164835164,
+    "link_demand": 0.858615140798917,
+    "link_util": 0.6700781917242143,
+    "max_link_demand": 5.614276943173951,
+    "mcast_write_link_util": 0.0,
+    "mesh_device": "P100",
+    "noc": {
+      "NOC0": {
+        "avg_link_demand": 1.717230281597834,
+        "avg_link_util": 1.3401563834484287,
+        "max_link_demand": 11.228553886347902
+      },
+      "NOC1": {
+        "avg_link_demand": 0.0,
+        "avg_link_util": 0.0,
+        "max_link_demand": 0.0
+      }
+    },
+    "num_cols": 17,
+    "num_rows": 12,
+    "version": "1.0.0"
+  },
+  "noc_transfers": [
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 185,
+      "fabric_event_type": false,
+      "id": 0,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 185,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              0,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            0
+          ],
+          "start_cycle": 176
+        }
+      ],
+      "src": [
+        0,
+        0,
+        0
+      ],
+      "start_cycle": 176,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 296,
+      "fabric_event_type": false,
+      "id": 2,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 296,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              2,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            0
+          ],
+          "start_cycle": 289
+        }
+      ],
+      "src": [
+        0,
+        2,
+        0
+      ],
+      "start_cycle": 289,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 376,
+      "fabric_event_type": false,
+      "id": 4,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 376,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              1,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            1
+          ],
+          "start_cycle": 358
+        }
+      ],
+      "src": [
+        0,
+        0,
+        1
+      ],
+      "start_cycle": 358,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 369,
+      "fabric_event_type": false,
+      "id": 5,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 369,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              1,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            1
+          ],
+          "start_cycle": 351
+        }
+      ],
+      "src": [
+        0,
+        1,
+        1
+      ],
+      "start_cycle": 351,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 459,
+      "fabric_event_type": false,
+      "id": 7,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 459,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              1,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            1
+          ],
+          "start_cycle": 443
+        }
+      ],
+      "src": [
+        0,
+        4,
+        1
+      ],
+      "start_cycle": 443,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 474,
+      "fabric_event_type": false,
+      "id": 10,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 474,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            2
+          ],
+          "start_cycle": 452
+        }
+      ],
+      "src": [
+        0,
+        2,
+        2
+      ],
+      "start_cycle": 452,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 352,
+      "fabric_event_type": false,
+      "id": 12,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 352,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            3
+          ],
+          "start_cycle": 337
+        }
+      ],
+      "src": [
+        0,
+        0,
+        3
+      ],
+      "start_cycle": 337,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 335,
+      "fabric_event_type": false,
+      "id": 13,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 335,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            3
+          ],
+          "start_cycle": 320
+        }
+      ],
+      "src": [
+        0,
+        1,
+        3
+      ],
+      "start_cycle": 320,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 431,
+      "fabric_event_type": false,
+      "id": 15,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 431,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            3
+          ],
+          "start_cycle": 421
+        }
+      ],
+      "src": [
+        0,
+        4,
+        3
+      ],
+      "start_cycle": 421,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 175,
+      "fabric_event_type": false,
+      "id": 1,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 175,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              1,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            0
+          ],
+          "start_cycle": 166
+        }
+      ],
+      "src": [
+        0,
+        1,
+        0
+      ],
+      "start_cycle": 166,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 274,
+      "fabric_event_type": false,
+      "id": 3,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 274,
+          "injection_rate": 40.0,
+          "links": [
+            [
+              0,
+              4,
+              0,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            0
+          ],
+          "start_cycle": 267
+        }
+      ],
+      "src": [
+        0,
+        4,
+        0
+      ],
+      "start_cycle": 267,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 482,
+      "fabric_event_type": false,
+      "id": 6,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 482,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              1,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              1,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            1
+          ],
+          "start_cycle": 462
+        }
+      ],
+      "src": [
+        0,
+        2,
+        1
+      ],
+      "start_cycle": 462,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 357,
+      "fabric_event_type": false,
+      "id": 8,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 357,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              0,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              0,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            0,
+            2
+          ],
+          "start_cycle": 341
+        }
+      ],
+      "src": [
+        0,
+        0,
+        2
+      ],
+      "start_cycle": 341,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 352,
+      "fabric_event_type": false,
+      "id": 9,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 352,
+          "injection_rate": 999.9000244140625,
+          "links": [
+            [
+              0,
+              1,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              1,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            1,
+            2
+          ],
+          "start_cycle": 337
+        }
+      ],
+      "src": [
+        0,
+        1,
+        2
+      ],
+      "start_cycle": 337,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 446,
+      "fabric_event_type": false,
+      "id": 11,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 446,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              4,
+              2,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              4,
+              2,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            4,
+            2
+          ],
+          "start_cycle": 436
+        }
+      ],
+      "src": [
+        0,
+        4,
+        2
+      ],
+      "start_cycle": 436,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    },
+    {
+      "dst": [
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "end_cycle": 466,
+      "fabric_event_type": false,
+      "id": 14,
+      "noc_event_type": "WRITE_",
+      "route": [
+        {
+          "device_id": 0,
+          "dst": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "end_cycle": 466,
+          "injection_rate": 60.900001525878906,
+          "links": [
+            [
+              0,
+              2,
+              3,
+              "NOC0_IN"
+            ],
+            [
+              0,
+              2,
+              3,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              4,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              5,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              6,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              7,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              8,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              9,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              10,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              11,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              12,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              13,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              14,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              15,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              16,
+              "NOC0_EAST"
+            ],
+            [
+              0,
+              2,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              3,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              4,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              5,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              6,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              7,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              8,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              9,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              10,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              11,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              0,
+              0,
+              "NOC0_SOUTH"
+            ],
+            [
+              0,
+              1,
+              0,
+              "NOC0_OUT"
+            ]
+          ],
+          "noc_type": "NOC0",
+          "src": [
+            0,
+            2,
+            3
+          ],
+          "start_cycle": 446
+        }
+      ],
+      "src": [
+        0,
+        2,
+        3
+      ],
+      "start_cycle": 446,
+      "total_bytes": 256,
+      "zones": "BRISC-KERNEL[0]"
+    }
+  ],
+  "timestep_data": [
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 32,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 0
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 64,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 32
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 96,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 64
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 128,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 96
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 160,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 128
+    },
+    {
+      "active_transfers": [
+        0,
+        1
+      ],
+      "avg_link_demand": 0.040245981552719835,
+      "avg_link_util": 0.040245981552719835,
+      "end_cycle": 192,
+      "link_demand": [
+        [
+          0,
+          0,
+          0,
+          "NOC0_IN",
+          20.0
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_IN",
+          32.5
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          52.5
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          20.0
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.08049196310543967,
+          "avg_link_util": 0.08049196310543967,
+          "max_link_demand": 32.84072167305477
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 160
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 224,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 192
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 256,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 224
+    },
+    {
+      "active_transfers": [
+        3
+      ],
+      "avg_link_demand": 0.47540565709150306,
+      "avg_link_util": 0.47540565709150306,
+      "end_cycle": 288,
+      "link_demand": [
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          26.25
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_IN",
+          26.25
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          26.25
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.9508113141830061,
+          "avg_link_util": 0.9508113141830061,
+          "max_link_demand": 43.103447195884385
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 256
+    },
+    {
+      "active_transfers": [
+        2,
+        13
+      ],
+      "avg_link_demand": 0.8577424818423415,
+      "avg_link_util": 0.8577424818423415,
+      "end_cycle": 320,
+      "link_demand": [
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          38.75
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_IN",
+          38.75
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          2,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          3,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          4,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          5,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          6,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          7,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          8,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          9,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          10,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ],
+        [
+          0,
+          11,
+          0,
+          "NOC0_SOUTH",
+          38.75
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 1.715484963684683,
+          "avg_link_util": 1.715484963684683,
+          "max_link_demand": 63.62889824154362
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 288
+    },
+    {
+      "active_transfers": [
+        5,
+        8,
+        9,
+        12,
+        13
+      ],
+      "avg_link_demand": 4.174325766725405,
+      "avg_link_util": 3.3164827559038734,
+      "end_cycle": 352,
+      "link_demand": [
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          20.934375762939453
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_IN",
+          28.546875
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          140.8312530517578
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          1.9031250476837158
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_IN",
+          28.546875
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_EAST",
+          20.934375762939453
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          5,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          6,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          7,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          8,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          9,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          10,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          11,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          12,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          13,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          14,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          15,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          16,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_EAST",
+          1.9031250476837158
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_EAST",
+          30.450000762939453
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          5,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          6,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          7,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          8,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          9,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          10,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          11,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          12,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          13,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          14,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          15,
+          "NOC0_EAST",
+          91.3499984741211
+        ],
+        [
+          0,
+          1,
+          16,
+          "NOC0_EAST",
+          91.3499984741211
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 8.34865153345081,
+          "avg_link_util": 6.632965511807747,
+          "max_link_demand": 149.99999373612945
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 320
+    },
+    {
+      "active_transfers": [
+        4,
+        5,
+        8
+      ],
+      "avg_link_demand": 5.614276943173951,
+      "avg_link_util": 4.0211396160243496,
+      "end_cycle": 384,
+      "link_demand": [
+        [
+          0,
+          0,
+          1,
+          "NOC0_IN",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          0,
+          "NOC0_OUT",
+          171.28125
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_IN",
+          60.900001525878906
+        ],
+        [
+          0,
+          0,
+          0,
+          "NOC0_SOUTH",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          1,
+          "NOC0_EAST",
+          49.48125076293945
+        ],
+        [
+          0,
+          0,
+          2,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          3,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          4,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          5,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          6,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          7,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          8,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          9,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          10,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          11,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          12,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          13,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          14,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          15,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          0,
+          16,
+          "NOC0_EAST",
+          110.38125610351563
+        ],
+        [
+          0,
+          1,
+          1,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          2,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          3,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          4,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          5,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          6,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          7,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          8,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          9,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          10,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          11,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          12,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          13,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          14,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          15,
+          "NOC0_EAST",
+          60.900001525878906
+        ],
+        [
+          0,
+          1,
+          16,
+          "NOC0_EAST",
+          60.900001525878906
+        ]
+      ],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 11.228553886347902,
+          "avg_link_util": 8.042279232048699,
+          "max_link_demand": 181.25000548088676
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 352
+    },
+    {
+      "active_transfers": [],
+      "avg_link_demand": 0.0,
+      "avg_link_util": 0.0,
+      "end_cycle": 416,
+      "link_demand": [],
+      "mcast_write_link_util": 0.0,
+      "noc": {
+        "NOC0": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        },
+        "NOC1": {
+          "avg_link_demand": 0.0,
+          "avg_link_util": 0.0,
+          "max_link_demand": 0.0
+        }
+      },
+      "start_cycle": 384
+    }
+  ],
+  "zones": [
+    {
+      "core": [
+        0,
+        0,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 358.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 319.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 50.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 436.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 49.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 419.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 355.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 424.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 408.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 51.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 60.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 348.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 50.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 413.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 57.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        0
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 347.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        0
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 49.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 59.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 418.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        1
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 50.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 53.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 52.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 51.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        3
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 413.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 50.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        2,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 49.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        3
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 49.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 367.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        4,
+        1
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 420.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 403.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        0,
+        2
+      ],
+      "proc": "NCRISC",
+      "zones": [
+        {
+          "end": 52.0,
+          "id": "NCRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    },
+    {
+      "core": [
+        0,
+        1,
+        2
+      ],
+      "proc": "BRISC",
+      "zones": [
+        {
+          "end": 366.0,
+          "id": "BRISC-KERNEL[0]",
+          "start": 0.0,
+          "zones": []
+        }
+      ]
+    }
+  ]
+}
