@@ -1,0 +1,2559 @@
+{
+  "model": "BOS-ResNet50-b1",
+  "architecture": "Eagle-N-5x4-workers",
+  "horizon": 20,
+  "status": "predicted_not_deployable_until_candidate_validation",
+  "metric": "equal_weight_trisc_kernel_engine_cycles",
+  "cost_model": "stock_logical_core_permutation_unvalidated",
+  "solver": "gurobi_warm_started_bounded_lexicographic_milp",
+  "solver_proven_optimal": false,
+  "solver_objectives": {
+    "stage1_incumbent_max_period_cycles": 65503620.0,
+    "achieved_max_period_cycles": 65503620,
+    "certified_max_load_relative_gap": 0.0,
+    "stage2_incumbent_total_absolute_deviation": 235297708.0,
+    "stage3_extra_axis_segment_penalty": 0.0,
+    "used_domain_placements": 19.0,
+    "minimum_cyclic_phase_switches": 4,
+    "segment_stage_completed": false,
+    "placement_count_stage_completed": false,
+    "phase_switch_stage_completed": false,
+    "placement_and_switch_search_scope": "global",
+    "completed_through_stage": 1,
+    "all_stages_proven_optimal": false,
+    "stage_certificates": {
+      "minimize_max_load": {
+        "proven_optimal": true,
+        "feasible_incumbent": true,
+        "status": 2,
+        "message": "Optimal",
+        "incumbent_objective": 65503620.0,
+        "dual_bound": 65503620.0,
+        "relative_gap": 0.0,
+        "node_count": 21,
+        "warm_start_submitted": true,
+        "warm_start_status": "Gurobi MIP start assigned"
+      }
+    }
+  },
+  "phases": [
+    {
+      "phase": 0,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 1,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 2,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 3,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 4,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 5,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_cnone",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": []
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 6,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 7,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 8,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 9,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 10,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 11,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 12,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 13,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 14,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 15,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 16,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 17,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 18,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    },
+    {
+      "phase": 19,
+      "domains": {
+        "layer1.module1.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module2.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer1.module3.conv2": {
+          "placement_id": "exclude_rnone_c4",
+          "excluded_rows": [],
+          "excluded_columns": [
+            4
+          ]
+        },
+        "layer2.module1.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module2.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module3.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module4.conv2": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer2.module1.downsample": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module2.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module3.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module4.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module5.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer3.module6.conv2_to_conv3": {
+          "placement_id": "stock",
+          "excluded_rows": [],
+          "excluded_columns": []
+        },
+        "layer4.module1.conv2_to_conv3": {
+          "placement_id": "exclude_rnone_c0",
+          "excluded_rows": [],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module2.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        },
+        "layer4.module3.conv2_to_conv3": {
+          "placement_id": "exclude_r0-1_c0",
+          "excluded_rows": [
+            0,
+            1
+          ],
+          "excluded_columns": [
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

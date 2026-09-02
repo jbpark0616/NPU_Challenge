@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+<style>
+  text { font-family: Arial, Helvetica, sans-serif; fill: #17212B; }
+  .tick { font-size: 18px; fill: #65717C; }
+  .axis-label { font-size: 22px; font-weight: 700; }
+  .bar-label { font-size: 24px; font-weight: 700; }
+  .value { font-size: 30px; font-weight: 700; }
+  .delta { font-size: 26px; font-weight: 700; fill: #1477A8; }
+  .delta-sub { font-size: 18px; fill: #56636E; }
+</style>
+
+<line x1="190" y1="555" x2="1050" y2="555" stroke="#17212B" stroke-width="2"/>
+<line x1="190" y1="105" x2="190" y2="555" stroke="#17212B" stroke-width="2"/>
+
+<line x1="190" y1="555" x2="1050" y2="555" stroke="#D6DCE1" stroke-width="1"/>
+<line x1="190" y1="442.5" x2="1050" y2="442.5" stroke="#D6DCE1" stroke-width="1"/>
+<line x1="190" y1="330" x2="1050" y2="330" stroke="#D6DCE1" stroke-width="1"/>
+<line x1="190" y1="217.5" x2="1050" y2="217.5" stroke="#D6DCE1" stroke-width="1"/>
+<line x1="190" y1="105" x2="1050" y2="105" stroke="#D6DCE1" stroke-width="1"/>
+
+<text x="170" y="561" class="tick" text-anchor="end">0</text>
+<text x="170" y="448.5" class="tick" text-anchor="end">0.55</text>
+<text x="170" y="336" class="tick" text-anchor="end">1.10</text>
+<text x="170" y="223.5" class="tick" text-anchor="end">1.65</text>
+<text x="170" y="111" class="tick" text-anchor="end">2.20</text>
+<text x="58" y="330" class="axis-label" text-anchor="middle" transform="rotate(-90 58 330)">Aggregate device latency (ms)</text>
+
+<rect x="350" y="134.3" width="230" height="420.7" rx="7" fill="#D55E00"/>
+<rect x="695" y="135.8" width="230" height="419.2" rx="7" fill="#1477A8"/>
+<text x="465" y="116.3" class="value" text-anchor="middle">2.057 ms</text>
+<text x="810" y="117.8" class="value" text-anchor="middle">2.049 ms</text>
+<text x="465" y="605" class="bar-label" text-anchor="middle">Stock</text>
+<text x="810" y="605" class="bar-label" text-anchor="middle">Validated remapping</text>
+
+<line x1="465" y1="58" x2="810" y2="58" stroke="#1477A8" stroke-width="2"/>
+<line x1="465" y1="58" x2="465" y2="78" stroke="#1477A8" stroke-width="2"/>
+<line x1="810" y1="58" x2="810" y2="78" stroke="#1477A8" stroke-width="2"/>
+<text x="637.5" y="43" class="delta" text-anchor="middle">Δ -0.35%</text>
+<text x="637.5" y="82" class="delta-sub" text-anchor="middle">-7.2 µs · no measurable overhead</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="760" viewBox="0 0 1560 760">
+  <rect width="100%" height="100%" fill="white"/>
+  <style>
+    text { font-family: "Times New Roman", Times, serif; fill: #111111; }
+    .axis-label { font-size: 34px; font-weight: 700; }
+    .tick { font-size: 27px; }
+    .legend { font-size: 29px; }
+  </style>
+  <line x1="165" y1="610" x2="1505" y2="610" stroke="#D9D9D9" stroke-width="2"/>
+<text class="tick" x="143" y="619" text-anchor="end">0</text>
+<line x1="165" y1="490" x2="1505" y2="490" stroke="#D9D9D9" stroke-width="2"/>
+<text class="tick" x="143" y="499" text-anchor="end">200</text>
+<line x1="165" y1="370" x2="1505" y2="370" stroke="#D9D9D9" stroke-width="2"/>
+<text class="tick" x="143" y="379" text-anchor="end">400</text>
+<line x1="165" y1="250" x2="1505" y2="250" stroke="#D9D9D9" stroke-width="2"/>
+<text class="tick" x="143" y="259" text-anchor="end">600</text>
+<line x1="165" y1="130" x2="1505" y2="130" stroke="#D9D9D9" stroke-width="2"/>
+<text class="tick" x="143" y="139" text-anchor="end">800</text>
+<line x1="165" y1="100" x2="165" y2="610" stroke="#111111" stroke-width="3"/>
+<line x1="165" y1="610" x2="1505" y2="610" stroke="#111111" stroke-width="3"/>
+<rect x="193.14" y="289.7875" width="77.72" height="320.2125" fill="#4472C4" stroke="#111111" stroke-width="1.4"/>
+<line x1="232" y1="287.8" x2="232" y2="290.2" stroke="#111111" stroke-width="2"/>
+<line x1="223" y1="287.8" x2="241" y2="287.8" stroke="#111111" stroke-width="2"/>
+<line x1="223" y1="290.2" x2="241" y2="290.2" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="232" y="655" text-anchor="middle">Full</text>
+<rect x="327.14" y="302.8" width="77.72" height="307.2" fill="#4472C4" stroke="#111111" stroke-width="1.4"/>
+<line x1="366" y1="292.6" x2="366" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<line x1="357" y1="292.6" x2="375" y2="292.6" stroke="#111111" stroke-width="2"/>
+<line x1="357" y1="304.59999999999997" x2="375" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="366" y="655" text-anchor="middle">Row 0</text>
+<rect x="461.14" y="200.76250000000005" width="77.72" height="409.23749999999995" fill="#ED7D31" stroke="#111111" stroke-width="1.4"/>
+<line x1="500" y1="179.2" x2="500" y2="205" stroke="#111111" stroke-width="2"/>
+<line x1="491" y1="179.2" x2="509" y2="179.2" stroke="#111111" stroke-width="2"/>
+<line x1="491" y1="205" x2="509" y2="205" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="500" y="655" text-anchor="middle">Row 1</text>
+<rect x="595.14" y="255.8125" width="77.72" height="354.1875" fill="#ED7D31" stroke="#111111" stroke-width="1.4"/>
+<line x1="634" y1="253" x2="634" y2="256.59999999999997" stroke="#111111" stroke-width="2"/>
+<line x1="625" y1="253" x2="643" y2="253" stroke="#111111" stroke-width="2"/>
+<line x1="625" y1="256.59999999999997" x2="643" y2="256.59999999999997" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="634" y="655" text-anchor="middle">Row 2</text>
+<rect x="729.14" y="353.6125" width="77.72" height="256.3875" fill="#4472C4" stroke="#111111" stroke-width="1.4"/>
+<line x1="768" y1="337.6" x2="768" y2="356.20000000000005" stroke="#111111" stroke-width="2"/>
+<line x1="759" y1="337.6" x2="777" y2="337.6" stroke="#111111" stroke-width="2"/>
+<line x1="759" y1="356.20000000000005" x2="777" y2="356.20000000000005" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="768" y="655" text-anchor="middle">Row 3</text>
+<rect x="863.14" y="301.97499999999997" width="77.72" height="308.02500000000003" fill="#4472C4" stroke="#111111" stroke-width="1.4"/>
+<line x1="902" y1="290.2" x2="902" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<line x1="893" y1="290.2" x2="911" y2="290.2" stroke="#111111" stroke-width="2"/>
+<line x1="893" y1="304.59999999999997" x2="911" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="902" y="655" text-anchor="middle">Col 0</text>
+<rect x="997.14" y="165.4375" width="77.72" height="444.5625" fill="#ED7D31" stroke="#111111" stroke-width="1.4"/>
+<line x1="1036" y1="154.60000000000002" x2="1036" y2="169.60000000000002" stroke="#111111" stroke-width="2"/>
+<line x1="1027" y1="154.60000000000002" x2="1045" y2="154.60000000000002" stroke="#111111" stroke-width="2"/>
+<line x1="1027" y1="169.60000000000002" x2="1045" y2="169.60000000000002" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="1036" y="655" text-anchor="middle">Col 1</text>
+<rect x="1131.14" y="164.6125" width="77.72" height="445.3875" fill="#ED7D31" stroke="#111111" stroke-width="1.4"/>
+<line x1="1170" y1="149.8" x2="1170" y2="170.20000000000005" stroke="#111111" stroke-width="2"/>
+<line x1="1161" y1="149.8" x2="1179" y2="149.8" stroke="#111111" stroke-width="2"/>
+<line x1="1161" y1="170.20000000000005" x2="1179" y2="170.20000000000005" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="1170" y="655" text-anchor="middle">Col 2</text>
+<rect x="1265.14" y="171.51250000000005" width="77.72" height="438.48749999999995" fill="#ED7D31" stroke="#111111" stroke-width="1.4"/>
+<line x1="1304" y1="142.59999999999997" x2="1304" y2="177.39999999999998" stroke="#111111" stroke-width="2"/>
+<line x1="1295" y1="142.59999999999997" x2="1313" y2="142.59999999999997" stroke="#111111" stroke-width="2"/>
+<line x1="1295" y1="177.39999999999998" x2="1313" y2="177.39999999999998" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="1304" y="655" text-anchor="middle">Col 3</text>
+<rect x="1399.14" y="302.04999999999995" width="77.72" height="307.95000000000005" fill="#4472C4" stroke="#111111" stroke-width="1.4"/>
+<line x1="1438" y1="292" x2="1438" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<line x1="1429" y1="292" x2="1447" y2="292" stroke="#111111" stroke-width="2"/>
+<line x1="1429" y1="304.59999999999997" x2="1447" y2="304.59999999999997" stroke="#111111" stroke-width="2"/>
+<text class="tick" x="1438" y="655" text-anchor="middle">Col 4</text>
+<text class="axis-label" x="835" y="732" text-anchor="middle">Excluded row or column</text>
+<text class="axis-label" x="42" y="355" text-anchor="middle" transform="rotate(-90 42 355)">Sender latency (cycles)</text>
+<rect x="185" y="35" width="27" height="27" fill="#4472C4" stroke="#111111" stroke-width="1"/>
+<text class="legend" x="227" y="58">1 rectangle</text>
+<rect x="430" y="35" width="27" height="27" fill="#ED7D31" stroke="#111111" stroke-width="1"/>
+<text class="legend" x="472" y="58">2 rectangles</text>
+</svg>
