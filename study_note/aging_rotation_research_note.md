@@ -302,6 +302,144 @@ private:
 
 ---
 
+## 13. Rotation overhead 분석 (2026-08-01 세션)
+
+**핵심 결론**: **Shape 유지 + anchor 만 shift** 제약 + **inference 경계 rotation** + **async CQ 오버랩** 조합이면 rotation 오버헤드는 실효 0 에 수렴. Aging mitigation 이 latency budget 을 잠식하지 않는 강력한 property.
+
+### 13.1 tt-metal 컴파일 계층별 재사용성
+
+| 계층 | 재컴파일 조건 | Shape 유지 + anchor shift 시 |
+|---|---|---|
+| Kernel binary (.elf) | source + compile_time_args + defines | ✅ 재사용 (compile_time_args 는 shape 만 인코딩, 좌표는 런타임 `my_x[]`/`my_y[]`) |
+| Circular buffer config | page_size, num_pages | ✅ 재사용 (shard shape 같으니 CB 크기 동일) |
+| Runtime args | 매번 갱신 (`SetRuntimeArgs`) | ⚡ μs |
+| Program 객체 | CoreRangeSet 다름 | ❌ cache miss — 재구성 (1~10 ms) |
+
+**Kernel JIT 컴파일 (수백 ms) 은 완전히 회피됨.** 남는 건 host-side program 재구성 (~ms) 뿐.
+
+### 13.2 Aging timescale vs overhead 스케일
+
+| Rotation 주기 | Program 재구성 오버헤드 비율 |
+|---|---|
+| 매 프레임 (33 ms) | 3~30% — 문제 될 수 있음 |
+| 매 100 프레임 (3.3 s) | 0.03~0.3% — 무시 가능 |
+| 매 초 | 0.1~1% — 무시 가능 |
+| 매 분 이상 | 노이즈 수준 |
+
+Aging (NBTI/HCI) timescale = 시간~년. 초 단위 rotation 이면 충분 → **overhead 완전히 무시 가능**.
+
+### 13.3 구현 전략 3가지 tradeoff
+
+| 전략 | 초기화 비용 | Rotation 시 비용 | 메모리 | 우리에게 |
+|---|---|---|---|---|
+| **A. Pre-compile N programs** — Tier 1 은 6개 미리 빌드, enqueue 스위치 | 6× program build | μs (스위치만) | 6× (KB~MB, 부담 X) | ⭐ 실험 단계 최적 |
+| **B. Rebuild on rotation** | 1× | 1~10 ms | 1× | 프로덕션 후보 |
+| **C. Union grid + runtime mask** — 20 코어 다 컴파일, active_mask 로 no-op | 1× | μs | 1× (큰) | 전력 낭비 |
+
+**A 전략 추천 이유**: (1) rotation 오버헤드 = 측정 노이즈, (2) rollback 쉬움, (3) tt-metal program cache 안정 상태 (히트율 100%).
+
+### 13.4 Inference 경계 rotation → μs 세계에 머무름
+
+**Inference 사이**에서 rotate 하면 L1 state 옮길 것 없음 → 순수 program switch (μs).
+**Layer 사이** (같은 inference 안) 에서 rotate 하면 activation 마이그레이션 reshard 필요 → ms 스케일.
+
+Aging 관점에서는 **inference 경계 rotation 만으로 충분** (aging 이 mid-inference 스케일로 변하지 않음). Mid-inference 로 내려갈 이유 자체가 없음 → 우리 시나리오는 항상 μs 세계.
+
+### 13.5 Overlap 층위 — 실효 오버헤드 0
+
+tt-metal command queue 가 async → host 는 device 실행과 병렬로 다음 program 준비:
+
+```
+Host   [prep N] [enqueue N] [prep N+1] [enqueue N+1] ...
+                    ↓             ↓
+Device      [run inference N ─────]   [run inference N+1 ─...]
+```
+
+Program 스위치 μs 는 device 실행 시간 (수 ms) 안에 완전 흡수. **별도 코드 필요 없이 자동으로 얻음.**
+
+추가 활용 가능한 층위:
+- **Trace record/replay** — `run_yolov8s.py` 의 `input_trace_addr` 활용. Rotation state N 개를 각각 trace 로 저장 → replay 시 program 재구성 0
+- **Multi-CQ** — CQ0 inference, CQ1 warmup. Eagle-N 지원 여부 확인 필요
+- **Idle time** — 30 FPS budget 33ms 중 inference 자체는 ~10~15ms → frame 당 15~20 ms 유휴에서 자연스러운 오버랩
+
+### 13.6 Sharding-specific mechanism, policy 공용
+
+Sharding 종류별로 anchor shift semantic 이 다름:
+
+| Sharding | Grid | Anchor 의미 | Tier 1 후보 | Halo |
+|---|---|---|---|---|
+| Height | 1D (16×1) | 시작 row | ~6개 | 상하 |
+| Block | 2D (4×5) | 2D (dx, dy) | ~20개 | 4방향 |
+| Width | 1D (C 축) | 시작 C offset | 소수 | 없음 |
+
+Patch 구조:
+```
+Policy layer         ← 공용 (aging state → next anchor 결정)
+    ↓
+Mechanism layer      ← sharding 별 분기
+  ├─ height_anchor_shift()
+  ├─ block_anchor_shift()   ← Tier 2 reflection 도 여기
+  └─ width_anchor_shift()
+```
+
+`conv2d_utils.cpp` 의 `determine_parallel_config_{HEIGHT,BLOCK,WIDTH}_SHARDED` 분기가 이미 있어서 patch 지점 자연스러움. **Block shard 는 후보 공간이 크고 halo 4방향이라 Tier 3 (aging-aware greedy) 가 진짜 힘 발휘하는 영역**.
+
+### 13.7 논문 셀링 포인트
+
+Aging mitigation 논문 관례 = "throughput X% 희생 ↔ aging Y% 완화" tradeoff.
+우리 프레이밍 = **"오버헤드 없이 완화"** — async CQ + pre-compile 조합으로 latency budget 무영향.
+- 정량화 지점: rotation event 당 실측 μs 리포트 → 예상 "measurement noise 이내"
+- 예상 질문 대응: "실행 오버헤드 얼마?" → 여기 §13 참조
+
+### 13.8 재활용 가능한 BOS 인프라 (2026-08-01 발견)
+
+`operations/bos/bos_sharded/` 에 우리 rotation 인프라의 절반이 이미 구현되어 있음. 세 재활용 포인트:
+
+1. **`bos_sharded_common.cpp` (95 lines) 의 `(local_cores, remote_cores)` 이중 벡터 인터페이스** — 임의 코어 두 집합 사이 데이터 이동을 per-core segment `{write_size, read_offset, bank_id, write_offset}` 로 미리 계산. Rotation step k → k+1 의 remap 문제 그대로.
+
+2. **`bos_nd_reshard_program_factory.cpp:76-110` 의 `override_runtime_arguments_callback` 패턴** — recompile 없이 각 core 의 offset/stride 만 remap. 우리 anchor shift 를 program cache 안 깨고 얹는 정확한 기법.
+
+3. **`bos_reshard_op.cpp:134-143` 의 legacy vs nd dispatch 스캐폴딩** — `if (rotation_enabled(input_tensor)) { conv2d_rotation_aware(...) } else { multi_core_conv2d_sharded(...) }` 로 우리 트랙 붙일 템플릿. Feature flag 로 A/B 스위치.
+
+**단, 그대로 못 쓰는 이유**: BOS 판은 자유도 100% (임의 코어 조합), 우리 rotation 은 자유도 = 6 (Tier 1) 또는 4 (Tier 2) 로 제약됨. **참조 구현으로 활용, 실제 patch 는 auto-picker 의 결정에 anchor offset 만 후처리로 얹는 방향**. 이게 SSR-style 완전 자유 도 upstream-style 완전 자동 도 아닌 **"제약된 자유"** 라는 세 번째 축.
+
+**추후 확장 (SSR 커버리지)**: Rotation 을 SSR (Deformable-DETR 계열, 진짜 차량용 E2E driving) 에도 이식하려면 BOS 자체 커널 (`bos_deformable_attention`, `bos_grid_sample` 등) 에도 rotation-aware 경로 확장 필요. 현재 스코프는 conv2d 만이라 ResNet50/YOLOv8s 만 자동으로 혜택. SSR 확장은 후속 트랙.
+
+---
+
+## 14. BLOCK_SHARDED core replacement 구현 결과 (2026-08-14)
+
+### 14.1 완료된 production slice
+
+- API: `Conv2dConfig.enable_core_remapping`, `excluded_worker_rows`, `excluded_worker_columns`
+- 대상: origin-anchored `ROW_MAJOR BLOCK_SHARDED` 3×3 Conv
+- placement: dense logical grid를 유지하면서 interior worker row 또는 column 정확히 하나 제외
+- column gap: activation multicast를 물리 gap 양쪽의 remote-only NoC segment로 분할
+- row gap: weight multicast를 물리 gap 양쪽의 remote-only NoC segment로 분할
+- Halo/config tensor, blocking, shard cardinality는 physical bounding box가 아니라 logical shard topology를 사용
+- 다음 op가 placement를 유지할 수 없으면 planner가 stock grid로 reshard한 뒤 remapping lifetime을 종료
+
+### 14.2 검증 결과
+
+- host: `CorePlacement` 19개 + `ConvCoreReplacementSafety` 6개 = 25개 통과
+- column: isolated Conv2와 BOS ResNet50 layer4 Conv2 full-model 경로 통과
+- row: 4×3 logical grid에서 explicit gap과 `excluded_worker_rows=[2]` 설정 경로 통과
+- row lifetime exit: 12-core `{y=0,1,3}` Conv2 출력 → 8-core stock Conv3 출력 및 PyTorch PCC 통과
+- segmented→stock reshard 중 padding-only worker가 page map에 없을 수 있으므로 zero-range runtime args를 허용하되, active worker map 누락은 fatal로 유지
+
+Eagle-N compute grid가 5×4이고 BOS layer4가 이미 4개 worker row를 사용하므로, 동일 core 수를 유지한 layer4 full-model row skip에는 여분 row가 없다. 따라서 row 경로는 4×3 isolated production chain으로 검증했고, 4×4 column 경로는 full model로 검증했다.
+
+### 14.3 현재 의도적 제한
+
+- row와 column 동시 제외
+- 한 축에서 둘 이상의 gap 또는 boundary worker 제외
+- translated origin과 segmented gap의 결합
+- `COL_MAJOR BLOCK_SHARDED`
+- `HEIGHT_SHARDED`, `WIDTH_SHARDED`
+- segmented placement를 1×1 Conv에서 직접 실행하는 경로; 현재는 stock으로 안전하게 exit
+
+---
+
 ## 11. Raw appendix — session terminal logs
 
 (원본 진단 로그 — 참고용, 정리된 finding 은 §9-10 참조)

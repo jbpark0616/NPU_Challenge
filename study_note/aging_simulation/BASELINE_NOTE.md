@@ -11,6 +11,13 @@
 
 프레임워크의 결정론적 스케줄이 20 compute core 활동량을 **3 축 모두 다른 방식으로** 극단 편중 (NIU 13×, SRAM 74×, Compute 30×). Chen et al. NBTI+HCI 공식으로 aging 편중 계산. 절대 aging 값은 6nm 공정 상수 미확정으로 defensible 하지 않아 **상대 비율만 리포트**. 세 축 모두 rotation 없이는 특정 코어에 permanent stress 누적.
 
+> **Compute 지표 정정 필요 (2026-08-19):** 기존 `compute_axis.py`는
+> 중첩된 `TRISC-FW`와 `TRISC-KERNEL` zone을 모두 합산해 engine time을
+> 이중 계상했다. 스케줄러 calibration과 향후 baseline은
+> `TRISC-KERNEL`만 사용한다. 아래의 기존 Compute 30.35× 및 그로부터
+> 파생된 aging ratio는 full-model profile로 재계산하기 전까지 historical
+> result로만 취급한다. NIU/SRAM 수치에는 이 정정이 적용되지 않는다.
+
 ---
 
 ## 1. 폴더 구조
@@ -32,9 +39,7 @@ study_note/aging_simulation/
 ├── NoC_analysis/                 ← 실측 NoC 데이터 파이프라인 (bos_model_copy 에서 복사)
 │   ├── outputs/per_core.csv      ← 20 core 실측 데이터 (aging_sim.py 입력)
 │   └── ...
-├── resnet50_batch1_report/       ← Run A (compute pass): ops_perf, tracy
-│   ├── ops_perf_results_*.csv
-│   ├── profile_log_device.csv
+├── resnet50_batch1_report/       ← Run A Tracy/NPE 원본 archive
 │   └── tracy_profile_log_host.tracy
 ├── stage_split_{0-4}/            ← Run B (NoC pass): raw noc traces
 └── plots/                        ← 생성된 figure
@@ -45,6 +50,14 @@ study_note/aging_simulation/
     ├── baseline_vth_dist_year{5,10}.png
     ├── per_core_heatmap_annotated.png
     └── baseline_summary.txt
+```
+
+Run A의 policy 입력 CSV 두 개는 다음 한 폴더에 모아 둔다:
+
+```text
+data_movement/conv_core_replacement/policy/data/full_model_baseline/input/
+├── ops_perf_results_2026_07_26_14_16_54.csv
+└── profile_log_device.csv
 ```
 
 ---
@@ -703,7 +716,7 @@ python rotation_tier3_visualize.py      # 4-way full progression (미팅용)
 입력 데이터 위치:
 - **NIU, SRAM**: `bos_model_copy/resnet50_jbpark/analysis/outputs/per_core.csv`
 - **Per-op matrix** (rotation sim 입력): `NoC_analysis/outputs/matrix.csv`
-- **Compute**: `resnet50_batch1_report/profile_log_device.csv` (Run A 결과)
+- **Compute**: `data_movement/conv_core_replacement/policy/data/full_model_baseline/input/profile_log_device.csv` (Run A 결과)
 - **Per-stage compute**: `stage_split_{0-4}/stage_{0-4}/logs/profile_log_device.csv`
 
 수정 후 재실행 → `plots/` 하위 그림들 갱신.

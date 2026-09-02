@@ -16,8 +16,19 @@
 - [x] Roofline intensity 정공화 (bytes_total → bytes_dram) → [[roofline debt]] 문제 1 부분 해소
 - [ ] 병목 지점 파악 → 연구 주제 확정
 - [ ] 개선 아이디어 실험
+- [ ] **C++ 학습 (aging rotation T1 patch 사전 조건)** → `study_note/cpp_study_plan.md` (진행 중)
 
 ## 지금 집중하고 있는 것
+- **2026-08-18 HEIGHT Conv remapping 마감**
+  - host safety suite 36/36 통과
+  - HEIGHT column gap, row gap, row+column four rectangles, boundary translation의 isolated/lifetime/full-model
+    guarded 검증 완료
+  - boundary full-model 최종 PCC `0.999603608935384`, driver close/DMA unpin 정상 완료
+  - remapped bounding box에서 stock topology를 복원하던 inference를 제거하는
+    `Conv2dConfig.core_remapping_input_stock_grid` provenance 경로 추가
+  - producer의 stock output grid를 consumer Conv3 config에 전달하고, planner `ExitToStock`이 이 provenance를
+    사용하도록 host regression 추가
+  - WIDTH_SHARDED exclusions는 비용 모델과 segmented loopback 지원 전까지 host fail-fast 유지
 - **연구 방향 (2026-07-28 재정비)**: **Aging-aware core rotation** — SDC detection 에서 aging mitigation 으로 pivot. 6주차 미팅 발표 자료 완성 (2026-07-29 발표 예정). Rotation Tier 1/2/3 sim + 시각화 + PPT 대본 완료.
 - **연구 방향 (이전 트랙, 유지)**: SDC detection on Eagle-N — Safety Island 가 커버 안 하는 correctness FT gap. `study_note/sdc_research_notes.md` + memory [[project-detection-only-scope]], [[project-eagle-n-safety-context]]
 
@@ -222,6 +233,122 @@
 ---
 
 ## 세션 로그
+- **2026-08-18 체크포인트 — HEIGHT_SHARDED isolated 실기 검증 완료, full-model lifetime 검증 추가**
+  - 최신 rectangle-compaction/unlinked-multicast build에서 targeted host safety test 3/3 재통과
+  - guarded `layer1_height_segmented_column_conv2_isolated` 실기 통과: stock/golden PCC `0.9999153194491188`, segmented/golden PCC `0.9999153194491188`, stock/segmented PCC `1.0`
+  - call 6.55s, 전체 12.38s에 완료했고 device driver close 및 DMA unpin까지 정상 종료
+  - production column-gap의 13 remote receivers를 planner의 두 physical bands로 유지한 7→2 rectangle compaction과 segment별 `linked=false` protocol을 실제 Blackhole에서 검증
+  - isolated와 full-model이 동일한 stock/segmented 14-core grid helper를 공유하도록 정리
+  - `layer1.module1.conv2`의 stock→segmented 출력과 다음 matmul-lowered `conv3`의 segmented→stock `ExitToStock`을 assert하는 guarded full-model 테스트 통과
+  - full-model call 45.71s, 전체 50.89s에 완료했고 최종 correctness validation, device driver close 및 DMA unpin까지 정상 종료
+  - 다음 HEIGHT slice로 physical row 2를 제외한 14-core ordered placement `{y0: x0..4, y1: x0..4, y3: x0..3}` 추가
+  - row-gap remote 13 cores는 `(0,0)-(4,1)`(sender 제외 9) + `(0,3)-(3,3)`(4)의 정확한 2 rectangles로 compact됨을 host test에 고정
+  - column/row isolated 테스트가 동일한 stock/segmented execution helper를 공유하도록 정리
+  - guarded row-gap isolated 실기 통과: stock/golden PCC `0.9999153194491188`, segmented/golden PCC `0.9999153194491188`, stock/segmented PCC `1.0`
+  - row-gap isolated call 6.62s, 전체 11.83s에 완료했고 device driver close 및 DMA unpin까지 정상 종료
+  - layer1 HEIGHT full-model 검증도 column/row 공용 helper로 정리하고 row-gap Conv2→Conv3 `ExitToStock`→최종 ResNet50 correctness test 통과
+  - row-gap full-model PCC `0.999603608935384`, call 45.47s, 전체 50.75s; device driver close 및 DMA unpin 정상 완료
+  - BOS 5x4에서 14 cores를 유지한 row+column 동시 exclusion은 가용 worker가 12개뿐이라 불가능; 동일 layer1 Conv2 shape를 12-core stock/four-rectangle isolated 비교로 검증하도록 별도 slice 추가
+  - 12-core physical X `{0,1,3,4}`, Y `{0,1,3}`의 4 rectangles, remote destination counts `3+4+2+2=11`, NOC0/NOC1 serialization, Propagate를 host test에 고정
+  - isolated helper를 core-count별 padded shard height 계산으로 일반화
+  - guarded 12-core four-rectangle isolated 실기 통과: stock/golden PCC `0.9999153194491188`, segmented/golden PCC `0.9999153194491188`, stock/segmented PCC `1.0`
+  - four-rectangle isolated call 6.58s, 전체 11.78s; device driver close 및 DMA unpin 정상 완료
+  - 다음 lifetime 단계로 config-driven four-rectangle Conv2 출력 유지 후 matmul-lowered Conv3에서 canonical stock output으로 `ExitToStock`하고 PyTorch golden과 비교하는 guarded chain 추가
+  - 첫 chain 실행에서 Conv2/Conv3 device completion과 clean driver shutdown까지 통과했으나, 테스트가 Conv3 stock output을 12 cores로 잘못 고정해 placement assertion 실패
+  - 실제 Conv3 stock optimizer는 `3136 NHW = 98 tiles`에 대해 canonical 11-core prefix `(5+5+1)`를 선택; host planner contract와 Python expected grid를 12→11 core transition으로 수정
+  - corrected four-rectangle Conv2→Conv3 chain PCC `0.9998905649290319`로 통과, call 7.00s/전체 12.38s; device driver close 및 DMA unpin 정상 완료
+  - HEIGHT 마지막 placement slice로 column 0 제외 boundary translation 추가: logical sender가 `(0,0)`에서 physical `(1,0)`으로 이동하고 14 workers는 `x1..4 × y0..2` + `x1..2 × y3`에 배치
+  - remote multicast를 `(1,0)-(4,2)`(sender 제외 11) + `(1,3)-(2,3)`(2)의 정확한 2 rectangles로 host 검증하고 NOC0/NOC1 serialization 및 Propagate를 고정
+  - guarded `layer1_height_boundary_translation_conv2_isolated` 실기 통과: stock/golden 및 segmented/golden PCC `0.9999153194491188`, stock/segmented PCC `1.0`
+  - boundary translation isolated call 6.71s, 전체 12.00s; device driver close 및 DMA unpin 정상 완료
+  - 동일 placement의 첫 full-model 실행은 Conv2 device completion 후 Conv3 matmul host validation에서 안전하게 실패: translated `x1..4`의 bounding width 4를 stock scan width로 오인해 14-core input을 잘못된 4x4 prefix로 reanchor했으며, program config 5x3과 불일치
+  - HEIGHT stock 복원을 bounding size가 아니라 physical row-scan boundary `end.x + 1`로 수정해 boundary exclusion에서도 원래 5-wide prefix를 복구; host regression assertion 추가
+  - 실패는 Conv3 device dispatch 전 TT_FATAL이었고 driver close/DMA unpin 정상 완료
+  - corrected boundary full-model PCC `0.999603608935384`로 통과, call 45.37s/전체 50.91s; device driver close 및 DMA unpin 정상 완료
+  - 이로써 HEIGHT_SHARDED의 column gap, row gap, four-rectangle, boundary sender translation, Propagate, ExitToStock, 최종 ResNet50 correctness 검증 완료
+  - 최종 host 회귀 전체 36/36 통과: placement 19, safety 9, buffer distribution 4, tensor spec 4; 의도적 fail-fast/death-test의 critical 로그도 모두 기대한 거부 경로로 확인
+  - 최종 회귀용 `run_bos_resnet50_height_regression_guarded.sh` 추가: 전체 host safety suite와 문법 검사를 선행하고 stock baseline 및 HEIGHT 8개 slice를 각각 독립 watchdog process로 실행; 어떤 nonzero exit에서도 즉시 중단
+- **2026-08-18 체크포인트 — HEIGHT_SHARDED 첫 watchdog 분석 및 host-only hardening**
+  - guarded `layer1_height_segmented_column_conv2_isolated` 실행이 stock input upload 로그 직후 120초 watchdog으로 종료됨; 보드는 물리 power-cycle 전까지 추가 workload 금지
+  - host audit에서 별도의 확정 버그 발견: BOS production stock topology는 device 전체 폭이 아닌 5-wide 14-core ROW_MAJOR prefix인데, 신규 discriminator가 device-wide canonical prefix와 비교해 정상 stock input을 remapped로 오인
+  - 단, 기존 로그는 첫 `synchronize_device` 직전에서 끝나 upload completion과 Conv 진입을 충분히 분리하지 못했으므로 이 오분류가 watchdog의 직접 원인인지는 다음 clean-device run 전까지 미확정
+  - HEIGHT stock/remapped 판정을 `CoreRangeSet` 자체 bounding topology 기준으로 수정; explicit exclusion은 기존 stock row-scan width를 유지하여 column 2 제외 후에도 정확히 14 workers를 선택
+  - ExitToStock은 input/output core 수가 같을 때 실제 stock output grid로 reanchor하도록 보강
+  - HEIGHT multicast 수신자를 정확한 maximal NoC rectangle로 compact하는 pure host helper 추출; non-loopback sender-containing geometry의 remote destination count와 NOC0/NOC1 runtime-arg serialization host test 추가
+  - production 5-wide 14-core stock/non-remapped, column-gap ordered workers, Propagate/ExitToStock, duplicate/out-of-range exclusions을 host safety test로 보강
+  - Python isolated test에 input synchronize/readback PCC, Conv submitted/complete 경계 로그를 추가해 다음 clean run의 hang 지점을 분리
+  - WIDTH_SHARDED는 kernel placement/core-id/sender lookup/loopback multicast가 bounding rectangle 가정을 유지하므로 exclusion을 host에서 계속 거부; planner-only enablement는 금지
+  - 물리 power-cycle 후 최신 소스를 Linux container에 rebuild; targeted host unit test 3/3 통과: HEIGHT exclusion/lifetime, exact multicast serialization, WIDTH fail-fast
+  - guarded stock `environment_baseline` 실기 통과: 50.14s, PCC `0.999603608935384`, device driver 정상 종료; 최신 변경의 stock non-regression 확인
+  - HEIGHT isolated 재실행: stock input sync/readback/Conv completion 통과, configured column-gap도 input sync/readback PCC 1.0 및 host submit까지 통과했으나 직후 device synchronize에서 watchdog
+  - 정지 범위는 segmented HEIGHT device program 내부 completion으로 한정; input upload/reshard, stock Conv, host planner/program submission은 원인에서 제외
+  - 초기 translation이 production column-gap의 sender 1 + remote 13 cores를 행별 7 horizontal segments로 잘라 planner/CorePlacement의 rectangle compaction 목적을 살리지 못함을 확인
+  - horizontal run의 X bounds가 같고 row가 인접하면 vertical로 합쳐 exact maximal rectangle을 만들도록 수정
+  - non-loopback multicast는 rectangle에 sender가 포함돼도 self-write하지 않으므로 sender를 geometry에 복원하고 destination count에서만 제외; production receiver cover를 7→2 rectangles `(0,0)-(1,3)`(7 remote) + `(3,0)-(4,2)`(6 remote)로 최종 압축
+  - offline audit에서 segmented activation은 독립 rectangle별 `linked=false`인 반면 1D segmented weight data만 `linked=true`임을 확인; 서로 다른 routes의 path reservation chain을 피하도록 1D weight/bias data segment를 unlinked multicast로 변경
+  - exact rectangle cover, sender-excluding destination count, data barrier 후 semaphore publication 계약은 유지
+  - 이후 power-cycle/rebuild 뒤 guarded isolated 재검증이 PCC까지 통과하여 해당 watchdog 상태는 해소됨
+- **2026-08-18 체크포인트 — HEIGHT_SHARDED core-remapping 첫 production slice 구현, 검증 pending**
+  - BOS batch-1 profile에서 실제 14-core `56x56, 64->64, 3x3` HEIGHT_SHARDED Conv 확인
+  - exclusion 이후에도 logical 1D shard 순서를 유지하는 worker 선택과 Propagate/ExitToStock lifetime 추가
+  - Halo logical-core→physical-worker 매핑을 bounding-box 산술 대신 ordered worker sequence 기준으로 변경
+  - 1D weight/bias/semaphore multicast에 rectangle segment runtime ABI와 kernel loop 추가
+  - physical sender row가 이동해도 HEIGHT_SHARDED weight slice는 항상 0을 사용하도록 origin 가정 제거
+  - host safety test와 guarded `layer1_height_segmented_column_conv2_isolated` 테스트 추가
+  - 현재 Windows checkout에는 build/Python 실행 환경이 없어 `git diff --check`만 통과; Linux build와 device 실행 전에는 지원 완료로 표시하지 않음
+- **2026-08-17 체크포인트 — four-rectangle Conv2 및 Conv2-to-Conv3 chain 실기 검증 완료**
+  - logical 4x3, physical X `{0,1,3,4}`, Y `{0,1,3}`로 중간 row/column을 동시에 비운 12-core 배치 사용
+  - X 2 segments × Y 2 segments = 4 Cartesian rectangles에서 activation/weight segmented multicast 동시 통과
+  - explicit segmented grid와 `excluded_worker_rows=[2]`, `excluded_worker_columns=[2]` config-driven 결과가 stock Conv2와 일치
+  - guarded `layer4_row_and_column_exclusions_conv2_isolated` 실기 통과, 데드락 없이 정상 종료
+  - `layer4_four_rectangle_conv2_to_conv3_exits_remapping` guarded 실기 통과
+  - four-rectangle Conv2 output 유지 후 stock contiguous 4x2 Conv3로 ExitToStock 및 PyTorch golden PCC 검증 완료
+  - layer4 Conv2의 실제 full-model 배치는 4x4=16 cores이므로 5x4 장치에서 row+column 동시 skip으로 같은
+    cardinality를 유지할 수 없음
+  - 기존 batch-1 profile에서 layer4 module2/module3 Conv2가 실제 4x2=8-core ROW_MAJOR BLOCK_SHARDED임을 확인
+  - module2 Conv2에 X `{0,1,3,4}`, Y `{0,2}`를 적용하는 config-driven four-rectangle full-model guarded
+    테스트 `layer4_four_rectangle_conv2_full_model` 통과
+  - Conv2 output은 four rectangles를 유지하고 Conv3 output은 stock contiguous 4x2로 복귀
+  - full BOS ResNet50 최종 PCC `0.999603608935384`, 데드락 없이 정상 종료
+- **2026-08-17 체크포인트 — BLOCK_SHARDED single row gap 재검증 완료**
+  - 최신 build에서 `unit_tests_conv_core_replacement` 33/33 통과
+  - `layer4_segmented_row_conv2_isolated` 재통과
+  - `layer4_segmented_row_conv2_to_conv3_exits_remapping` 재통과
+  - single interior row/column gap production slice를 다시 닫았으며, 다음 작업은 row+column 동시 exclusion
+  - exclusion vector 길이가 아니라 결과 placement를 제한하도록 정리: 축별 최대 2 segments, Cartesian 최대 4 rectangles
+  - 경계의 연속된 복수 exclusion은 1-segment translation으로 허용하고, 3 segments를 만드는 비연속 exclusion은 host에서 거부
+  - guarded `layer4_row_and_column_exclusions_conv2_isolated` 테스트 추가 당시에는 device 검증 pending
+- **2026-08-17 체크포인트 — Blackhole `NOC_BRCST_EXCLUDE` discovery microtest 구축**
+  - firmware `noc_multicast_copy_exclude()`가 multicast별로 `NOC_BRCST_EXCLUDE`를 프로그래밍함을 재확인; 기존 "L1 write를 막을 수 없다"는 판단은 일반 dataflow API에 exclude가 노출되지 않은 것과 HW 기능 부재를 혼동한 것
+  - 24-bit exclude 필드가 Blackhole의 4×6-bit `NOC_MULTICAST_ENCODING`과 같은 폭이라는 근거로 single-core excluded rectangle 인코딩 가설 수립
+  - `one_to_all/test_multicast_exclude.cpp` + `kernels/sender_multicast_exclude.cpp` 추가
+  - 안전 단계: posted multicast, standard ACK counter 미갱신, bounded command-buffer poll, exclude register clear/readback, host L1 sentinel 검증
+  - NoC0/NoC1을 별도 테스트로 분리하고 clean-device 확인 + 외부 timeout을 강제하는 `run_multicast_exclude_guarded.sh` 추가
+  - **아직 금지**: exclude 인코딩과 실제 recipient count가 실기에서 확인되기 전 non-posted/linked ACK barrier 및 Conv fast path 적용
+  - 현재 Windows 세션에는 Docker daemon/장치 build가 없어 `git diff --check`까지만 완료; 다음은 컨테이너 sync/build 후 clean reset 상태에서 NoC0 단독 실행
+- **2026-08-15 체크포인트 — 다음 확장 범위 확정**
+  - 현재 구현과 검증 결과는 모두 디스크에 저장되어 있으며 아직 커밋하지 않은 working tree 상태
+  - 현 구현은 의도적으로 **interior worker row 또는 column 정확히 하나**만 제외하는 guarded slice
+  - 다음 착수점: 연속/비연속 복수 row·column exclusion을 `CorePlacement`의 일반적인 segment 목록으로 표현하고, activation/weight multicast가 가변 개수 segment를 처리하도록 확장
+  - 함께 손볼 곳: preflight/config 검증, remapping planner의 logical-prefix 전파, reader/writer runtime-arg ABI, kernel의 segment 반복 처리, reshard 경로
+  - 검증 순서: host placement/safety 테스트 → 2-row 및 2-column isolated Conv2 → Conv2→Conv3 chain → ResNet50 full model PCC
+  - 주의: Eagle-N의 작은 worker grid에서는 row를 여러 개 비우면 필요한 active logical grid 크기를 유지하지 못할 수 있으므로, 각 레이어의 요구 shard cardinality와 물리 bounding box를 먼저 확인
+- **2026-08-14**: Conv core replacement — BLOCK_SHARDED 단일 축 skip 완료
+  - `Conv2dConfig`: `enable_core_remapping`, `excluded_worker_rows`, `excluded_worker_columns` Python/C++ API 연결
+  - 지원 slice: origin-anchored `ROW_MAJOR BLOCK_SHARDED` 3×3 Conv, interior worker row 또는 column 정확히 하나 제외
+  - column gap: segmented activation multicast + BOS ResNet50 layer4 Conv2 full-model PCC 통과
+  - row gap: segmented weight multicast + explicit/config-driven Conv2 + Conv2→stock Conv3 chain PCC 통과
+  - Halo/config tensor와 Conv blocking을 physical bounding box가 아닌 dense logical shard topology 기준으로 수정
+  - padding-only worker를 포함한 segmented→stock reshard의 `unordered_map::at` 오류 수정
+  - host safety/placement 테스트 25개 통과; high-risk device 테스트는 외부 watchdog runner로 수행
+  - 의도적 제한: 동시 row+column gap, 복수 gap, boundary gap, translated segmented grid, COL_MAJOR 및 HEIGHT/WIDTH_SHARDED는 아직 미지원
+- **2026-07-30**: C++ 학습 트랙 시작
+  - **어제 (2026-07-29) 짠 학습 플랜을 파일/메모리에 저장 안 한 실수 인지** → 이후 재발 방지 위해 [[cpp-study-plan]] memory + `study_note/cpp_study_plan.md` 파일 확정
+  - **Target 폴더 정정**: 학습은 `C:\NPU_Challenge\operations\` (컨테이너에서 pull 한 BOS fork copy, 2026-07-26) 로 진행. `C:\NPU_Challenge\tt-metal\` upstream 아님 (파일명 다름: fork 는 `*_pybind.cpp`, `conv2d_op.hpp/cpp`)
+  - **Step 1 완료 — 호출 경로 검증**: pybind → conv2d.cpp → device/conv2d_op.cpp → operation::run_without_autoformat → Conv2d::create_program → *_program_factory.cpp → device/kernels/*.cpp. 각 전이 지점 file:line 근거는 `study_note/cpp_study_plan.md` 세션 로그 참조
+  - **T1 patch 지점 후보** (Step 3 이관): `Conv2d::create_program:193/229` 에서 CoreRangeSet 이 `input_tensor_a.shard_spec().value().grid` 로부터 옴 → patch 는 (A) 상류 `conv2d_utils::determine_parallel_config` 또는 (B) `multi_core_conv2d_sharded` 안 kernel 배치 전 remap
+  - **Step 2 시작** — `device/conv2d_op.hpp` Section 1 (line 1-20) 완료. Tier 1 대부분 + Tier 2/3/4 개념 훑기 완료 (자세한 커버리지는 cpp_study_plan.md)
+  - **다음 세션**: Section 2 (`struct Conv2dConfig` line 22 부터 실제 정독) — Tier 2 실전 시작
 - **2026-07-21**: Core/Shard 이론 분석 + CSV 비교 초안
   - **`conv2d_utils.cpp` 4 개 핵심 함수 완전 이해**:
     - `find_closest_largest_divisor*` (line 54-90): padding-tolerant 약수 greedy
@@ -325,5 +452,3 @@
 - **2026-07-11~12**: tt-npe 설치, 프로파일링 워크플로우 정리 (`tt-npe_intro.md`).
 - **2026-07-04~09**: ResNet50 / YOLOv8s baseline 프로파일링 CSV 수집 및 plot 8종 + tables 생성.
 - **2026-07-12**: PROGRESS.md 초기 작성.
-
-

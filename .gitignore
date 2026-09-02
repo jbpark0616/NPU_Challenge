@@ -1,4 +1,42 @@
-# 대용량 로그 및 데이터 파일 무시
+# Generated and machine-local files
+**/__pycache__/
+*.py[cod]
+*.log
 *.tracy
-*.csv
 *.zip*
+~$*.pptx
+.venv/
+
+# Local workspaces and generated output
+/.tmp/
+/tmp/
+/output/
+/archive/
+/tt-metal/
+/tt-npe/
+/ttnn-visualizer/
+/.claude/
+/AGENTS.md
+
+# IDE state is kept locally. Existing tracked settings are intentionally left
+# untouched and are excluded from the research commits.
+/NPU_Challenge.code-workspace
+
+# Raw profiler data stays local. Compact result tables are explicitly allowed.
+*.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_balance_summary.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_candidate_worker_costs.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_domain_candidates.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_fixed_background_per_worker.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_schedule_complexity.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_schedule_h20.csv
+!/data_movement/conv_core_replacement/policy/data/experiments/single_axis_split/full_model_stock_vs_optimized_per_worker.csv
+/data_movement/conv_core_replacement/conv_core_validated_latency/
+/data_movement/conv_core_replacement/profiler_raw/
+/data_movement/conv_core_replacement/policy/data/full_model_baseline/output/
+
+# Bulk visualization output. Final, presentation-ready figures live under the
+# Conv policy and presentation directories instead.
+/data_movement/data/
+/bos_model_copy/**/npe_viz/noc_heatmap_*.png
+/bos_model_copy/yolov8s/yolo_study/noc_*.png

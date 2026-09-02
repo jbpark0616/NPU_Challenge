@@ -5,8 +5,9 @@ as a third aging axis.
 
 Method:
   1. Load profile_log_device.csv (per-core per-RISC zone timing).
-  2. Filter to TRISC_0/1/2 (compute engines; BRISC/NCRISC are data movement,
-     already captured in NIU axis).
+  2. Filter to TRISC_0/1/2 TRISC-KERNEL zones (compute engines;
+     BRISC/NCRISC are data movement, already captured in NIU axis). Excluding
+     the enclosing TRISC-FW zone prevents nested-duration double counting.
   3. Match ZONE_START/ZONE_END by (core_x, core_y, RISC, timer_id, run_host_id).
   4. Sum active durations per core across all 3 TRISCs.
   5. Normalize to alpha_compute in (0, 1].
@@ -16,7 +17,10 @@ import numpy as np
 import pandas as pd
 
 REPO = Path('C:/NPU_Challenge')
-DEVICE_CSV = REPO / 'study_note/aging_simulation/resnet50_batch1_report/profile_log_device.csv'
+DEVICE_CSV = (
+    REPO
+    / 'data_movement/conv_core_replacement/policy/data/full_model_baseline/input/profile_log_device.csv'
+)
 OUT_CSV    = REPO / 'study_note/aging_simulation/plots/per_core_compute.csv'
 OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
 
@@ -24,6 +28,7 @@ OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
 COMPUTE_Y = {0, 1, 2, 4}
 COMPUTE_X = set(range(5))
 TRISC_TYPES = {'TRISC_0', 'TRISC_1', 'TRISC_2'}
+KERNEL_ZONE = 'TRISC-KERNEL'
 
 
 def load_device_log():
@@ -35,7 +40,10 @@ def load_device_log():
 def compute_active_cycles(df):
     """For each (core_x, core_y, RISC), pair ZONE_START <-> ZONE_END by
        (timer_id, run_host_id) and sum durations."""
-    df = df[df['RISC processor type'].isin(TRISC_TYPES)].copy()
+    df = df[
+        df['RISC processor type'].isin(TRISC_TYPES)
+        & (df['zone name'] == KERNEL_ZONE)
+    ].copy()
     df = df[(df['core_x'].isin(COMPUTE_X)) & (df['core_y'].isin(COMPUTE_Y))]
 
     starts = df[df['type'] == 'ZONE_START'][
