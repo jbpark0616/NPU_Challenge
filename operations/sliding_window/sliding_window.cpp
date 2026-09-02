@@ -4,6 +4,7 @@
 #include "sliding_window.hpp"
 #include <cstdint>
 #include <mutex>
+#include <set>
 #include <tt-logger/tt-logger.hpp>
 #include <vector>
 #include <tt_stl/assert.hpp>
@@ -619,16 +620,24 @@ HaloGatherKernelConfig generate_halo_kernel_config_tensors(
     const std::vector<PixelMetadata>& tensor_metadata,
     const std::vector<ShardBoundary>& shard_boundaries,
     bool is_block_sharded,
-    bool transpose_mcast,
     bool remote_read,
     IDevice* device,
-    uint32_t num_cores_x,
+    const ParallelConfig& parallel_config,
     bool is_in_tiled,
     int block_size) {
+    std::vector<CoreCoord> ordered_workers;
+    ordered_workers.reserve(parallel_config.grid.num_cores());
+    for (const auto& range : parallel_config.grid.ranges()) {
+        for (const auto& worker : range) {
+            ordered_workers.push_back(worker);
+        }
+    }
     auto core_id_to_noc_coords =
-        [is_block_sharded, transpose_mcast, device, num_cores_x](uint32_t core_id) -> CoreCoord {
-        auto core_coord = is_block_sharded ? (transpose_mcast ? CoreCoord(core_id, 0) : CoreCoord(0, core_id))
-                                           : CoreCoord(core_id % num_cores_x, core_id / num_cores_x);
+        [is_block_sharded, device, &parallel_config, &ordered_workers](uint32_t core_id) -> CoreCoord {
+        TT_FATAL(core_id < ordered_workers.size(), "Logical halo core is outside the selected worker sequence");
+        const CoreCoord core_coord = is_block_sharded
+            ? get_block_sharded_worker_core_for_nhw_core(parallel_config, core_id)
+            : ordered_workers[core_id];
         return device->worker_core_from_logical_core(core_coord);
     };
 
@@ -923,9 +932,19 @@ uint32_t get_repeat_factor_for_replicating_nhw_config_across_grid(const Parallel
         case tt::tt_metal::TensorMemoryLayout::HEIGHT_SHARDED: return 1;
         case tt::tt_metal::TensorMemoryLayout::WIDTH_SHARDED: return p_config.grid.num_cores();
         case tt::tt_metal::TensorMemoryLayout::BLOCK_SHARDED: {
-            TT_ASSERT(p_config.grid.ranges().size() == 1, "BLOCK_SHARDED should have just a single core range");
-            uint32_t ncores_y = p_config.grid.ranges().begin()->end_coord.y + 1;
-            uint32_t ncores_x = p_config.grid.ranges().begin()->end_coord.x + 1;
+            std::set<uint32_t> worker_x;
+            std::set<uint32_t> worker_y;
+            for (const auto& range : p_config.grid.ranges()) {
+                for (const auto& worker : range) {
+                    worker_x.insert(worker.x);
+                    worker_y.insert(worker.y);
+                }
+            }
+            TT_FATAL(
+                worker_x.size() * worker_y.size() == p_config.grid.num_cores(),
+                "BLOCK_SHARDED grid must be a Cartesian product of worker x/y axes");
+            const uint32_t ncores_x = static_cast<uint32_t>(worker_x.size());
+            const uint32_t ncores_y = static_cast<uint32_t>(worker_y.size());
             if (p_config.shard_orientation == tt::tt_metal::ShardOrientation::ROW_MAJOR) {
                 return ncores_x;
             } else if (p_config.shard_orientation == tt::tt_metal::ShardOrientation::COL_MAJOR) {
@@ -936,6 +955,32 @@ uint32_t get_repeat_factor_for_replicating_nhw_config_across_grid(const Parallel
         }
         default: TT_FATAL(false, "Unsupported shard scheme");
     }
+}
+
+CoreCoord get_block_sharded_worker_core_for_nhw_core(
+    const ParallelConfig& parallel_config, uint32_t logical_nhw_core_id) {
+    TT_FATAL(
+        parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED,
+        "NHW worker-axis mapping requires BLOCK_SHARDED parallel config");
+    std::set<uint32_t> selected_x;
+    std::set<uint32_t> selected_y;
+    for (const auto& range : parallel_config.grid.ranges()) {
+        for (const auto& worker : range) {
+            selected_x.insert(worker.x);
+            selected_y.insert(worker.y);
+        }
+    }
+    TT_FATAL(
+        selected_x.size() * selected_y.size() == parallel_config.grid.num_cores(),
+        "BLOCK_SHARDED grid must be a Cartesian product of worker x/y axes");
+    const std::vector<uint32_t> worker_x(selected_x.begin(), selected_x.end());
+    const std::vector<uint32_t> worker_y(selected_y.begin(), selected_y.end());
+    if (parallel_config.shard_orientation == ShardOrientation::ROW_MAJOR) {
+        TT_FATAL(logical_nhw_core_id < worker_y.size(), "Logical NHW core is outside selected worker Y axis");
+        return {worker_x.front(), worker_y[logical_nhw_core_id]};
+    }
+    TT_FATAL(logical_nhw_core_id < worker_x.size(), "Logical NHW core is outside selected worker X axis");
+    return {worker_x[logical_nhw_core_id], worker_y.front()};
 }
 
 std::vector<uint16_t> replicate_config(const std::vector<uint16_t>& config_vector, int factor) {
@@ -1000,7 +1045,40 @@ Tensor move_config_tensor_to_device(
         is_block_sharded ? (p_config.shard_orientation == ShardOrientation::COL_MAJOR ? ShardOrientation::ROW_MAJOR
                                                                                       : ShardOrientation::COL_MAJOR)
                          : ShardOrientation::ROW_MAJOR;
-    ShardSpec shard_spec(p_config.grid, shard_shape, config_shard_orientation);
+    CoreRangeSet config_grid = p_config.grid;
+    if (is_block_sharded &&
+        p_config.grid.bounding_box().grid_size().x * p_config.grid.bounding_box().grid_size().y !=
+            p_config.grid.num_cores()) {
+        std::set<uint32_t> worker_x;
+        std::set<uint32_t> worker_y;
+        for (const auto& range : p_config.grid.ranges()) {
+            for (const auto& worker : range) {
+                worker_x.insert(worker.x);
+                worker_y.insert(worker.y);
+            }
+        }
+        TT_FATAL(
+            worker_x.size() * worker_y.size() == p_config.grid.num_cores(),
+            "Segmented BLOCK_SHARDED config grid must be a Cartesian product");
+
+        std::vector<CoreRange> ordered_config_workers;
+        ordered_config_workers.reserve(p_config.grid.num_cores());
+        if (config_shard_orientation == ShardOrientation::ROW_MAJOR) {
+            for (uint32_t y : worker_y) {
+                for (uint32_t x : worker_x) {
+                    ordered_config_workers.emplace_back(CoreCoord{x, y});
+                }
+            }
+        } else {
+            for (uint32_t x : worker_x) {
+                for (uint32_t y : worker_y) {
+                    ordered_config_workers.emplace_back(CoreCoord{x, y});
+                }
+            }
+        }
+        config_grid = CoreRangeSet(std::move(ordered_config_workers));
+    }
+    ShardSpec shard_spec(config_grid, shard_shape, config_shard_orientation);
     MemoryConfig memory_config{TensorMemoryLayout::HEIGHT_SHARDED, BufferType::L1_SMALL, shard_spec};
     return config_tensor.to_device(device, memory_config);
 }

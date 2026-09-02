@@ -5,6 +5,54 @@
 #include "dataflow_api.h"
 #include "conv_reader_common.hpp"
 
+#ifdef SEGMENTED_WEIGHT_MCAST
+constexpr uint32_t weights_mcast_segment_arg_count = 6;
+
+FORCE_INLINE void write_to_weight_mcast_segments(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t source_l1_addr,
+    uint32_t destination_l1_addr,
+    uint32_t size_bytes) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * weights_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            destination_l1_addr);
+        // Each segment is an independent remote-only rectangle. Do not keep
+        // a multicast path reserved across disjoint rectangles: the HEIGHT
+        // production placement may emit several segments, and a linked chain
+        // across different routes can prevent Blackhole completion.
+        noc_async_write_multicast(
+            source_l1_addr,
+            destination,
+            size_bytes,
+            get_arg_val<uint32_t>(arg + 4),
+            false);
+    }
+}
+
+FORCE_INLINE void set_weight_mcast_segment_semaphores(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t receiver_semaphore_addr) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * weights_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            receiver_semaphore_addr);
+        noc_semaphore_set_multicast(
+            receiver_semaphore_addr, destination, get_arg_val<uint32_t>(arg + 4));
+    }
+}
+#endif
+
 void kernel_main() {
     // This writer is for output tensor in tile format
     constexpr uint32_t cb_id_weight = get_compile_time_arg_val(0);
@@ -73,10 +121,16 @@ void kernel_main() {
 #endif
 
     // mcast args
+#ifdef SEGMENTED_WEIGHT_MCAST
+    const uint32_t weights_mcast_segment_count = get_arg_val<uint32_t>(i++);
+    const uint32_t weights_mcast_segments_arg_start = i;
+    i += weights_mcast_segment_count * weights_mcast_segment_arg_count;
+#else
     const uint32_t weights_mcast_dest_noc_start_x = get_arg_val<uint32_t>(i++);
     const uint32_t weights_mcast_dest_noc_start_y = get_arg_val<uint32_t>(i++);
     const uint32_t weights_mcast_dest_noc_end_x = get_arg_val<uint32_t>(i++);
     const uint32_t weights_mcast_dest_noc_end_y = get_arg_val<uint32_t>(i++);
+#endif
     const uint32_t weights_mcast_num_dests = get_arg_val<uint32_t>(i++);
     const uint32_t weights_mcast_num_cores = get_arg_val<uint32_t>(i++);
     const uint32_t weights_mcast_sender_semaphore_addr = get_semaphore(get_arg_val<uint32_t>(i++));
@@ -115,12 +169,14 @@ void kernel_main() {
     volatile tt_l1_ptr uint32_t* weights_mcast_sender_semaphore_addr_ptr =
         reinterpret_cast<volatile tt_l1_ptr uint32_t*>(weights_mcast_sender_semaphore_addr);
 
+#ifndef SEGMENTED_WEIGHT_MCAST
     const uint64_t weights_mcast_receiver_semaphore_noc_addr = get_noc_multicast_addr(
         weights_mcast_dest_noc_start_x,
         weights_mcast_dest_noc_start_y,
         weights_mcast_dest_noc_end_x,
         weights_mcast_dest_noc_end_y,
         weights_mcast_receiver_semaphore_addr);
+#endif
 #endif
 
     // read in bias if enabled (done only once for all batches)
@@ -240,6 +296,14 @@ void kernel_main() {
                 noc_semaphore_set(weights_mcast_sender_semaphore_addr_ptr, 0);
 
                 // Now we have the block in the CB address, we can mcast to dests!
+#ifdef SEGMENTED_WEIGHT_MCAST
+                write_to_weight_mcast_segments(
+                    weights_mcast_segments_arg_start,
+                    weights_mcast_segment_count,
+                    weights_start_address,
+                    weights_start_address,
+                    weights_block_size_bytes);
+#else
                 uint64_t weights_multicast_data_addr = get_noc_multicast_addr(
                     weights_mcast_dest_noc_start_x,
                     weights_mcast_dest_noc_start_y,
@@ -253,6 +317,7 @@ void kernel_main() {
                     weights_block_size_bytes,
                     weights_mcast_num_cores,
                     true);
+#endif
 
                 // Note: no need for write barrier, since these two multicasts are done on the same noc id and
                 // same vc even though cmd bufs are different Also, this only works because we are setting VCs
@@ -266,11 +331,19 @@ void kernel_main() {
 
                 // We should also multicast the flag to destinations
                 // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_WEIGHT_MCAST
+                noc_async_write_barrier();
+                set_weight_mcast_segment_semaphores(
+                    weights_mcast_segments_arg_start,
+                    weights_mcast_segment_count,
+                    weights_mcast_receiver_semaphore_addr);
+#else
                 noc_semaphore_set_multicast(
                     weights_mcast_receiver_semaphore_addr,
                     weights_mcast_receiver_semaphore_noc_addr,
                     weights_mcast_num_cores,
                     false);
+#endif
 #endif
 
                 weight_current_block_start_tile_id += weight_next_block_stride_h;
@@ -304,6 +377,14 @@ void kernel_main() {
             noc_semaphore_set(weights_mcast_sender_semaphore_addr_ptr, 0);
 
             // Now we have the block in the CB address, we can mcast to dests!
+#ifdef SEGMENTED_WEIGHT_MCAST
+            write_to_weight_mcast_segments(
+                weights_mcast_segments_arg_start,
+                weights_mcast_segment_count,
+                bias_start_address,
+                bias_start_address,
+                bias_block_size_bytes);
+#else
             uint64_t bias_multicast_data_addr = get_noc_multicast_addr(
                 weights_mcast_dest_noc_start_x,
                 weights_mcast_dest_noc_start_y,
@@ -313,6 +394,7 @@ void kernel_main() {
             // num_dests must not include source, since we are NOT really doing a local copy!
             noc_async_write_multicast(
                 bias_start_address, bias_multicast_data_addr, bias_block_size_bytes, weights_mcast_num_cores, true);
+#endif
 
             // Note: no need for write barrier, since these two multicasts are done on the same noc id and same vc
             // even though cmd bufs are different Also, this only works because we are setting VCs statically (using
@@ -328,11 +410,19 @@ void kernel_main() {
 
             // We should also multicast the flag to destinations
             // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_WEIGHT_MCAST
+            noc_async_write_barrier();
+            set_weight_mcast_segment_semaphores(
+                weights_mcast_segments_arg_start,
+                weights_mcast_segment_count,
+                weights_mcast_receiver_semaphore_addr);
+#else
             noc_semaphore_set_multicast(
                 weights_mcast_receiver_semaphore_addr,
                 weights_mcast_receiver_semaphore_noc_addr,
                 weights_mcast_num_cores,
                 false);
+#endif
 #endif
 
             cb_push_back(bias_cb_id, bias_ntiles);

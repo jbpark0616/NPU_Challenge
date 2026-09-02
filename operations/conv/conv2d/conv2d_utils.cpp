@@ -35,6 +35,32 @@ namespace operations::conv {
 using sliding_window::ParallelConfig;
 using sliding_window::SlidingWindowConfig;
 
+CorePlacement validate_stock_block_sharded_worker_grid(
+    const CoreRangeSet& worker_grid,
+    const CoreCoord& worker_grid_size,
+    const char* source,
+    BlockShardedWorkerGridPolicy policy) {
+    TT_FATAL(!worker_grid.empty(), "{} BLOCK_SHARDED Conv worker grid must not be empty", source);
+    const CorePlacement placement = make_core_placement_from_worker_grid(worker_grid_size, worker_grid);
+
+    const auto x_segments = placement.x_segments();
+    const auto y_segments = placement.y_segments();
+    const bool supported_segmented_grid =
+        policy == BlockShardedWorkerGridPolicy::RowMajorUpToFourRectangles && x_segments.size() <= 2 &&
+        y_segments.size() <= 2;
+    TT_FATAL(
+        !placement.has_worker_gaps() || supported_segmented_grid,
+        "{} BLOCK_SHARDED Conv worker grid is outside the enabled placement slice; only contiguous rectangles or "
+        "an explicitly enabled ROW_MAJOR grid with at most two segments per worker axis (four Cartesian "
+        "rectangles) are supported; ranges={}, active_cores={}, x_segments={}, y_segments={}",
+        source,
+        worker_grid.ranges().size(),
+        worker_grid.num_cores(),
+        x_segments.size(),
+        y_segments.size());
+    return placement;
+}
+
 uint32_t find_closest_largest_divisor(uint32_t num, uint32_t start_divisor) {
     uint32_t divisor = start_divisor;
     while (num % divisor != 0) {
@@ -187,7 +213,7 @@ ParallelConfig determine_parallel_config(
     return pconfig;
 }
 
-ParallelConfig determine_output_parallel_config(
+static ParallelConfig determine_stock_output_parallel_config(
     const ParallelConfig& input_parallel_config,
     const CoreCoord& compute_grid_size,
     uint32_t out_channels,
@@ -203,8 +229,9 @@ ParallelConfig determine_output_parallel_config(
                 compute_grid_size,
                 true);
         } else if (input_parallel_config.shard_scheme == ttnn::TensorMemoryLayout::BLOCK_SHARDED) {
-            const uint32_t start_divisor_c =
-                block_shard_orientation == ShardOrientation::COL_MAJOR ? compute_grid_size.y : compute_grid_size.x;
+            const uint32_t start_divisor_c = block_shard_orientation == ShardOrientation::COL_MAJOR
+                                                 ? compute_grid_size.y
+                                                 : compute_grid_size.x;
             uint32_t num_cores_c = find_closest_largest_divisor_with_num_padding(out_channels_ntiles, start_divisor_c);
             const uint32_t num_cores_nhw = get_num_cores_nhw_from_parallel_config(input_parallel_config);
             const uint32_t cores_x =
@@ -217,6 +244,74 @@ ParallelConfig determine_output_parallel_config(
     }
 
     return output_parallel_config;
+}
+
+ParallelConfig determine_output_parallel_config(
+    const ParallelConfig& input_parallel_config,
+    const CoreCoord& compute_grid_size,
+    uint32_t out_channels,
+    ShardOrientation block_shard_orientation,
+    bool is_mm_conv,
+    bool enable_core_remapping) {
+    return determine_output_parallel_config(
+        input_parallel_config,
+        compute_grid_size,
+        out_channels,
+        block_shard_orientation,
+        is_mm_conv,
+        enable_core_remapping,
+        std::nullopt);
+}
+
+ParallelConfig determine_output_parallel_config(
+    const ParallelConfig& input_parallel_config,
+    const CoreCoord& compute_grid_size,
+    uint32_t out_channels,
+    ShardOrientation block_shard_orientation,
+    bool is_mm_conv,
+    bool enable_core_remapping,
+    const std::optional<CoreRangeSet>& core_remapping_input_stock_grid) {
+    const CoreRange input_grid_box = input_parallel_config.grid.bounding_box();
+    TT_FATAL(
+        input_grid_box.end_coord.x < compute_grid_size.x && input_grid_box.end_coord.y < compute_grid_size.y,
+        "Conv input worker grid must fit within the device compute grid; input={}, compute_grid=({},{})",
+        input_parallel_config.grid,
+        compute_grid_size.x,
+        compute_grid_size.y);
+
+    ParallelConfig stock_input_parallel_config = input_parallel_config;
+    std::optional<CorePlacement> input_placement;
+    if (input_parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+        input_placement = make_core_placement_from_worker_grid(compute_grid_size, input_parallel_config.grid);
+        stock_input_parallel_config.grid = core_remapping_input_stock_grid.value_or(
+            make_core_placement(compute_grid_size, input_placement->shard_grid_size).worker_cores);
+    } else if (input_parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED) {
+        stock_input_parallel_config.grid =
+            core_remapping_input_stock_grid.value_or(input_parallel_config.grid);
+    }
+    ParallelConfig stock_output_parallel_config = determine_stock_output_parallel_config(
+        stock_input_parallel_config, compute_grid_size, out_channels, block_shard_orientation, is_mm_conv);
+
+    // BLOCK_SHARDED retains its structural compatibility adapter. HEIGHT_SHARDED placement lifetime is explicit:
+    // without provenance the supplied input grid is the stock grid for this preparation boundary.
+    const bool block_remapping_active = input_parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+        (core_remapping_input_stock_grid.has_value()
+             ? input_parallel_config.grid != stock_input_parallel_config.grid
+             : (input_grid_box.start_coord != CoreCoord{0, 0} || input_placement->has_worker_gaps()));
+    const bool remapping_active =
+        block_remapping_active ||
+        (input_parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED &&
+         input_parallel_config.grid != stock_input_parallel_config.grid);
+    const bool current_placement_is_executable = enable_core_remapping &&
+        !(input_parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED && is_mm_conv);
+    return plan_conv_core_remapping(
+               input_parallel_config,
+               stock_output_parallel_config,
+               compute_grid_size,
+               remapping_active,
+               current_placement_is_executable,
+               ConvCorePlacementProvenance{stock_input_parallel_config})
+        .output_parallel_config;
 }
 
 std::tuple<uint32_t, uint32_t> calculate_output_image_size(
@@ -243,6 +338,11 @@ uint32_t get_num_cores_nhw_from_parallel_config(const ParallelConfig& pconfig) {
         pconfig.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED ||
         pconfig.shard_scheme == TensorMemoryLayout::WIDTH_SHARDED);
     auto grid_size = pconfig.grid.bounding_box().grid_size();
+    if (pconfig.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+        const CoreCoord inferred_worker_grid_size{
+            pconfig.grid.bounding_box().end_coord.x + 1, pconfig.grid.bounding_box().end_coord.y + 1};
+        grid_size = make_core_placement_from_worker_grid(inferred_worker_grid_size, pconfig.grid).shard_grid_size;
+    }
     uint32_t num_cores = pconfig.grid.num_cores();
     uint32_t num_cores_nhw = 0;
     if (pconfig.shard_scheme == TensorMemoryLayout::WIDTH_SHARDED) {
@@ -269,6 +369,11 @@ uint32_t get_num_cores_channels_from_parallel_config(const ParallelConfig& pconf
         pconfig.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED ||
         pconfig.shard_scheme == TensorMemoryLayout::WIDTH_SHARDED);
     auto grid_size = pconfig.grid.bounding_box().grid_size();
+    if (pconfig.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+        const CoreCoord inferred_worker_grid_size{
+            pconfig.grid.bounding_box().end_coord.x + 1, pconfig.grid.bounding_box().end_coord.y + 1};
+        grid_size = make_core_placement_from_worker_grid(inferred_worker_grid_size, pconfig.grid).shard_grid_size;
+    }
     uint32_t num_cores_channels = 0;
     if (pconfig.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED) {
         num_cores_channels = 1;
@@ -315,8 +420,15 @@ Conv2dParallelizationConfig determine_conv_op_parallel_config_from_conv_output_m
     TT_ASSERT(conv_output_mem_config.shard_spec().has_value());
     const auto& shard_spec = conv_output_mem_config.shard_spec().value();
     const auto& shard_shape = shard_spec.shape;
+    CoreCoord logical_grid_size = shard_spec.grid.bounding_box().grid_size();
+    if (conv_output_mem_config.memory_layout() == TensorMemoryLayout::BLOCK_SHARDED) {
+        const CoreCoord inferred_worker_grid_size{
+            shard_spec.grid.bounding_box().end_coord.x + 1, shard_spec.grid.bounding_box().end_coord.y + 1};
+        logical_grid_size =
+            make_core_placement_from_worker_grid(inferred_worker_grid_size, shard_spec.grid).shard_grid_size;
+    }
     return {
-        .grid_size = shard_spec.grid.bounding_box().grid_size(),
+        .grid_size = logical_grid_size,
         .num_cores_nhw = num_cores_nhw,
         .num_cores_c_in = num_cores_c_in,
         .num_cores_c_out = num_cores_c_out,
@@ -552,7 +664,8 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
     uint32_t width,
     uint32_t in_channels,
     uint32_t out_channels,
-    bool is_mm_conv) {
+    bool is_mm_conv,
+    bool allow_segmented_worker_grid) {
     const ttnn::Tensor& input_tensor = input_tensor_;  // tensor to return
     bool input_tensor_on_device = tt::tt_metal::is_device_tensor(input_tensor_);
     bool needs_shard_or_reshard = false;
@@ -570,6 +683,35 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
     if (conv_config.shard_layout.has_value()) {
         shard_layout = conv_config.shard_layout.value();
     }
+    const auto block_shard_orientation =
+        conv_config.transpose_shards ? ShardOrientation::COL_MAJOR : ShardOrientation::ROW_MAJOR;
+    // The 1x1 Conv lowering uses the ROW_MAJOR 2D reuse-mcast Matmul backend, which validates its narrower
+    // segmented execution contract (sharded input/output, full logical grid, identical placement) in the program
+    // factory. Keep placement selection common so a semantic Conv2D request does not exit remapping merely because
+    // its compute implementation is Matmul.
+    const auto override_worker_grid_policy =
+        allow_segmented_worker_grid && block_shard_orientation == ShardOrientation::ROW_MAJOR
+            ? BlockShardedWorkerGridPolicy::RowMajorUpToFourRectangles
+            : BlockShardedWorkerGridPolicy::ContiguousOnly;
+    bool override_grid_accepts_remapped_input = false;
+
+    if (conv_config.override_sharding_config) {
+        TT_FATAL(conv_config.core_grid.has_value(), "Core grid must be provided when overriding sharding config");
+        TT_FATAL(conv_config.shard_layout.has_value(), "Shard layout must be provided when overriding sharding config");
+        if (shard_layout == TensorMemoryLayout::BLOCK_SHARDED) {
+            const auto override_placement = validate_stock_block_sharded_worker_grid(
+                conv_config.core_grid.value(),
+                device->compute_with_storage_grid_size(),
+                "override",
+                override_worker_grid_policy);
+            const bool override_is_non_stock =
+                override_placement.worker_cores.bounding_box().start_coord != CoreCoord{0, 0} ||
+                override_placement.has_worker_gaps();
+            TT_FATAL(
+                !override_is_non_stock || conv_config.enable_core_remapping,
+                "A non-stock Conv core_grid override requires enable_core_remapping=true");
+        }
+    }
 
     const ttnn::MemoryConfig& input_memory_config = input_tensor_.memory_config();
     const tt::tt_metal::TensorMemoryLayout input_shard_scheme = input_memory_config.memory_layout();
@@ -586,6 +728,21 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
             const tt::tt_metal::ShardSpec& input_shard_spec = input_memory_config.shard_spec().value();
             const tt::tt_metal::ShardOrientation input_shard_orientation = input_shard_spec.orientation;
             const CoreRangeSet input_shard_grid = input_shard_spec.grid;
+            if (input_shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+                // Accept the narrowly supported segmented shape at the planner ingress even when this particular
+                // Conv cannot execute it. The lifetime planner below will then reanchor and reshard it to stock
+                // before device submission. Execution capability remains separately gated by
+                // allow_segmented_worker_grid.
+                const auto input_worker_grid_policy =
+                    input_shard_orientation == ShardOrientation::ROW_MAJOR
+                        ? BlockShardedWorkerGridPolicy::RowMajorUpToFourRectangles
+                        : BlockShardedWorkerGridPolicy::ContiguousOnly;
+                validate_stock_block_sharded_worker_grid(
+                    input_shard_grid,
+                    device->compute_with_storage_grid_size(),
+                    "input",
+                    input_worker_grid_policy);
+            }
             ParallelConfig pconfig = {
                 .grid = input_shard_grid,
                 .shard_scheme = input_shard_scheme,
@@ -602,9 +759,11 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
             }
 
             if (is_mm_conv && input_shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+                const auto input_placement = make_core_placement_from_worker_grid(
+                    device->compute_with_storage_grid_size(), input_shard_grid);
                 uint32_t num_cores_c = input_shard_orientation == ShardOrientation::ROW_MAJOR
-                                           ? input_shard_grid.bounding_box().grid_size().x
-                                           : input_shard_grid.bounding_box().grid_size().y;
+                                           ? input_placement.shard_grid_size.x
+                                           : input_placement.shard_grid_size.y;
                 if (in_channels != num_cores_c * input_shard_spec.shape[1]) {
                     needs_shard_or_reshard = true;
                     shard_layout = TensorMemoryLayout::BLOCK_SHARDED;
@@ -618,7 +777,14 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
                 TT_FATAL(
                     conv_config.shard_layout.has_value(),
                     "If override_sharding_config is set, shard_layout must be set as well.");
-                if (conv_config.core_grid.value() != input_shard_grid) {
+                if (conv_config.core_grid.value() != input_shard_grid && conv_config.enable_core_remapping &&
+                    allow_segmented_worker_grid && shard_layout == TensorMemoryLayout::BLOCK_SHARDED &&
+                    input_shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+                    input_shard_orientation == ShardOrientation::ROW_MAJOR && !conv_config.transpose_shards) {
+                    override_grid_accepts_remapped_input = block_sharded_override_matches_remapped_logical_grid(
+                        device->compute_with_storage_grid_size(), input_shard_grid, conv_config.core_grid.value());
+                }
+                if (conv_config.core_grid.value() != input_shard_grid && !override_grid_accepts_remapped_input) {
                     needs_shard_or_reshard = true;
                 }
                 if (shard_layout != input_shard_scheme) {
@@ -633,8 +799,6 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
         }
     }
 
-    auto block_shard_orientation =
-        conv_config.transpose_shards ? ShardOrientation::COL_MAJOR : ShardOrientation::ROW_MAJOR;
     ParallelConfig parallel_config = input_tensor_parallel_config;
     if (conv_config.reshard_if_not_optimal || needs_shard_or_reshard) {
         ParallelConfig optimal_parallel_config = determine_parallel_config(
@@ -658,11 +822,29 @@ std::tuple<ttnn::Shape, ttnn::MemoryConfig, bool> get_conv_padded_input_shape_an
             auto shard_orientation = shard_layout == TensorMemoryLayout::BLOCK_SHARDED ? block_shard_orientation
                                                                                        : ShardOrientation::ROW_MAJOR;
             parallel_config = {
-                .grid = conv_config.core_grid.value(),
+                .grid = shard_layout == TensorMemoryLayout::BLOCK_SHARDED
+                    ? select_equivalent_remapped_block_execution_grid(
+                          device->compute_with_storage_grid_size(),
+                          input_tensor_parallel_config.grid,
+                          conv_config.core_grid.value(),
+                          override_grid_accepts_remapped_input)
+                    : conv_config.core_grid.value(),
                 .shard_scheme = shard_layout,
                 .shard_orientation = shard_orientation};
         } else {
             parallel_config = optimal_parallel_config;
+            const bool optimal_grid_accepts_remapped_input = conv_config.enable_core_remapping &&
+                allow_segmented_worker_grid && input_tensor_on_device && input_memory_config.is_sharded() &&
+                input_tensor_parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+                optimal_parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+                input_tensor_parallel_config.shard_orientation == ShardOrientation::ROW_MAJOR &&
+                optimal_parallel_config.shard_orientation == ShardOrientation::ROW_MAJOR &&
+                !conv_config.transpose_shards;
+            parallel_config.grid = select_equivalent_remapped_block_execution_grid(
+                device->compute_with_storage_grid_size(),
+                input_tensor_parallel_config.grid,
+                optimal_parallel_config.grid,
+                optimal_grid_accepts_remapped_input);
         }
         if (input_tensor_parallel_config != parallel_config) {
             needs_shard_or_reshard = true;
@@ -704,21 +886,128 @@ std::tuple<ttnn::Tensor, ParallelConfig, ParallelConfig> shard_or_reshard_tensor
     uint32_t in_channels,
     uint32_t out_channels,
     bool is_mm_conv,
-    bool auto_shard) {
+    bool auto_shard,
+    bool allow_segmented_worker_grid) {
     ttnn::Tensor input_tensor = input_tensor_;  // tensor to return
     bool input_tensor_on_device = tt::tt_metal::is_device_tensor(input_tensor_);
     auto compute_grid_size = device->compute_with_storage_grid_size();
 
     auto [input_padded_shape, input_tensor_sharded_memory_config, needs_shard_or_reshard] =
         get_conv_padded_input_shape_and_mem_config(
-            device, input_tensor_, conv_config, batch_size, height, width, in_channels, out_channels, is_mm_conv);
+            device,
+            input_tensor_,
+            conv_config,
+            batch_size,
+            height,
+            width,
+            in_channels,
+            out_channels,
+            is_mm_conv,
+            allow_segmented_worker_grid);
     ParallelConfig parallel_config = {
         .grid = input_tensor_sharded_memory_config.shard_spec().value().grid,
         .shard_scheme = input_tensor_sharded_memory_config.memory_layout(),
         .shard_orientation = input_tensor_sharded_memory_config.shard_spec().value().orientation};
+    const ParallelConfig unremapped_parallel_config = parallel_config;
 
-    ParallelConfig output_parallel_config = determine_output_parallel_config(
-        parallel_config, compute_grid_size, out_channels, parallel_config.shard_orientation, is_mm_conv);
+    const bool explicit_remapping_requested =
+        !conv_config.excluded_worker_rows.empty() || !conv_config.excluded_worker_columns.empty();
+    const bool explicit_remapping_is_executable =
+        allow_segmented_worker_grid && parallel_config.shard_scheme != TensorMemoryLayout::WIDTH_SHARDED &&
+        (!is_mm_conv ||
+         (parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+          parallel_config.shard_orientation == ShardOrientation::ROW_MAJOR));
+    TT_FATAL(
+        !explicit_remapping_requested || conv_config.enable_core_remapping,
+        "Conv excluded_worker_rows/columns require enable_core_remapping=true");
+    TT_FATAL(
+        !explicit_remapping_requested || explicit_remapping_is_executable,
+        "Explicit Conv placement is supported by the 3x3 HEIGHT_SHARDED/ROW_MAJOR BLOCK_SHARDED path and the 1x1 "
+        "ROW_MAJOR BLOCK_SHARDED Matmul lowering");
+    if (explicit_remapping_requested) {
+        const ParallelConfig requested_parallel_config = select_conv_core_remapping_input_placement(
+            parallel_config,
+            compute_grid_size,
+            conv_config.excluded_worker_rows,
+            conv_config.excluded_worker_columns);
+        if (requested_parallel_config.grid != parallel_config.grid) {
+            parallel_config = requested_parallel_config;
+            auto requested_input_shard_spec = input_tensor_sharded_memory_config.shard_spec().value();
+            requested_input_shard_spec.grid = parallel_config.grid;
+            input_tensor_sharded_memory_config =
+                input_tensor_sharded_memory_config.with_shard_spec(requested_input_shard_spec);
+            needs_shard_or_reshard = true;
+        }
+    }
+
+    TT_FATAL(
+        parallel_config.shard_scheme != TensorMemoryLayout::HEIGHT_SHARDED || explicit_remapping_requested ||
+            conv_config.core_remapping_input_stock_grid.has_value() ||
+            !is_remapped_height_sharded_worker_grid(parallel_config.grid),
+        "A remapped HEIGHT_SHARDED Conv input requires core_remapping_input_stock_grid provenance");
+
+    const CoreRange input_grid_box = parallel_config.grid.bounding_box();
+    ParallelConfig stock_input_parallel_config = parallel_config;
+    std::optional<CorePlacement> input_placement;
+    if (parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED) {
+        input_placement = make_core_placement_from_worker_grid(compute_grid_size, parallel_config.grid);
+        stock_input_parallel_config.grid = explicit_remapping_requested
+            ? unremapped_parallel_config.grid
+            : conv_config.core_remapping_input_stock_grid.value_or(
+                  make_core_placement(compute_grid_size, input_placement->shard_grid_size).worker_cores);
+    } else if (parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED) {
+        stock_input_parallel_config.grid = explicit_remapping_requested
+            ? unremapped_parallel_config.grid
+            : conv_config.core_remapping_input_stock_grid.value_or(parallel_config.grid);
+    }
+    ParallelConfig stock_output_parallel_config = determine_stock_output_parallel_config(
+        stock_input_parallel_config,
+        compute_grid_size,
+        out_channels,
+        parallel_config.shard_orientation,
+        is_mm_conv);
+
+    // A non-stock physical input requires a lifetime decision. Propagation is an explicit user/planner choice;
+    // without that opt-in, or at an unsupported operation boundary, the planner reanchors the tensor before dispatch.
+    const bool input_is_remapped =
+        input_grid_box.start_coord != CoreCoord{0, 0} || (input_placement && input_placement->has_worker_gaps());
+    const bool height_input_is_remapped =
+        parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED &&
+        parallel_config.grid != stock_input_parallel_config.grid;
+    const bool block_input_is_remapped = parallel_config.shard_scheme == TensorMemoryLayout::BLOCK_SHARDED &&
+        ((explicit_remapping_requested || conv_config.core_remapping_input_stock_grid.has_value())
+             ? parallel_config.grid != stock_input_parallel_config.grid
+             : input_is_remapped);
+    const bool remapping_active =
+        block_input_is_remapped ||
+        height_input_is_remapped;
+    const bool current_placement_is_executable = conv_config.enable_core_remapping &&
+        (parallel_config.shard_scheme == TensorMemoryLayout::HEIGHT_SHARDED
+             ? explicit_remapping_is_executable
+             : (!input_placement || !input_placement->has_worker_gaps() || allow_segmented_worker_grid));
+    auto remapping_plan = plan_conv_core_remapping(
+        parallel_config,
+        stock_output_parallel_config,
+        compute_grid_size,
+        remapping_active,
+        current_placement_is_executable,
+        ConvCorePlacementProvenance{stock_input_parallel_config});
+    parallel_config = remapping_plan.input_parallel_config;
+    ParallelConfig output_parallel_config = remapping_plan.output_parallel_config;
+
+    if (remapping_plan.requires_input_reshard()) {
+        auto stock_input_shard_spec = input_tensor_sharded_memory_config.shard_spec().value();
+        stock_input_shard_spec.grid = parallel_config.grid;
+        input_tensor_sharded_memory_config =
+            input_tensor_sharded_memory_config.with_shard_spec(stock_input_shard_spec);
+        needs_shard_or_reshard = true;
+        log_debug(
+            tt::LogOp,
+            "Conv core-remapping planner selected ExitToStock; reanchoring input grid to {} and using stock output "
+            "grid {}",
+            parallel_config.grid,
+            output_parallel_config.grid);
+    }
 
     // We can have flat and unflattened (n, h, w, c) tensors here
     const auto flattened_input_shape = flatten_4d_shape(input_tensor.logical_shape());
@@ -932,7 +1221,8 @@ Conv2dConfig determine_conv_config_for_auto_shard(
             compute_grid_size,
             out_channels,
             shard_orientation,
-            is_mm_conv /* && conv_config.shard_layout != TensorMemoryLayout::WIDTH_SHARDED*/);
+            is_mm_conv /* && conv_config.shard_layout != TensorMemoryLayout::WIDTH_SHARDED*/,
+            conv_config.enable_core_remapping);
 
         const uint32_t in_channels_padded = tt::round_up(
             in_channels, get_num_cores_channels_from_parallel_config(input_parallel_config) * input_channels_alignment);
@@ -1202,7 +1492,12 @@ static std::pair<uint32_t, Conv2dConfig> calculate_conv_dram_slice_L1_usage(
             .shard_scheme = sliced_input_tensor_memory_config.memory_layout(),
             .shard_orientation = sliced_input_tensor_memory_config.shard_spec().value().orientation};
         ParallelConfig output_parallel_config = determine_output_parallel_config(
-            parallel_config, params.compute_grid, params.out_channels, shard_orientation, params.mm_conv);
+            parallel_config,
+            params.compute_grid,
+            params.out_channels,
+            shard_orientation,
+            params.mm_conv,
+            conv_config.enable_core_remapping);
 
         uint32_t padded_in_channels = tt::round_up(
             params.in_channels,

@@ -8,6 +8,8 @@
 #include <string>
 
 #include "ttnn/operations/matmul/device/matmul_op.hpp"
+#include "ttnn/operations/conv/conv2d/conv_core_placement.hpp"
+#include "ttnn/operations/conv/conv2d/conv_core_remapping_planner.hpp"
 #include "ttnn/operations/conv/conv2d/device/conv2d_op.hpp"
 #include "ttnn/tensor/tensor.hpp"
 #include "ttnn/operations/sliding_window/sliding_window.hpp"
@@ -21,6 +23,20 @@ using namespace conv2d;
 using OutputHeight = uint32_t;
 using OutputWidth = uint32_t;
 using Result = std::tuple<ttnn::Tensor, OutputHeight, OutputWidth, ttnn::Tensor, std::optional<ttnn::Tensor>>;
+
+enum class BlockShardedWorkerGridPolicy {
+    ContiguousOnly,
+    RowMajorUpToFourRectangles,
+};
+
+// Fail-fast guard for the block-sharded Conv factory. Contiguous worker
+// rectangles may be translated. The opt-in segmented policy is deliberately
+// limited to the first production slice supported by the factory/kernel.
+CorePlacement validate_stock_block_sharded_worker_grid(
+    const CoreRangeSet& worker_grid,
+    const CoreCoord& worker_grid_size,
+    const char* source,
+    BlockShardedWorkerGridPolicy policy = BlockShardedWorkerGridPolicy::ContiguousOnly);
 
 uint32_t find_closest_largest_divisor(uint32_t num, uint32_t start_divisor);
 
@@ -82,7 +98,17 @@ sliding_window::ParallelConfig determine_output_parallel_config(
     const CoreCoord& compute_grid_size,
     uint32_t out_channels,
     tt::tt_metal::ShardOrientation block_shard_orientation,
-    bool is_mm_conv);
+    bool is_mm_conv,
+    bool enable_core_remapping = false);
+
+sliding_window::ParallelConfig determine_output_parallel_config(
+    const sliding_window::ParallelConfig& input_parallel_config,
+    const CoreCoord& compute_grid_size,
+    uint32_t out_channels,
+    tt::tt_metal::ShardOrientation block_shard_orientation,
+    bool is_mm_conv,
+    bool enable_core_remapping,
+    const std::optional<CoreRangeSet>& core_remapping_input_stock_grid);
 
 std::tuple<uint32_t, uint32_t> calculate_output_image_size(
     std::array<uint32_t, 2> input_image_size,
@@ -191,7 +217,8 @@ shard_or_reshard_tensor_if_required(
     uint32_t in_channels,
     uint32_t out_channels,
     bool is_mm_conv,
-    bool auto_shard);
+    bool auto_shard,
+    bool allow_segmented_worker_grid = false);
 
 Tensor fold_input_tensor_if_required(
     const ttnn::Tensor& input_tensor,

@@ -222,6 +222,11 @@ std::unordered_map<CoreCoord, std::vector<detail::CompressedStrideBlock>> create
 
     for (const auto& [core, page_strides] : input_map) {
         if (page_strides.empty()) {
+            // A sharded buffer can retain workers that own only padded tensor
+            // space. Keep an explicit no-work entry so the generic reshard
+            // program can still install zero-range runtime arguments on that
+            // worker.
+            ret_map.try_emplace(core, std::vector<detail::CompressedStrideBlock>{});
             continue;
         }
         std::vector<detail::CompressedStrideBlock> compressed_blocks;
@@ -1030,7 +1035,17 @@ operation::ProgramWithCallbacks reshard_multi_core_generic(const Tensor& input, 
         if (input.buffer()->page_size() != output.buffer()->page_size()) {
             auto output_core_to_page_range_pair =
                 get_core_page_ranges_diff_width(input.buffer(), output.buffer(), input);
-            const auto& page_stride_vector = output_core_to_page_range_pair.at(core);
+            const auto page_ranges_it = output_core_to_page_range_pair.find(core);
+            const auto& mapped_output_cores = output.buffer()->get_buffer_page_mapping()->all_cores;
+            TT_FATAL(
+                page_ranges_it != output_core_to_page_range_pair.end() ||
+                    std::find(mapped_output_cores.begin(), mapped_output_cores.end(), core) == mapped_output_cores.end(),
+                "Reshard page ranges are missing for active output core {}",
+                core);
+            static const std::vector<detail::CompressedStrideBlock> empty_page_stride_vector;
+            const auto& page_stride_vector = page_ranges_it == output_core_to_page_range_pair.end()
+                                                 ? empty_page_stride_vector
+                                                 : page_ranges_it->second;
             runtime_args_0 = get_runtime_args_for_given_ranges_diff_width(
                 physical_core_coords,
                 page_stride_vector,
@@ -1048,7 +1063,17 @@ operation::ProgramWithCallbacks reshard_multi_core_generic(const Tensor& input, 
                 page_stride_vector.size());
         } else {
             auto output_core_to_page_range_pair = get_core_page_ranges(input.buffer(), output.buffer());
-            const auto& page_stride_vector = output_core_to_page_range_pair.at(core);
+            const auto page_ranges_it = output_core_to_page_range_pair.find(core);
+            const auto& mapped_output_cores = output.buffer()->get_buffer_page_mapping()->all_cores;
+            TT_FATAL(
+                page_ranges_it != output_core_to_page_range_pair.end() ||
+                    std::find(mapped_output_cores.begin(), mapped_output_cores.end(), core) == mapped_output_cores.end(),
+                "Reshard page ranges are missing for active output core {}",
+                core);
+            static const std::vector<detail::PageStride> empty_page_stride_vector;
+            const auto& page_stride_vector = page_ranges_it == output_core_to_page_range_pair.end()
+                                                 ? empty_page_stride_vector
+                                                 : page_ranges_it->second;
             runtime_args_0 = get_runtime_args_for_given_ranges(
                 physical_core_coords,
                 page_stride_vector,

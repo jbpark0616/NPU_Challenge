@@ -320,7 +320,11 @@ void py_bind_conv2d(py::module& module) {
             bool,
             bool,
             bool,
-            std::optional<bool>>(),
+            std::optional<bool>,
+            bool,
+            std::optional<CoreRangeSet>,
+            std::vector<uint32_t>,
+            std::vector<uint32_t>>(),
         py::kw_only(),
         py::arg("weights_dtype") = std::nullopt,
         py::arg("activation") = std::nullopt,
@@ -341,7 +345,11 @@ void py_bind_conv2d(py::module& module) {
         py::arg("in_place") = false,
         py::arg("enable_kernel_stride_folding") = false,
         py::arg("enable_activation_reuse") = false,
-        py::arg("force_split_reader") = std::nullopt);
+        py::arg("force_split_reader") = std::nullopt,
+        py::arg("enable_core_remapping") = false,
+        py::arg("core_remapping_input_stock_grid") = std::nullopt,
+        py::arg("excluded_worker_rows") = std::vector<uint32_t>{},
+        py::arg("excluded_worker_columns") = std::vector<uint32_t>{});
     py_conv_config.def_readwrite("weights_dtype", &Conv2dConfig::weights_dtype, R"doc(
         Optional argument which specifies the data type of the preprocessed weights & bias tensor if the Conv2D op is responsible for preparing the weights.
         Supports ttnn.bfloat16 and ttnn.bfloat8_b.
@@ -486,6 +494,32 @@ void py_bind_conv2d(py::module& module) {
 
         ===============================================================
     )doc");
+    py_conv_config.def_readwrite(
+        "enable_core_remapping",
+        &Conv2dConfig::enable_core_remapping,
+        R"doc(
+        Explicitly enables propagation of a non-stock BLOCK_SHARDED worker placement through compatible Conv2D
+        operations. A recognized non-stock input is reanchored to stock when this flag is false, when the current
+        operation cannot execute the placement, or when the output topology expands.
+        )doc");
+    py_conv_config.def_readwrite(
+        "core_remapping_input_stock_grid",
+        &Conv2dConfig::core_remapping_input_stock_grid,
+        R"doc(Optional stock worker grid for an already-remapped Conv2D input.
+        Set this on the consumer of a remapped tensor so the placement lifetime planner can propagate or exit using
+        explicit provenance instead of inferring the stock topology from physical worker coordinates.)doc");
+    py_conv_config.def_readwrite(
+        "excluded_worker_rows",
+        &Conv2dConfig::excluded_worker_rows,
+        R"doc(Worker-row coordinates excluded from an explicitly selected Conv core placement.
+        One or more coordinates may be supplied. Row and column exclusions may be combined when the resulting
+        ROW_MAJOR BLOCK_SHARDED 3x3 placement has at most two segments per axis.)doc");
+    py_conv_config.def_readwrite(
+        "excluded_worker_columns",
+        &Conv2dConfig::excluded_worker_columns,
+        R"doc(Worker-column coordinates excluded from an explicitly selected Conv core placement.
+        One or more coordinates may be supplied. Row and column exclusions may be combined when the resulting
+        ROW_MAJOR BLOCK_SHARDED 3x3 placement has at most two segments per axis.)doc");
 
     py_conv_config.def("__repr__", [](const Conv2dConfig& config) { return fmt::format("{}", config); });
 }

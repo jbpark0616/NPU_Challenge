@@ -7,6 +7,7 @@
 #include <optional>
 #include <string>
 #include <utility>
+#include <vector>
 #include "ttnn/operations/sliding_window/sliding_window.hpp"
 #include "ttnn/tensor/tensor.hpp"
 #include "ttnn/run_operation.hpp"
@@ -116,6 +117,21 @@ struct Conv2dConfig {
     // If not Height sharded and activation block size height is not greater than 32, then this is ignored.
     // If not set, then split reader heuristic is used to determine if it should be enabled.
     std::optional<bool> force_split_reader = std::nullopt;
+
+    // Explicitly enables propagation of a non-stock input worker placement through compatible Conv operations.
+    // If false, a recognized non-stock input is reanchored to the stock placement before dispatch. If true,
+    // propagation still ends when the current Conv implementation cannot execute the placement or its output
+    // topology expands.
+    bool enable_core_remapping = false;
+
+    // Explicit placement provenance for an input produced on a remapped worker grid. This is the stock worker grid
+    // that the current input would have used before remapping. It lets the lifetime planner distinguish placement
+    // from logical sharding without reconstructing the stock grid from the remapped grid's bounding box.
+    std::optional<CoreRangeSet> core_remapping_input_stock_grid = std::nullopt;
+
+    // Worker coordinates to exclude when selecting an explicit remapped placement.
+    std::vector<uint32_t> excluded_worker_rows;
+    std::vector<uint32_t> excluded_worker_columns;
     // ===============================================================
 
     static constexpr auto attribute_names = std::make_tuple(
@@ -138,7 +154,11 @@ struct Conv2dConfig {
         "in_place",
         "enable_kernel_stride_folding",
         "enable_activation_reuse",
-        "force_split_reader");
+        "force_split_reader",
+        "enable_core_remapping",
+        "core_remapping_input_stock_grid",
+        "excluded_worker_rows",
+        "excluded_worker_columns");
     auto attribute_values() const {
         return std::make_tuple(
             std::cref(this->weights_dtype),
@@ -160,7 +180,11 @@ struct Conv2dConfig {
             std::cref(this->in_place),
             std::cref(this->enable_kernel_stride_folding),
             std::cref(this->enable_activation_reuse),
-            std::cref(this->force_split_reader));
+            std::cref(this->force_split_reader),
+            std::cref(this->enable_core_remapping),
+            std::cref(this->core_remapping_input_stock_grid),
+            std::cref(this->excluded_worker_rows),
+            std::cref(this->excluded_worker_columns));
     }
 };
 

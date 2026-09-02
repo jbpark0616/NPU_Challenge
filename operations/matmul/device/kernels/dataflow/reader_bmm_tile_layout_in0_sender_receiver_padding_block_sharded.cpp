@@ -9,6 +9,49 @@
 #include "ttnn/operations/ccl/kernel_common/worker_sync_utils.hpp"
 #include "pad_tile.hpp"
 
+#ifdef SEGMENTED_IN0_MCAST
+constexpr uint32_t in0_mcast_segment_arg_count = 6;
+
+FORCE_INLINE void write_in0_mcast_segments(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t source_l1_addr,
+    uint32_t destination_l1_addr,
+    uint32_t size_bytes) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * in0_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            destination_l1_addr);
+        // Each physical segment is an independent multicast transaction.  Do not leave it linked across a
+        // destination change: the data barrier below must be able to complete before VALID is published.
+        noc_async_write_multicast(
+            source_l1_addr, destination, size_bytes, get_arg_val<uint32_t>(arg + 4), false);
+    }
+}
+
+FORCE_INLINE void set_in0_mcast_segment_semaphores(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t valid_value_l1_addr,
+    uint32_t receiver_semaphore_addr) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * in0_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            receiver_semaphore_addr);
+        noc_semaphore_set_multicast(
+            valid_value_l1_addr, destination, get_arg_val<uint32_t>(arg + 4));
+    }
+}
+#endif
+
 void kernel_main() {
     constexpr bool core_has_output_block_work = (bool)get_compile_time_arg_val(0);
     constexpr bool core_in_in0_receiver_mcast_grid = (bool)get_compile_time_arg_val(1);
@@ -45,6 +88,11 @@ void kernel_main() {
     const uint32_t in0_mcast_dest_noc_end_y = get_arg_val<uint32_t>(rt_args_idx++);
     tt_l1_ptr uint32_t* in0_mcast_noc_x = (tt_l1_ptr uint32_t*)(get_arg_addr(increment_arg_idx(rt_args_idx, num_x)));
     tt_l1_ptr uint32_t* in0_mcast_noc_y = (tt_l1_ptr uint32_t*)(get_arg_addr(increment_arg_idx(rt_args_idx, num_y)));
+#ifdef SEGMENTED_IN0_MCAST
+    const uint32_t in0_mcast_segment_count = get_arg_val<uint32_t>(rt_args_idx++);
+    const uint32_t in0_mcast_segments_arg_start = rt_args_idx;
+    rt_args_idx += in0_mcast_segment_count * in0_mcast_segment_arg_count;
+#endif
 
     constexpr uint32_t cb_id_in0 = 0;
     constexpr uint32_t cb_id_in2 = 2;  // Sharded cb
@@ -201,6 +249,29 @@ void kernel_main() {
                         noc_semaphore_set(in0_mcast_sender_semaphore_addr_ptr, 0);
 
                         // Now we have the block in the CB address, we can mcast to dests!
+#ifdef SEGMENTED_IN0_MCAST
+                        if constexpr (!extract_shard_sub_blocks) {
+                            noc_async_write(
+                                in0_tensor_read_addr,
+                                get_noc_addr(in0_tensor_local_l1_write_addr),
+                                in0_block_size_bytes);
+                        }
+                        write_in0_mcast_segments(
+                            in0_mcast_segments_arg_start,
+                            in0_mcast_segment_count,
+                            in0_tensor_read_addr,
+                            in0_tensor_local_l1_write_addr,
+                            in0_block_size_bytes);
+                        // Every physical segment is an independent transaction. Complete all remote data writes
+                        // (and the optional sender-local CB copy) before publishing VALID on any receiver.
+                        noc_async_write_barrier();
+                        in0_mcast_receiver_semaphore_addr_ptr[0] = VALID;
+                        set_in0_mcast_segment_semaphores(
+                            in0_mcast_segments_arg_start,
+                            in0_mcast_segment_count,
+                            in0_mcast_sender_semaphore_valid_addr,
+                            in0_mcast_receiver_semaphore_addr);
+#else
                         uint64_t in0_multicast_data_addr = in0_multicast_data_noc | in0_tensor_local_l1_write_addr;
 
                         if constexpr (core_in_in0_receiver_mcast_grid) {
@@ -263,6 +334,7 @@ void kernel_main() {
                                 in0_mcast_receiver_semaphore_noc_addr,
                                 in0_mcast_num_cores);
                         }
+#endif
                         // Note: no need for write barrier, since these two multicasts are done on the same noc id and
                         // same vc even though cmd bufs are different Also, this only works because we are setting VCs
                         // statically (using NOC_CMD_STATIC_VC).

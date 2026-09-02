@@ -13,6 +13,7 @@
 #include "tt-metalium/buffer_types.hpp"
 #include "ttnn/operation.hpp"
 #include "ttnn/operations/matmul/device/matmul_op.hpp"
+#include "ttnn/operations/conv/conv2d/conv_core_placement.hpp"
 #include "ttnn/operations/eltwise/unary/common/unary_op_utils.hpp"
 #include "ttnn/operations/compute_throttle_utils.hpp"
 
@@ -22,6 +23,49 @@ using ttnn::operations::unary::UnaryOpType;
 using ttnn::operations::unary::UnaryWithParam;
 
 namespace reuse_mcast_optimized_helpers {
+
+using ttnn::operations::conv::CorePlacement;
+using ttnn::operations::conv::CorePlacementMcastAxis;
+using ttnn::operations::conv::make_core_placement_from_worker_grid;
+using ttnn::operations::conv::serialize_mcast_segments;
+
+tt::tt_metal::CoreRangeSet logical_rectangle_worker_cores(
+    const CorePlacement& placement, uint32_t width, uint32_t height) {
+    TT_FATAL(
+        width <= placement.shard_grid_size.x && height <= placement.shard_grid_size.y,
+        "Matmul logical rectangle ({},{}) exceeds segmented placement ({},{})",
+        width,
+        height,
+        placement.shard_grid_size.x,
+        placement.shard_grid_size.y);
+    std::vector<tt::tt_metal::CoreRange> workers;
+    workers.reserve(width * height);
+    for (uint32_t y = 0; y < height; ++y) {
+        for (uint32_t x = 0; x < width; ++x) {
+            workers.emplace_back(placement.worker_core({x, y}));
+        }
+    }
+    return tt::tt_metal::CoreRangeSet(std::move(workers));
+}
+
+tt::tt_metal::CoreRangeSet logical_row_worker_cores(
+    const CorePlacement& placement, uint32_t logical_y, uint32_t width) {
+    std::vector<tt::tt_metal::CoreRange> workers;
+    workers.reserve(width);
+    for (uint32_t x = 0; x < width; ++x) {
+        workers.emplace_back(placement.worker_core({x, logical_y}));
+    }
+    return tt::tt_metal::CoreRangeSet(std::move(workers));
+}
+
+uint32_t multicast_destination_count(const ttnn::operations::conv::CorePlacementMcastLine& line) {
+    uint32_t destinations = 0;
+    for (const auto& segment : line.segments) {
+        TT_FATAL(segment.destination_count > 0, "Matmul multicast must not emit a zero-destination segment");
+        destinations += segment.destination_count;
+    }
+    return destinations;
+}
 
 tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     tt_metal::Program& program,
@@ -144,6 +188,23 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
 
     uint32_t start_core_x = 0;
     uint32_t start_core_y = 0;
+    if (in0_is_sharded) {
+        const CoreRange in0_core_box = in0_buffer->shard_spec().grid().bounding_box();
+        start_core_x = in0_core_box.start_coord.x;
+        start_core_y = in0_core_box.start_coord.y;
+    }
+    if (output_is_sharded) {
+        const CoreCoord input_grid_start{start_core_x, start_core_y};
+        const CoreCoord output_grid_start = out_buffer->shard_spec().grid().bounding_box().start_coord;
+        TT_FATAL(
+            output_grid_start == input_grid_start,
+            "2D multicast matmul requires sharded input and output grids to have the same origin; input=({},{}), "
+            "output=({},{})",
+            start_core_x,
+            start_core_y,
+            output_grid_start.x,
+            output_grid_start.y);
+    }
 
     uint32_t num_blocks_y = ((M - 1) / per_core_M) + 1;
     uint32_t num_blocks_x = ((N - 1) / per_core_N) + 1;
@@ -153,9 +214,47 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
         std::swap(num_cores_with_work_c, num_cores_with_work_r);
     }
 
+    std::optional<CorePlacement> segmented_placement;
+    if (in0_block_sharded) {
+        auto placement = make_core_placement_from_worker_grid(
+            device->compute_with_storage_grid_size(), in0_buffer->shard_spec().grid());
+        if (placement.has_worker_gaps()) {
+            TT_FATAL(!fuse_op, "Segmented 2D multicast matmul does not support fused collective signaling");
+            TT_FATAL(
+                !transpose_mcast,
+                "Segmented 2D multicast matmul currently supports only ROW_MAJOR BLOCK_SHARDED placement");
+            TT_FATAL(
+                output_is_sharded,
+                "Segmented 2D multicast matmul requires a sharded output");
+            TT_FATAL(
+                num_cores_with_work_c > 1 && num_cores_with_work_r > 1,
+                "Segmented 2D multicast matmul requires at least two logical workers on each multicast axis");
+            TT_FATAL(
+                placement.shard_grid_size.x == num_cores_with_work_c &&
+                    placement.shard_grid_size.y == num_cores_with_work_r,
+                "Segmented 2D multicast matmul currently requires every placed worker to produce one output "
+                "block; placement=({},{}) work=({},{})",
+                placement.shard_grid_size.x,
+                placement.shard_grid_size.y,
+                num_cores_with_work_c,
+                num_cores_with_work_r);
+            const auto output_placement = make_core_placement_from_worker_grid(
+                device->compute_with_storage_grid_size(), out_buffer->shard_spec().grid());
+            TT_FATAL(
+                output_placement.worker_x == placement.worker_x && output_placement.worker_y == placement.worker_y,
+                "Segmented 2D multicast matmul requires input and output to use the identical worker placement");
+            segmented_placement = std::move(placement);
+        }
+    }
+
     CoreRange all_cores_with_work(
         {(std::size_t)start_core_x, (std::size_t)start_core_y},
         {(std::size_t)start_core_x + num_cores_with_work_c - 1, (std::size_t)start_core_y + num_cores_with_work_r - 1});
+    CoreRangeSet all_cores_with_work_set({all_cores_with_work});
+    if (segmented_placement.has_value()) {
+        all_cores_with_work_set = logical_rectangle_worker_cores(
+            *segmented_placement, num_cores_with_work_c, num_cores_with_work_r);
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     //                      IN0 SHARDED SENDER/RECEIVER
@@ -171,7 +270,9 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     // Only used for in0 block sharded
     std::optional<CoreRange> in0_mcast_cores_without_work_and_not_in_receiver_grid;
     if (in0_block_sharded) {
-        CoreCoord in0_shard_grid = in0_buffer->shard_spec().grid().bounding_box().grid_size();
+        CoreCoord in0_shard_grid = segmented_placement.has_value()
+            ? segmented_placement->shard_grid_size
+            : in0_buffer->shard_spec().grid().bounding_box().grid_size();
         // in0 shard grid already accounts for transpose_mcast
         // ie. If transpose_mcast, in0 width is along y
         in0_sender_num_cores_along_width = transpose_mcast ? in0_shard_grid.y : in0_shard_grid.x;
@@ -188,20 +289,30 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
         }
 
         if (transpose_mcast) {
-            in0_mcast_receiver_grid_diff_coord_start = device->worker_core_from_logical_core({0, start_core_y}).y;
+            in0_mcast_receiver_grid_diff_coord_start =
+                device->worker_core_from_logical_core({start_core_x, start_core_y}).y;
             in0_mcast_receiver_grid_diff_coord_end =
-                device->worker_core_from_logical_core({0, start_core_y + num_blocks_x - 1}).y;
+                device->worker_core_from_logical_core({start_core_x, start_core_y + num_blocks_x - 1}).y;
             in0_mcast_noc_y.reserve(in0_sender_num_cores_along_width);
             for (uint32_t core_idx_y = 0; core_idx_y < in0_sender_num_cores_along_width; ++core_idx_y) {
-                in0_mcast_noc_y.push_back(device->worker_core_from_logical_core({0, core_idx_y}).y);
+                in0_mcast_noc_y.push_back(
+                    device->worker_core_from_logical_core({start_core_x, start_core_y + core_idx_y}).y);
             }
         } else {
-            in0_mcast_receiver_grid_diff_coord_start = device->worker_core_from_logical_core({start_core_x, 0}).x;
-            in0_mcast_receiver_grid_diff_coord_end =
-                device->worker_core_from_logical_core({start_core_x + num_blocks_x - 1, 0}).x;
+            const auto first_worker = segmented_placement.has_value()
+                ? segmented_placement->worker_core({0, 0})
+                : CoreCoord{start_core_x, start_core_y};
+            const auto last_worker = segmented_placement.has_value()
+                ? segmented_placement->worker_core({num_blocks_x - 1, 0})
+                : CoreCoord{start_core_x + num_blocks_x - 1, start_core_y};
+            in0_mcast_receiver_grid_diff_coord_start = device->worker_core_from_logical_core(first_worker).x;
+            in0_mcast_receiver_grid_diff_coord_end = device->worker_core_from_logical_core(last_worker).x;
             in0_mcast_noc_x.reserve(in0_sender_num_cores_along_width);
             for (uint32_t core_idx_x = 0; core_idx_x < in0_sender_num_cores_along_width; ++core_idx_x) {
-                in0_mcast_noc_x.push_back(device->worker_core_from_logical_core({core_idx_x, 0}).x);
+                const auto worker = segmented_placement.has_value()
+                    ? segmented_placement->worker_core({core_idx_x, 0})
+                    : CoreCoord{start_core_x + core_idx_x, start_core_y};
+                in0_mcast_noc_x.push_back(device->worker_core_from_logical_core(worker).x);
             }
         }
 
@@ -217,7 +328,14 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     CoreRange all_cores(
         {(std::size_t)start_core_x, (std::size_t)start_core_y},
         {(std::size_t)start_core_x + num_cores_c - 1, (std::size_t)start_core_y + num_cores_r - 1});
-    const auto& cores = grid_to_cores(all_cores.start_coord, all_cores.end_coord, true);
+    CoreRangeSet all_cores_set({all_cores});
+    if (segmented_placement.has_value()) {
+        TT_FATAL(
+            num_cores_c == num_cores_with_work_c && num_cores_r == num_cores_with_work_r,
+            "Segmented 2D multicast matmul does not support auxiliary no-work sender cores");
+        all_cores_set = all_cores_with_work_set;
+    }
+    const auto& cores = corerange_to_cores(all_cores_set, std::nullopt, true);
     //////////////////////////////////////////////////////////////////////////////////////////
     //       IN0 SENDER (interleaved only) and IN1 SENDER (both interleaved and sharded)
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -251,6 +369,10 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
         std::swap(in0_sender_interleaved, in1_sender);
         std::swap(in0_sender_in1_receiver, in0_receiver_in1_sender);
     }
+    CoreRangeSet in1_sender_set({in1_sender});
+    if (segmented_placement.has_value()) {
+        in1_sender_set = logical_row_worker_cores(*segmented_placement, 0, num_cores_with_work_c);
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //       IN0 RECEIVER (interleaved only) and IN1 RECEIVER (both interleaved and sharded)
@@ -281,6 +403,16 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     }
     CoreRangeSet in0_receiver_interleaved(in0_receiver_interleaved_set);
     CoreRangeSet in1_receiver(in1_receiver_set);
+    if (segmented_placement.has_value()) {
+        std::vector<CoreRange> receiver_workers;
+        receiver_workers.reserve(num_cores_with_work_c * (num_cores_with_work_r - 1));
+        for (uint32_t logical_y = 1; logical_y < num_cores_with_work_r; ++logical_y) {
+            for (uint32_t logical_x = 0; logical_x < num_cores_with_work_c; ++logical_x) {
+                receiver_workers.emplace_back(segmented_placement->worker_core({logical_x, logical_y}));
+            }
+        }
+        in1_receiver = CoreRangeSet(std::move(receiver_workers));
+    }
 
     std::optional<CoreRange> in0_receiver_in1_receiver_interleaved_other_cores;
     if (split_half) {
@@ -291,10 +423,10 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     }
 
     // Mcast args
-    auto in0_mcast_sender_semaphore_id = tt_metal::CreateSemaphore(program, all_cores, INVALID);
-    auto in0_mcast_receiver_semaphore_id = tt_metal::CreateSemaphore(program, all_cores, INVALID);
-    auto in1_mcast_sender_semaphore_id = tt_metal::CreateSemaphore(program, all_cores, INVALID);
-    auto in1_mcast_receiver_semaphore_id = tt_metal::CreateSemaphore(program, all_cores, INVALID);
+    auto in0_mcast_sender_semaphore_id = tt_metal::CreateSemaphore(program, all_cores_set, INVALID);
+    auto in0_mcast_receiver_semaphore_id = tt_metal::CreateSemaphore(program, all_cores_set, INVALID);
+    auto in1_mcast_sender_semaphore_id = tt_metal::CreateSemaphore(program, all_cores_set, INVALID);
+    auto in1_mcast_receiver_semaphore_id = tt_metal::CreateSemaphore(program, all_cores_set, INVALID);
 
     bool in1_is_dram = in1_buffer->buffer_type() == tt_metal::BufferType::DRAM;
     bool in3_is_dram = true;
@@ -556,6 +688,10 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     if (in0_height_sharded) {
         mm_kernel_in0_sender_interleaved_defines["IN0_SHARDED"] = "1";
     }
+    if (segmented_placement.has_value()) {
+        mm_kernel_in0_sender_sharded_defines["SEGMENTED_IN0_MCAST"] = "1";
+        mm_kernel_in1_sender_writer_defines["SEGMENTED_IN1_MCAST"] = "1";
+    }
 
     if (in1_receiver.num_cores() == 0) {
         mm_kernel_in1_sender_writer_defines["SKIP_MCAST"] = "1";
@@ -622,7 +758,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
             program,
             "ttnn/cpp/ttnn/operations/matmul/device/kernels/dataflow/"
             "reader_bmm_tile_layout_in0_sender_receiver_padding_block_sharded.cpp",
-            all_cores_with_work,  // in0_mcast_cores_with_work_and_in_receiver_grid
+            all_cores_with_work_set,  // in0_mcast_cores_with_work_and_in_receiver_grid
             tt_metal::DataMovementConfig{
                 .processor = tt_metal::DataMovementProcessor::RISCV_1,
                 .noc = in0_noc,
@@ -668,7 +804,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     auto mm_kernel_in1_sender_writer_id = tt_metal::CreateKernel(
         program,
         "ttnn/cpp/ttnn/operations/matmul/device/kernels/dataflow/reader_bmm_tile_layout_in1_sender_writer_padding.cpp",
-        in1_sender,
+        in1_sender_set,
         tt_metal::DataMovementConfig{
             .processor = tt_metal::DataMovementProcessor::RISCV_0,
             .noc = in1_noc,
@@ -769,7 +905,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     tt_metal::CreateKernel(
         program,
         "ttnn/cpp/ttnn/operations/matmul/device/kernels/compute/bmm_large_block_zm_fused_bias_activation.cpp",
-        all_cores_with_work,
+        all_cores_with_work_set,
         tt_metal::ComputeConfig{
             .math_fidelity = math_fidelity,
             .fp32_dest_acc_en = fp32_dest_acc_en,
@@ -786,7 +922,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     if (in0_height_sharded) {
         src0_cb_config.set_globally_allocated_address(*in0_buffer);
     }
-    tt_metal::CreateCircularBuffer(program, all_cores, src0_cb_config);
+    tt_metal::CreateCircularBuffer(program, all_cores_set, src0_cb_config);
     log_debug(
         LogOp,
         "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -803,7 +939,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     if (in1_is_sharded and not in1_is_dram) {
         src1_cb_config.set_globally_allocated_address(*in1_buffer);
     }
-    tt_metal::CreateCircularBuffer(program, all_cores, src1_cb_config);
+    tt_metal::CreateCircularBuffer(program, all_cores_set, src1_cb_config);
     log_debug(
         LogOp,
         "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -820,7 +956,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                 .set_page_size(src2_cb_index, in0_single_tile_size)
                 .set_globally_allocated_address(*in0_buffer)
                 .set_tile_dims(src2_cb_index, in0_tile);
-        cb_src2 = tt_metal::CreateCircularBuffer(program, all_cores, src2_cb_config);
+        cb_src2 = tt_metal::CreateCircularBuffer(program, all_cores_set, src2_cb_config);
         log_debug(
             LogOp,
             "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -834,7 +970,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
         tt::tt_metal::CircularBufferConfig cb_for_l1_array_config =
             tt::tt_metal::CircularBufferConfig(32 * 2, {{l1_cb_index, tt::DataFormat::Float16_b}})
                 .set_page_size(l1_cb_index, 32 * 2);
-        tt_metal::CreateCircularBuffer(program, all_cores, cb_for_l1_array_config);
+        tt_metal::CreateCircularBuffer(program, all_cores_set, cb_for_l1_array_config);
     }
 
     uint32_t output_cb_index = tt::CBIndex::c_4;
@@ -861,7 +997,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                                 .set_page_size(interm0_cb_index, interm0_single_tile_size)
                                 .set_tile_dims(interm0_cb_index, output_tile);
 
-        tt_metal::CreateCircularBuffer(program, CoreRangeSet({all_cores}), interm0_cb_config);
+        tt_metal::CreateCircularBuffer(program, all_cores_set, interm0_cb_config);
         log_debug(
             LogOp,
             "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -883,7 +1019,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     if (output_is_sharded) {
         output_cb_config = output_cb_config.set_globally_allocated_address(*out_buffer);
     }
-    auto cb_output = tt_metal::CreateCircularBuffer(program, CoreRangeSet({all_cores}), output_cb_config);
+    auto cb_output = tt_metal::CreateCircularBuffer(program, all_cores_set, output_cb_config);
     log_debug(
         LogOp,
         "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -899,7 +1035,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
             tt_metal::CircularBufferConfig(in3_CB_size, {{src3_cb_index, bias_data_format}})
                 .set_page_size(src3_cb_index, bias_single_tile_size)
                 .set_tile_dims(src3_cb_index, bias_tile);
-        tt_metal::CreateCircularBuffer(program, all_cores, cb_src3_config);
+        tt_metal::CreateCircularBuffer(program, all_cores_set, cb_src3_config);
         log_debug(
             LogOp,
             "CB {} :: PS = {}, NP = {}, TOTAL = {}",
@@ -915,7 +1051,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
             tt_metal::CircularBufferConfig(in1_single_tile_size, {{in1_intermediate_cb_index, in1_data_format}})
                 .set_page_size(in1_intermediate_cb_index, in1_single_tile_size)
                 .set_tile_dims(in1_intermediate_cb_index, in1_tile);
-        tt_metal::CreateCircularBuffer(program, all_cores, cb_in1_intermediate_config);
+        tt_metal::CreateCircularBuffer(program, all_cores_set, cb_in1_intermediate_config);
     }
     if (in0_needs_intermediate_cb_read) {
         uint32_t in0_intermediate_cb_index = tt::CBIndex::c_8;
@@ -923,7 +1059,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
             tt_metal::CircularBufferConfig(in0_single_tile_size, {{in0_intermediate_cb_index, in0_data_format}})
                 .set_page_size(in0_intermediate_cb_index, in0_single_tile_size)
                 .set_tile_dims(in0_intermediate_cb_index, in0_tile);
-        tt_metal::CreateCircularBuffer(program, all_cores, cb_in0_intermediate_config);
+        tt_metal::CreateCircularBuffer(program, all_cores_set, cb_in0_intermediate_config);
     }
     // Parameters for last row, col, or block
     uint32_t last_per_core_M = M % per_core_M == 0 ? per_core_M : M % per_core_M;
@@ -962,7 +1098,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     uint32_t in1_end_idx = num_blocks_x - 1;
     const auto& in0_sender_interleaved_cores = grid_to_cores(
         in0_sender_interleaved.start_coord, in0_sender_interleaved.end_coord, true);  // Only used for interleaved in0
-    const auto& in1_sender_cores = grid_to_cores(in1_sender.start_coord, in1_sender.end_coord, true);
+    const auto& in1_sender_cores = corerange_to_cores(in1_sender_set, std::nullopt, true);
     const auto& in1_receiver_cores = corerange_to_cores(in1_receiver, std::nullopt, true);
     std::vector<CoreCoord> in1_receiver_other_cores;
     if (in0_receiver_in1_receiver_interleaved_other_cores.has_value()) {
@@ -973,12 +1109,24 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
     }
 
     for (const auto& core : cores) {
-        CoreCoord left_core = {(std::size_t)start_core_x, (std::size_t)core.y};
-        CoreCoord left_core_plus_one = {(std::size_t)start_core_x + 1, (std::size_t)core.y};
-        CoreCoord right_core = {(std::size_t)start_core_x + num_cores_with_work_c - 1, (std::size_t)core.y};
-        CoreCoord top_core = {(std::size_t)core.x, (std::size_t)start_core_y};
-        CoreCoord top_core_plus_one = {(std::size_t)core.x, (std::size_t)start_core_y + 1};
-        CoreCoord bottom_core = {(std::size_t)core.x, (std::size_t)start_core_y + num_cores_with_work_r - 1};
+        const auto placement_logical_core = segmented_placement.has_value()
+            ? segmented_placement->shard_core(core)
+            : std::optional<ttnn::operations::conv::ShardCoord>{
+                  ttnn::operations::conv::ShardCoord{core.x - start_core_x, core.y - start_core_y}};
+        TT_FATAL(placement_logical_core.has_value(), "Matmul worker {} is outside the selected placement", core);
+        const uint32_t logical_x = placement_logical_core->x;
+        const uint32_t logical_y = placement_logical_core->y;
+        const auto selected_worker = [&](uint32_t x, uint32_t y) {
+            return segmented_placement.has_value()
+                ? segmented_placement->worker_core({x, y})
+                : CoreCoord{start_core_x + x, start_core_y + y};
+        };
+        CoreCoord left_core = selected_worker(0, logical_y);
+        CoreCoord left_core_plus_one = selected_worker(1, logical_y);
+        CoreCoord right_core = selected_worker(num_cores_with_work_c - 1, logical_y);
+        CoreCoord top_core = selected_worker(logical_x, 0);
+        CoreCoord top_core_plus_one = selected_worker(logical_x, 1);
+        CoreCoord bottom_core = selected_worker(logical_x, num_cores_with_work_r - 1);
 
         auto left_core_physical = device->worker_core_from_logical_core(left_core);
         auto left_core_plus_one_physical = device->worker_core_from_logical_core(left_core_plus_one);
@@ -986,8 +1134,8 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
         auto top_core_physical = device->worker_core_from_logical_core(top_core);
         auto top_core_plus_one_physical = device->worker_core_from_logical_core(top_core_plus_one);
         auto bottom_core_physical = device->worker_core_from_logical_core(bottom_core);
-        uint32_t in0_idx = core.y - start_core_y;
-        uint32_t in1_idx = core.x - start_core_x;
+        uint32_t in0_idx = logical_y;
+        uint32_t in1_idx = logical_x;
 
         auto in0_mcast_sender = left_core_physical;
         auto in1_mcast_sender = top_core_physical;
@@ -1019,7 +1167,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
             std::vector<uint32_t> mm_in0_sender_args;
             if (transpose_mcast) {
                 in0_mcast_receiver_grid_same_coord = device->worker_core_from_logical_core(core).x;
-                mm_in0_sender_args.push_back(core.y);
+                mm_in0_sender_args.push_back(logical_y);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_same_coord);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_diff_coord_start);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_same_coord);
@@ -1028,13 +1176,25 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                 mm_in0_sender_args.insert(mm_in0_sender_args.end(), in0_mcast_noc_y.begin(), in0_mcast_noc_y.end());
             } else {
                 in0_mcast_receiver_grid_same_coord = device->worker_core_from_logical_core(core).y;
-                mm_in0_sender_args.push_back(core.x);
+                mm_in0_sender_args.push_back(logical_x);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_diff_coord_start);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_same_coord);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_diff_coord_end);
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_same_coord);
                 mm_in0_sender_args.insert(mm_in0_sender_args.end(), in0_mcast_noc_x.begin(), in0_mcast_noc_x.end());
                 mm_in0_sender_args.push_back(in0_mcast_receiver_grid_same_coord);
+            }
+            if (segmented_placement.has_value()) {
+                const auto remote_line = segmented_placement->remote_mcast_line_for_worker_sender(
+                    CorePlacementMcastAxis::Row, logical_y, core);
+                TT_FATAL(
+                    multicast_destination_count(remote_line) == num_blocks_x - 1,
+                    "Segmented Matmul in0 row multicast destination count does not match its semaphore barrier");
+                const auto segment_args = serialize_mcast_segments(
+                    remote_line,
+                    in0_noc == tt::tt_metal::NOC::NOC_0,
+                    [&](CoreCoord worker) { return device->worker_core_from_logical_core(worker); });
+                mm_in0_sender_args.insert(mm_in0_sender_args.end(), segment_args.begin(), segment_args.end());
             }
             if (in1_idx < num_blocks_x) {
                 tt_metal::SetRuntimeArgs(
@@ -1081,7 +1241,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                 (std::uint32_t)in0_mcast_sender.y   // in0_mcast_sender_noc_y
             };
             // left half
-            if (core.x <= half_core || (!transpose_mcast and core.y == start_core_y)) {
+            if (logical_x <= half_core || (!transpose_mcast and logical_y == 0)) {
                 tt_metal::SetRuntimeArgs(program, mm_kernel_in0_receiver_id, core, mm_in0_receiver_args);
             }
             // right half
@@ -1113,6 +1273,20 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                     (std::uint32_t)out_buffer->address(),
                     ((std::uint32_t)in1_idx * per_core_N) + (in0_idx * per_core_M * N)  // out_tensor_start_tile_id
                 };
+                if (segmented_placement.has_value()) {
+                    const auto remote_line = segmented_placement->remote_mcast_line_for_worker_sender(
+                        CorePlacementMcastAxis::Column, logical_x, core);
+                    TT_FATAL(
+                        multicast_destination_count(remote_line) == num_blocks_y - 1,
+                        "Segmented Matmul in1 column multicast destination count does not match its semaphore "
+                        "barrier");
+                    const auto segment_args = serialize_mcast_segments(
+                        remote_line,
+                        in1_noc == tt::tt_metal::NOC::NOC_0,
+                        [&](CoreCoord worker) { return device->worker_core_from_logical_core(worker); });
+                    mm_in1_sender_writer_args.insert(
+                        mm_in1_sender_writer_args.begin() + 6, segment_args.begin(), segment_args.end());
+                }
 
                 if (in1_idx == in1_end_idx) {  // right cores when no transpose_mcast
                     // padding args (READER)
@@ -1310,7 +1484,7 @@ tt::tt_metal::operation::ProgramWithCallbacks create_program_mcast_in0_in1(
                 }
 
                 // left half
-                if (core.x <= half_core || (transpose_mcast and core.y == start_core_y)) {
+                if (logical_x <= half_core || (transpose_mcast and logical_y == 0)) {
                     tt_metal::SetRuntimeArgs(
                         program, mm_kernel_in1_receiver_writer_id, core, mm_in1_receiver_writer_args);
                 }

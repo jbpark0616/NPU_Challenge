@@ -46,10 +46,17 @@ void kernel_main() {
     }
 
     uint32_t i = 0;
+#ifdef SEGMENTED_ACT_MCAST
+    const uint32_t act_mcast_segment_count = get_arg_val<uint32_t>(i++);
+    const uint32_t act_mcast_segments_arg_start = i;
+    constexpr uint32_t act_mcast_segment_arg_count = 6;
+    i += act_mcast_segment_count * act_mcast_segment_arg_count;
+#else
     uint32_t act_mcast_dest_noc_start_x = get_arg_val<uint32_t>(i++);
     uint32_t act_mcast_dest_noc_start_y = get_arg_val<uint32_t>(i++);
     uint32_t act_mcast_dest_noc_end_x = get_arg_val<uint32_t>(i++);
     uint32_t act_mcast_dest_noc_end_y = get_arg_val<uint32_t>(i++);
+#endif
     uint32_t act_mcast_sender_id = get_arg_val<uint32_t>(i++);
     uint32_t act_mcast_sender_noc_x = get_arg_val<uint32_t>(i++);
     const bool is_receiver_core = get_arg_val<uint32_t>(i++) > 0;
@@ -79,10 +86,12 @@ void kernel_main() {
     volatile tt_l1_ptr uint32_t* act_mcast_sender_semaphore_addr_ptr =
         reinterpret_cast<volatile tt_l1_ptr uint32_t*>(act_mcast_sender_semaphore_addr);
 
+#ifndef SEGMENTED_ACT_MCAST
     uint64_t act_multicast_noc_addr = get_noc_multicast_addr(
         act_mcast_dest_noc_start_x, act_mcast_dest_noc_start_y, act_mcast_dest_noc_end_x, act_mcast_dest_noc_end_y, 0);
 
     uint64_t act_mcast_receiver_semaphore_noc_addr = act_multicast_noc_addr | act_mcast_receiver_semaphore_addr;
+#endif
 
     // TODO: need to make the read coalescing optimization cleaner
     // currently works for the case of num_coalesced_reads == weight_size_w since these reads are contiguous on both
@@ -153,6 +162,56 @@ void kernel_main() {
                     // Now we have the block in the CB address, we can mcast to dests!
                     uint32_t tilized_act_start_address = get_read_ptr(tilized_in0_cb_id);
 
+#ifdef SEGMENTED_ACT_MCAST
+                    const uint32_t act_mcast_destination_l1_addr = get_write_ptr(cb_id_act);
+                    // Keep the sender-local transfer separate. Every serialized
+                    // segment contains remote receivers only, matching the
+                    // device-tested segmented one-to-all protocol.
+                    noc_async_write(
+                        get_noc_addr(tilized_act_start_address),
+                        get_noc_addr(act_mcast_destination_l1_addr),
+                        act_mcast_sender_size_bytes);
+                    for (uint32_t segment = 0; segment < act_mcast_segment_count; ++segment) {
+                        const uint32_t arg = act_mcast_segments_arg_start + segment * act_mcast_segment_arg_count;
+                        const uint32_t start_x = get_arg_val<uint32_t>(arg + 0);
+                        const uint32_t start_y = get_arg_val<uint32_t>(arg + 1);
+                        const uint32_t end_x = get_arg_val<uint32_t>(arg + 2);
+                        const uint32_t end_y = get_arg_val<uint32_t>(arg + 3);
+                        const uint32_t destination_count = get_arg_val<uint32_t>(arg + 4);
+                        const bool contains_sender = get_arg_val<uint32_t>(arg + 5) != 0;
+                        const uint64_t destination =
+                            get_noc_multicast_addr(start_x, start_y, end_x, end_y, act_mcast_destination_l1_addr);
+                        (void)contains_sender;  // Remote-only plans always serialize false.
+                        noc_async_write_multicast(
+                            tilized_act_start_address,
+                            destination,
+                            act_mcast_sender_size_bytes,
+                            destination_count,
+                            false);
+                    }
+                    // All segments carry one logical activation block. Complete every data
+                    // transfer before publishing VALID to any physical segment.
+                    noc_async_write_barrier();
+
+                    for (uint32_t segment = 0; segment < act_mcast_segment_count; ++segment) {
+                        const uint32_t arg = act_mcast_segments_arg_start + segment * act_mcast_segment_arg_count;
+                        const uint32_t start_x = get_arg_val<uint32_t>(arg + 0);
+                        const uint32_t start_y = get_arg_val<uint32_t>(arg + 1);
+                        const uint32_t end_x = get_arg_val<uint32_t>(arg + 2);
+                        const uint32_t end_y = get_arg_val<uint32_t>(arg + 3);
+                        const uint32_t destination_count = get_arg_val<uint32_t>(arg + 4);
+                        const bool contains_sender = get_arg_val<uint32_t>(arg + 5) != 0;
+                        const uint64_t destination = get_noc_multicast_addr(
+                            start_x, start_y, end_x, end_y, act_mcast_receiver_semaphore_addr);
+                        (void)contains_sender;  // Remote-only plans always serialize false.
+                        noc_semaphore_set_multicast(
+                            act_mcast_sender_semaphore_valid_addr, destination, destination_count, false);
+                    }
+                    noc_semaphore_set(act_mcast_receiver_semaphore_addr_ptr, VALID);
+                    if (is_receiver_core) {
+                        noc_semaphore_wait(act_mcast_receiver_semaphore_addr_ptr, VALID);
+                    }
+#else
                     uint64_t act_multicast_data_addr = act_multicast_noc_addr | get_write_ptr(cb_id_act);
                     if (is_receiver_core) {
                         if constexpr (act_mcast_num_cores) {
@@ -206,6 +265,7 @@ void kernel_main() {
                             act_mcast_receiver_semaphore_noc_addr,
                             act_mcast_num_cores + 1);
                     }
+#endif
                 } else if (is_receiver_core) {
                     // MCAST RECEIVER: receive entire tilized input from sender core
                     // Set act semaphore value to INVALID

@@ -8,6 +8,49 @@
 #include "hostdevcommon/common_values.hpp"
 #include "ttnn/operations/ccl/kernel_common/worker_sync_utils.hpp"
 #include "ckernel.h"
+
+#ifdef SEGMENTED_IN1_MCAST
+constexpr uint32_t in1_mcast_segment_arg_count = 6;
+
+FORCE_INLINE void write_in1_mcast_segments(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t source_l1_addr,
+    uint32_t destination_l1_addr,
+    uint32_t size_bytes) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * in1_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            destination_l1_addr);
+        // Segments may use different multicast rectangles, so each transaction must be independently completed
+        // before receiver semaphores are released.
+        noc_async_write_multicast(
+            source_l1_addr, destination, size_bytes, get_arg_val<uint32_t>(arg + 4), false);
+    }
+}
+
+FORCE_INLINE void set_in1_mcast_segment_semaphores(
+    uint32_t segments_arg_start,
+    uint32_t segment_count,
+    uint32_t receiver_semaphore_addr) {
+    for (uint32_t segment = 0; segment < segment_count; ++segment) {
+        const uint32_t arg = segments_arg_start + segment * in1_mcast_segment_arg_count;
+        const uint64_t destination = get_noc_multicast_addr(
+            get_arg_val<uint32_t>(arg + 0),
+            get_arg_val<uint32_t>(arg + 1),
+            get_arg_val<uint32_t>(arg + 2),
+            get_arg_val<uint32_t>(arg + 3),
+            receiver_semaphore_addr);
+        noc_semaphore_set_multicast(
+            receiver_semaphore_addr, destination, get_arg_val<uint32_t>(arg + 4));
+    }
+}
+#endif
+
 void kernel_main() {
     // READER
     uint32_t rt_args_idx = 0;
@@ -19,6 +62,11 @@ void kernel_main() {
     const uint32_t in1_mcast_dest_noc_start_y = get_arg_val<uint32_t>(rt_args_idx++);
     const uint32_t in1_mcast_dest_noc_end_x = get_arg_val<uint32_t>(rt_args_idx++);
     const uint32_t in1_mcast_dest_noc_end_y = get_arg_val<uint32_t>(rt_args_idx++);
+#ifdef SEGMENTED_IN1_MCAST
+    const uint32_t in1_mcast_segment_count = get_arg_val<uint32_t>(rt_args_idx++);
+    const uint32_t in1_mcast_segments_arg_start = rt_args_idx;
+    rt_args_idx += in1_mcast_segment_count * in1_mcast_segment_arg_count;
+#endif
 
     // sparsity args
     const uint32_t sparsity_addr = get_arg_val<uint32_t>(rt_args_idx++);
@@ -348,12 +396,22 @@ void kernel_main() {
                         // Now we have the block in the CB address, we can mcast to dests!
                         uint64_t in1_multicast_data_addr = in1_multicast_data_noc | in1_start_address;
                         // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_IN1_MCAST
+                        write_in1_mcast_segments(
+                            in1_mcast_segments_arg_start,
+                            in1_mcast_segment_count,
+                            in1_start_address,
+                            in1_start_address,
+                            in1_block_size_bytes);
+                        noc_async_write_barrier();
+#else
                         noc_async_write_multicast(
                             in1_start_address,
                             in1_multicast_data_addr,
                             in1_block_size_bytes,
                             in1_mcast_num_cores,
                             true);
+#endif
 
                         // Note: no need for write barrier, since these two multicasts are done on the same noc id and
                         // same vc even though cmd bufs are different Also, this only works because we are setting VCs
@@ -368,10 +426,17 @@ void kernel_main() {
 
                         // We should also multicast the flag to destinations
                         // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_IN1_MCAST
+                        set_in1_mcast_segment_semaphores(
+                            in1_mcast_segments_arg_start,
+                            in1_mcast_segment_count,
+                            in1_mcast_receiver_semaphore_addr);
+#else
                         noc_semaphore_set_multicast(
                             in1_mcast_receiver_semaphore_addr,
                             in1_mcast_receiver_semaphore_noc_addr,
                             in1_mcast_num_cores);
+#endif
 #endif  // SKIP_MCAST
 
 #ifndef IN1_SHARDED
@@ -454,12 +519,22 @@ void kernel_main() {
                         // Now we have the block in the CB address, we can mcast to dests!
                         uint64_t in3_multicast_data_addr = in1_multicast_data_noc | in3_start_address;
                         // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_IN1_MCAST
+                        write_in1_mcast_segments(
+                            in1_mcast_segments_arg_start,
+                            in1_mcast_segment_count,
+                            in3_start_address,
+                            in3_start_address,
+                            in3_block_size_bytes);
+                        noc_async_write_barrier();
+#else
                         noc_async_write_multicast(
                             in3_start_address,
                             in3_multicast_data_addr,
                             in3_block_size_bytes,
                             in1_mcast_num_cores,
                             true);
+#endif
                         // Note: no need for write barrier, since these two multicasts are done on the same noc id, same
                         // vc, same cmd_buf Also, this only works because we are setting VCs statically (using
                         // NOC_CMD_STATIC_VC).
@@ -473,10 +548,17 @@ void kernel_main() {
 
                         // We should also multicast the flag to destinations
                         // num_dests must not include source, since we are NOT really doing a local copy!
+#ifdef SEGMENTED_IN1_MCAST
+                        set_in1_mcast_segment_semaphores(
+                            in1_mcast_segments_arg_start,
+                            in1_mcast_segment_count,
+                            in1_mcast_receiver_semaphore_addr);
+#else
                         noc_semaphore_set_multicast(
                             in1_mcast_receiver_semaphore_addr,
                             in1_mcast_receiver_semaphore_noc_addr,
                             in1_mcast_num_cores);
+#endif
 
 #endif  // SKIP_MCAST
 

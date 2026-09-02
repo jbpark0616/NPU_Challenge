@@ -8,11 +8,13 @@
 #include <cmath>
 #include <numeric>
 #include <optional>
+#include <set>
 #include <tt-metalium/constants.hpp>
 #include <tt-metalium/work_split.hpp>
 
 #include "ttnn/distributed/types.hpp"
 #include "ttnn/operations/core/compute_kernel/compute_kernel_config.hpp"
+#include "ttnn/operations/conv/conv2d/conv_core_placement.hpp"
 #include "ttnn/run_operation.hpp"
 #include "ttnn/types.hpp"
 
@@ -849,6 +851,14 @@ MatmulProgramConfig get_matmul_program_config(
     // support of arbitrary compute grid and more generic sharded output tensor
     // creation
     auto grid_size = input_tensor_a.shard_spec().value().grid.bounding_box().grid_size();
+    if (input_tensor_a.memory_config().memory_layout() == TensorMemoryLayout::BLOCK_SHARDED) {
+        // Program configs express the dense logical shard topology. Physical gaps are carried by the ShardSpec and
+        // translated by the 2D reuse-mcast program factory.
+        grid_size = ttnn::operations::conv::make_core_placement_from_worker_grid(
+                        input_tensor_a.device()->compute_with_storage_grid_size(),
+                        input_tensor_a.shard_spec().value().grid)
+                        .shard_grid_size;
+    }
 
     auto in0_tile_shape = input_tensor_a.tensor_spec().tile().get_tile_shape();
     auto in1_tile_shape = input_tensor_b.tensor_spec().tile().get_tile_shape();
@@ -1586,16 +1596,41 @@ Tensor sparse_matmul(
 }
 
 void check_tensor_in_grid(const Tensor& tensor, const CoreCoord& grid_size) {
-    // Validate tensor is within grid if sharded and not in DRAM
     if (tensor.memory_config().is_sharded() && tensor.memory_config().buffer_type() != BufferType::DRAM) {
         const auto& shard_spec = tensor.memory_config().shard_spec().value();
         const auto& shard_grid = shard_spec.grid;
-        CoreRange range(CoreCoord(0, 0), grid_size);
-        TT_FATAL(
-            range.contains(shard_grid),
-            "Tensor shard spec grid must be within config grid! Shard grid: {}, Config grid: {}",
-            shard_grid,
-            range);
+
+        if (tensor.memory_config().memory_layout() == TensorMemoryLayout::BLOCK_SHARDED) {
+            // The segmented 2D reuse-mcast path interprets the selected worker coordinates as a dense logical shard
+            // grid. Translated origins and physical gaps are valid, but every selected x/y pair must exist.
+            std::set<uint32_t> worker_x;
+            std::set<uint32_t> worker_y;
+            for (const auto& range : shard_grid.ranges()) {
+                for (const auto& worker : range) {
+                    worker_x.insert(worker.x);
+                    worker_y.insert(worker.y);
+                }
+            }
+            const CoreCoord shard_grid_size{
+                static_cast<uint32_t>(worker_x.size()), static_cast<uint32_t>(worker_y.size())};
+            TT_FATAL(
+                shard_grid_size.x <= grid_size.x && shard_grid_size.y <= grid_size.y &&
+                    worker_x.size() * worker_y.size() == shard_grid.num_cores(),
+                "BLOCK_SHARDED tensor shard spec must be a Cartesian worker placement whose logical dimensions fit "
+                "within config grid dimensions! Shard grid: {}, Logical shard grid size: {}, Config grid size: {}",
+                shard_grid,
+                shard_grid_size,
+                grid_size);
+        } else {
+            // HEIGHT_SHARDED and WIDTH_SHARDED tensors may be partial row-major prefixes (for example BOS's
+            // 14-core 5x3 HEIGHT_SHARDED placement), so preserve the established containment validation.
+            CoreRange range(CoreCoord(0, 0), grid_size);
+            TT_FATAL(
+                range.contains(shard_grid),
+                "Tensor shard spec grid must be within config grid! Shard grid: {}, Config grid: {}",
+                shard_grid,
+                range);
+        }
     }
 }
 
@@ -2517,11 +2552,52 @@ std::vector<ttnn::TensorSpec> Matmul::compute_output_specs(
                     uint32_t num_blocks_x = ((N - 1) / per_core_N) + 1;
                     CoreRangeSet all_cores;
                     ShardOrientation shard_orientation;
+                    CoreCoord output_grid_start{0, 0};
+                    // The 2D reuse-mcast program executes on the in0 shard grid. Its output must therefore inherit
+                    // in0's absolute worker-grid origin even if an origin-anchored output MemoryConfig reached matmul.
+                    if (input_tensor_a.is_sharded()) {
+                        output_grid_start = input_tensor_a.shard_spec()->grid.bounding_box().start_coord;
+                    } else if (this->output_mem_config.shard_spec().has_value()) {
+                        output_grid_start =
+                            this->output_mem_config.shard_spec()->grid.bounding_box().start_coord;
+                    }
                     if (program_config.transpose_mcast) {
-                        all_cores = CoreRangeSet({CoreRange({0, 0}, {num_blocks_y - 1, num_blocks_x - 1})});
+                        all_cores = CoreRangeSet({CoreRange(
+                            output_grid_start,
+                            CoreCoord{
+                                output_grid_start.x + num_blocks_y - 1,
+                                output_grid_start.y + num_blocks_x - 1})});
                         shard_orientation = ShardOrientation::COL_MAJOR;
                     } else {
-                        all_cores = CoreRangeSet({CoreRange({0, 0}, {num_blocks_x - 1, num_blocks_y - 1})});
+                        if (input_tensor_a.is_sharded()) {
+                            const auto placement = ttnn::operations::conv::make_core_placement_from_worker_grid(
+                                input_tensor_a.device()->compute_with_storage_grid_size(),
+                                input_tensor_a.shard_spec()->grid);
+                            if (placement.has_worker_gaps()) {
+                                const CoreCoord output_grid_size{num_blocks_x, num_blocks_y};
+                                TT_FATAL(
+                                    placement.shard_grid_size == output_grid_size,
+                                    "Segmented 2D multicast matmul output must preserve the complete input worker "
+                                    "placement; placement={}, output_blocks=({},{})",
+                                    placement.shard_grid_size,
+                                    num_blocks_x,
+                                    num_blocks_y);
+                                all_cores = placement.ordered_worker_cores(
+                                    ttnn::operations::conv::CorePlacementOrder::RowMajor);
+                            } else {
+                                all_cores = CoreRangeSet({CoreRange(
+                                    output_grid_start,
+                                    CoreCoord{
+                                        output_grid_start.x + num_blocks_x - 1,
+                                        output_grid_start.y + num_blocks_y - 1})});
+                            }
+                        } else {
+                            all_cores = CoreRangeSet({CoreRange(
+                                output_grid_start,
+                                CoreCoord{
+                                    output_grid_start.x + num_blocks_x - 1,
+                                    output_grid_start.y + num_blocks_y - 1})});
+                        }
                         shard_orientation = ShardOrientation::ROW_MAJOR;
                     }
                     ShardSpec shard_spec = ShardSpec{

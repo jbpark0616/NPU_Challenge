@@ -1040,7 +1040,13 @@ static Conv2dBlockConfig get_opt_block_config(
             conv_config.act_block_h_override);
     }
     ParallelConfig output_parallel_config = determine_output_parallel_config(
-        parallel_config, compute_grid_size, out_channels, parallel_config.shard_orientation, mm_conv);
+        parallel_config,
+        compute_grid_size,
+        out_channels,
+        parallel_config.shard_orientation,
+        mm_conv,
+        conv_config.enable_core_remapping,
+        conv_config.core_remapping_input_stock_grid);
 
     MemoryConfig conv_out_memory_config = create_sharded_memory_config_from_parallel_config(
         ttnn::Shape(
@@ -1318,7 +1324,9 @@ static Conv2dWeightsBiasPrepConfig setup_conv_prep_config(
         device->compute_with_storage_grid_size(),
         out_channels,
         parallel_config.shard_orientation,
-        mm_conv);
+        mm_conv,
+        conv_config.enable_core_remapping,
+        conv_config.core_remapping_input_stock_grid);
 
     const bool auto_shard = !input_memory_config.is_sharded() && !conv_config.shard_layout.has_value();
     return Conv2dWeightsBiasPrepConfig(

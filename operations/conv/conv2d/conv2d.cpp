@@ -745,7 +745,8 @@ Result conv2d_L1(
         in_channels,
         out_channels,
         mm_conv,
-        auto_shard);
+        auto_shard,
+        mm_conv || kernel_size == std::array<uint32_t, 2>{3, 3});
 
     const uint32_t input_channels_alignment = get_input_channels_alignment(
         input_tensor_post_tm.memory_config().memory_layout(),

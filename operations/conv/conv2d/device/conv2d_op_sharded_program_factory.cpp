@@ -236,8 +236,14 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         input_cores == output_cores || block_sharded,
         "For height sharded convs input and output cores must be the same");
 
+    const CoreCoord worker_grid_size = device->compute_with_storage_grid_size();
+    const bool height_remapped = height_sharded && is_remapped_height_sharded_worker_grid(input_cores);
+    const CoreRange input_core_box = input_cores.bounding_box();
+    const bool segmented_height_weight_mcast =
+        height_remapped && input_core_box.grid_size().x * input_core_box.grid_size().y != input_cores.num_cores();
+
     CoreRangeSet all_cores;
-    if (height_sharded) {
+    if (height_sharded && !height_remapped) {
         all_cores = CoreRangeSet(CoreRange(
             CoreCoord(0, 0),
             CoreCoord(parallelization_config.grid_size.x - 1, parallelization_config.grid_size.y - 1)));
@@ -245,9 +251,55 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         all_cores = input_cores.merge(output_cores);
     }
 
-    const uint32_t num_cores_x = parallelization_config.grid_size.x;
-    const uint32_t num_cores_y = parallelization_config.grid_size.y;
     const uint32_t total_num_cores = all_cores.num_cores();
+
+    const CoreRange output_core_box = output_cores.bounding_box();
+    std::optional<CorePlacement> input_placement;
+    std::optional<CorePlacement> output_placement;
+    bool has_segmented_placement = false;
+    bool segmented_act_mcast = false;
+    bool segmented_weight_mcast = false;
+    if (block_sharded) {
+        input_placement = make_core_placement_from_worker_grid(worker_grid_size, input_cores);
+        output_placement = make_core_placement_from_worker_grid(worker_grid_size, output_cores);
+        has_segmented_placement = input_placement->has_worker_gaps() || output_placement->has_worker_gaps();
+        const auto input_x_segments = input_placement->x_segments();
+        const auto input_y_segments = input_placement->y_segments();
+        const bool identical_row_major_placement =
+            !transpose_mcast && a.shard_spec().value().orientation == ShardOrientation::ROW_MAJOR &&
+            output.shard_spec().value().orientation == ShardOrientation::ROW_MAJOR &&
+            input_placement->worker_x == output_placement->worker_x &&
+            input_placement->worker_y == output_placement->worker_y;
+        segmented_act_mcast =
+            has_segmented_placement && identical_row_major_placement && input_x_segments.size() > 1 &&
+            input_x_segments.size() <= 2 && output_placement->x_segments().size() <= 2;
+        segmented_weight_mcast =
+            has_segmented_placement && identical_row_major_placement && input_y_segments.size() > 1 &&
+            input_y_segments.size() <= 2 && output_placement->y_segments().size() <= 2;
+        TT_FATAL(
+            !has_segmented_placement ||
+                (identical_row_major_placement && input_x_segments.size() <= 2 && input_y_segments.size() <= 2 &&
+                 output_placement->x_segments().size() <= 2 && output_placement->y_segments().size() <= 2),
+            "Segmented BLOCK_SHARDED Conv currently supports only identical ROW_MAJOR input/output placements "
+            "with at most two segments per worker axis (four Cartesian rectangles)");
+        TT_FATAL(
+            input_placement->worker_x.front() == output_placement->worker_x.front() &&
+                input_placement->worker_y.front() == output_placement->worker_y.front(),
+            "BLOCK_SHARDED Conv input and output worker rectangles must have the same translated origin; "
+            "input_start=({},{}), output_start=({},{})",
+            input_core_box.start_coord.x,
+            input_core_box.start_coord.y,
+            output_core_box.start_coord.x,
+            output_core_box.start_coord.y);
+    }
+
+    // parallelization_config.grid_size is the physical bounding box. For a
+    // segmented Cartesian placement, blocking and multicast cardinalities
+    // must use the dense logical output grid instead.
+    const uint32_t num_cores_x =
+        block_sharded ? output_placement->shard_grid_size.x : parallelization_config.grid_size.x;
+    const uint32_t num_cores_y =
+        block_sharded ? output_placement->shard_grid_size.y : parallelization_config.grid_size.y;
 
     const uint32_t per_core_out_matrix_width_ntiles = parallelization_config.per_core_out_matrix_width_ntile;
     const uint32_t per_core_out_matrix_height_ntiles = parallelization_config.per_core_out_matrix_height_ntile;
@@ -258,9 +310,8 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
     uint32_t out_conv_c_blocks = 1;
     uint32_t input_channels_padded = shard_shape[1];
     if (block_sharded) {
-        TT_ASSERT(input_cores.size() == 1, "Block sharded convs should have only one input core range!");
-        const uint32_t in_num_cores_x = input_cores.bounding_box().end_coord.x + 1;
-        const uint32_t in_num_cores_y = input_cores.bounding_box().end_coord.y + 1;
+        const uint32_t in_num_cores_x = input_placement->shard_grid_size.x;
+        const uint32_t in_num_cores_y = input_placement->shard_grid_size.y;
 
         conv_act_c_blocks =
             a.shard_spec().value().orientation == ShardOrientation::ROW_MAJOR ? in_num_cores_x : in_num_cores_y;
@@ -285,6 +336,18 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
     const uint32_t dilation_w = (uint32_t)sliding_window_config.dilation_hw.second;
     const uint32_t stride_h = (uint32_t)sliding_window_config.stride_hw.first;
     const uint32_t stride_w = (uint32_t)sliding_window_config.stride_hw.second;
+
+    TT_FATAL(
+        !height_remapped ||
+            (!transpose_mcast && a.shard_spec().value().orientation == ShardOrientation::ROW_MAJOR &&
+             output.shard_spec().value().orientation == ShardOrientation::ROW_MAJOR && filter_h == 3 && filter_w == 3),
+        "Remapped HEIGHT_SHARDED Conv currently supports only identical ROW_MAJOR input/output placements on the "
+        "guarded non-transposed 3x3 path");
+    TT_FATAL(
+        !(segmented_act_mcast || segmented_weight_mcast) || (filter_h == 3 && filter_w == 3),
+        "Segmented BLOCK_SHARDED Conv is enabled only for the guarded 3x3 production slice; filter={}x{}",
+        filter_h,
+        filter_w);
 
     if (sliding_window_config.is_transpose) {
         auto input_shape = sliding_window_config.get_transposed_full_input_shape();
@@ -570,12 +633,11 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
     }
     uint32_t bias_ntiles_per_core = bias_ntiles / num_weight_slices_width;
 
-    const uint32_t in_num_cores_x = input_cores.bounding_box().end_coord.x + 1;
-    const uint32_t in_num_cores_y = input_cores.bounding_box().end_coord.y + 1;
-
-    const CoreCoord top_left_core = {(std::size_t)0, (std::size_t)0};
-    const CoreCoord top_left_core_plus_one = {(std::size_t)1, (std::size_t)1};
-    const CoreCoord bottom_right_core = {(std::size_t)in_num_cores_x - 1, (std::size_t)in_num_cores_y - 1};
+    const auto ordered_input_cores = ordered_conv_worker_cores(input_cores);
+    TT_FATAL(!ordered_input_cores.empty(), "Conv input worker grid must not be empty");
+    const CoreCoord top_left_core = block_sharded ? input_core_box.start_coord : ordered_input_cores.front();
+    const CoreCoord top_left_core_plus_one = {top_left_core.x + 1, top_left_core.y + 1};
+    const CoreCoord bottom_right_core = input_core_box.end_coord;
     const CoreCoord top_left_core_physical = device->worker_core_from_logical_core(top_left_core);
     const CoreCoord top_left_core_plus_one_physical = device->worker_core_from_logical_core(top_left_core_plus_one);
     const CoreCoord bottom_right_core_physical = device->worker_core_from_logical_core(bottom_right_core);
@@ -594,17 +656,31 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         enable_split_reader && block_sharded && input_cores.num_cores() > output_cores.num_cores();
 
     if (block_sharded) {
-        const CoreCoord out_bottom_right_core = {(std::size_t)num_cores_x - 1, (std::size_t)num_cores_y - 1};
+        const CoreCoord out_bottom_right_core = output_core_box.end_coord;
         // 2D mcast
         if (transpose_mcast) {
-            mcast_sender_cores = CoreRangeSet(CoreRange(top_left_core, CoreCoord(0, num_cores_y - 1)));
+            mcast_sender_cores =
+                CoreRangeSet(CoreRange(top_left_core, CoreCoord(top_left_core.x, out_bottom_right_core.y)));
             if (!skip_weights_mcast) {
-                mcast_receiver_cores = CoreRange(CoreCoord(1, 0), out_bottom_right_core);
+                mcast_receiver_cores =
+                    CoreRange(CoreCoord(top_left_core.x + 1, top_left_core.y), out_bottom_right_core);
             }
         } else {
-            mcast_sender_cores = CoreRangeSet(CoreRange(top_left_core, CoreCoord(num_cores_x - 1, 0)));
+            if (has_segmented_placement) {
+                std::vector<CoreRange> weight_sender_ranges;
+                weight_sender_ranges.reserve(output_placement->worker_x.size());
+                for (uint32_t worker_x : output_placement->worker_x) {
+                    weight_sender_ranges.emplace_back(CoreCoord{worker_x, output_placement->worker_y.front()});
+                }
+                mcast_sender_cores = CoreRangeSet(std::move(weight_sender_ranges));
+            } else {
+                mcast_sender_cores =
+                    CoreRangeSet(CoreRange(top_left_core, CoreCoord(out_bottom_right_core.x, top_left_core.y)));
+            }
             if (!skip_weights_mcast) {
-                mcast_receiver_cores = CoreRange(CoreCoord(0, 1), out_bottom_right_core);
+                mcast_receiver_cores = has_segmented_placement
+                    ? output_cores.subtract(mcast_sender_cores)
+                    : CoreRangeSet(CoreRange(CoreCoord(top_left_core.x, top_left_core.y + 1), out_bottom_right_core));
             }
         }
         if (populate_skipped_work_cores) {
@@ -828,6 +904,12 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
     if (skip_activation_mcast) {
         reader_defines["SKIP_MCAST"] = "1";
     }
+    if (segmented_act_mcast) {
+        reader_defines["SEGMENTED_ACT_MCAST"] = "1";
+    }
+    if (segmented_weight_mcast || segmented_height_weight_mcast) {
+        writer_mcast_sender_defines["SEGMENTED_WEIGHT_MCAST"] = "1";
+    }
     if (skip_weights_mcast) {
         writer_mcast_sender_defines["SKIP_MCAST"] = "1";
     }
@@ -929,7 +1011,6 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
     tt::tt_metal::TensorAccessorArgs(bias ? bias->buffer() : nullptr).append_to(writer_compile_time_args);
 
     const bool check_skip_compute = input_cores != output_cores;
-    log_debug(tt::LogOp, "AA");
     std::vector<uint32_t> compute_kernel_args = {
         act_block_w_ntiles,
         act_num_subblocks,
@@ -977,7 +1058,6 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         }
     }
 
-    log_debug(tt::LogOp, "BB");
     const tt::tt_metal::NOC writer_mcast_noc = tt::tt_metal::detail::preferred_noc_for_dram_read(device->arch());
     const tt::tt_metal::NOC reader_noc =
         writer_mcast_noc == tt::tt_metal::NOC::NOC_0 ? tt::tt_metal::NOC::NOC_1 : tt::tt_metal::NOC::NOC_0;
@@ -1031,27 +1111,33 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                         : std::vector<uint32_t>{end_x, end_y, start_x, start_y};
     };
 
-    log_debug(tt::LogOp, "CC");
     // Setup reader runtime arguments
     if (block_sharded) {
-        const uint32_t in_num_cores_x = input_cores.bounding_box().end_coord.x + 1;
-        const uint32_t in_num_cores_y = input_cores.bounding_box().end_coord.y + 1;
+        const uint32_t in_num_cores_x = input_placement->shard_grid_size.x;
+        const uint32_t in_num_cores_y = input_placement->shard_grid_size.y;
         std::vector<uint32_t> act_mcast_noc_y;
         if (transpose_mcast) {
             act_mcast_noc_y.reserve(in_num_cores_y);
             for (uint32_t core_idx_y = 0; core_idx_y < in_num_cores_y; ++core_idx_y) {
-                act_mcast_noc_y.push_back(device->worker_core_from_logical_core({0, core_idx_y}).y);
+                act_mcast_noc_y.push_back(
+                    device
+                        ->worker_core_from_logical_core(
+                            input_placement->worker_core({0, core_idx_y}))
+                        .y);
             }
         } else {
             // NOTE: using same var for x as well, this is intentional
             act_mcast_noc_y.reserve(in_num_cores_x);
             for (int32_t core_idx_x = 0; core_idx_x < in_num_cores_x; ++core_idx_x) {
-                act_mcast_noc_y.push_back(device->worker_core_from_logical_core({core_idx_x, 0}).x);
+                act_mcast_noc_y.push_back(
+                    device
+                        ->worker_core_from_logical_core(
+                            input_placement->worker_core({static_cast<uint32_t>(core_idx_x), 0}))
+                        .x);
             }
         }
 
-        log_debug(tt::LogOp, "DD");
-        const CoreCoord out_bottom_right_core = {(std::size_t)num_cores_x - 1, (std::size_t)num_cores_y - 1};
+        const CoreCoord out_bottom_right_core = output_core_box.end_coord;
         const CoreCoord out_bottom_right_core_physical = device->worker_core_from_logical_core(out_bottom_right_core);
         const bool reader_is_noc_0 = reader_noc == tt::tt_metal::NOC::NOC_0;
 
@@ -1059,9 +1145,15 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
             for (const CoreCoord& core : core_range) {
                 const bool is_receiver_core = output_cores.contains(core);
                 const bool is_sender_core = input_cores.contains(core);
+                const auto input_shard = input_placement->shard_core(core);
+                const auto output_shard = output_placement->shard_core(core);
+                TT_FATAL(
+                    input_shard.has_value() || output_shard.has_value(),
+                    "BLOCK_SHARDED Conv core must belong to the input or output logical placement");
+                const ShardCoord logical_core = input_shard.has_value() ? *input_shard : *output_shard;
                 std::vector<uint32_t> reader_rt_args;
                 if (transpose_mcast) {
-                    CoreCoord bottom_core = {(std::size_t)core.x, (std::size_t)num_cores_y - 1};
+                    CoreCoord bottom_core = {(std::size_t)core.x, out_bottom_right_core.y};
                     CoreCoord bottom_core_physical = device->worker_core_from_logical_core(bottom_core);
 
                     reader_rt_args = setup_mcast_args(
@@ -1071,23 +1163,47 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                         bottom_core_physical.x,
                         bottom_core_physical.y);
 
-                    reader_rt_args.push_back(core.y);                  // act_mcast_sender_id
+                    reader_rt_args.push_back(logical_core.y);  // act_mcast_sender_id
                     reader_rt_args.push_back(bottom_core_physical.x);  // act_mcast_sender_noc_x
                 } else {
                     CoreCoord core_physical = device->worker_core_from_logical_core(core);
 
-                    reader_rt_args = setup_mcast_args(
-                        reader_is_noc_0,
-                        top_left_core_physical.x,
-                        core_physical.y,
-                        out_bottom_right_core_physical.x,
-                        core_physical.y);
-                    reader_rt_args.push_back(core.x);           // act_mcast_sender_id
+                    if (segmented_act_mcast) {
+                        const auto line = output_placement->remote_mcast_line_for_worker_sender(
+                            CorePlacementMcastAxis::Row, logical_core.y, core);
+                        uint32_t remote_destination_count = 0;
+                        for (const auto& segment : line.segments) {
+                            TT_FATAL(
+                                !segment.contains_sender && !segment.workers.contains(core),
+                                "Segmented activation multicast rectangles must exclude sender {}",
+                                core);
+                            remote_destination_count += segment.destination_count;
+                        }
+                        TT_FATAL(
+                            remote_destination_count == num_cores_x - 1,
+                            "Segmented activation multicast sender {} expects {} remote destinations, got {}",
+                            core,
+                            num_cores_x - 1,
+                            remote_destination_count);
+                        reader_rt_args = serialize_mcast_segments(
+                            line,
+                            reader_is_noc_0,
+                            [&](CoreCoord worker) { return device->worker_core_from_logical_core(worker); });
+                    } else {
+                        reader_rt_args = setup_mcast_args(
+                            reader_is_noc_0,
+                            top_left_core_physical.x,
+                            core_physical.y,
+                            out_bottom_right_core_physical.x,
+                            core_physical.y);
+                    }
+                    reader_rt_args.push_back(logical_core.x);  // act_mcast_sender_id
                     reader_rt_args.push_back(core_physical.y);  // act_mcast_sender_noc_x
                 }
                 reader_rt_args.push_back(static_cast<uint32_t>(is_receiver_core));  // is_receiver_core
                 reader_rt_args.push_back(static_cast<uint32_t>(is_sender_core));    // is_receiver_core
-                reader_rt_args.push_back(transpose_mcast ? core.x : core.y);        // dram config reader index
+                reader_rt_args.push_back(
+                    transpose_mcast ? logical_core.x : logical_core.y);  // dram config reader index
                 reader_rt_args.insert(reader_rt_args.end(), act_mcast_noc_y.begin(), act_mcast_noc_y.end());
                 SetRuntimeArgs(program, reader_id, core, reader_rt_args);
             }
@@ -1114,7 +1230,6 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         }
     }
 
-    log_debug(tt::LogOp, "FF");
     // Setup writer mcast arguments
     // Setup sender args first
     for (const CoreRange& core_range : mcast_sender_cores.ranges()) {
@@ -1128,7 +1243,14 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                 continue;
             }
             // Calculate weight slice indices
-            uint32_t weight_slice_i = (block_sharded && transpose_mcast || !block_sharded) ? core.y : core.x;
+            // HEIGHT_SHARDED uses one full-width weight slice regardless of the selected sender's physical row.
+            uint32_t weight_slice_i = height_sharded ? 0 : core.y;
+            std::optional<ShardCoord> output_shard;
+            if (block_sharded) {
+                output_shard = output_placement->shard_core(core);
+                TT_FATAL(output_shard.has_value(), "Weight sender must belong to the output logical placement");
+                weight_slice_i = transpose_mcast ? output_shard->y : output_shard->x;
+            }
 
             uint32_t out_start_tile_id_w = weight_slice_i * per_core_out_matrix_width_ntiles;
             uint32_t bias_tile_offset = out_start_tile_id_w;
@@ -1144,9 +1266,12 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                 const bool is_sender_core = input_cores.contains(core);
                 // 2D multicast setup
                 if (transpose_mcast) {
-                    CoreCoord right_core = {(std::size_t)num_cores_x - 1, (std::size_t)core.y};
+                    CoreCoord right_core = {output_core_box.end_coord.x, (std::size_t)core.y};
                     CoreCoord right_core_physical = device->worker_core_from_logical_core(right_core);
-                    TT_FATAL(core.x == 0, "Expected core.x to be 0 for sender in 2D mcast setup");
+                    TT_FATAL(
+                        core.x == top_left_core.x,
+                        "Expected sender core.x to equal translated grid origin {} in 2D mcast setup",
+                        top_left_core.x);
 
                     std::vector<uint32_t> mcast_coords = setup_mcast_args(
                         writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
@@ -1167,17 +1292,44 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                          static_cast<uint32_t>(false)});  // skip_work
                     SetRuntimeArgs(program, writer_mcast_sender_id, core, sender_rt_args);
                 } else {
-                    CoreCoord top_core = {(std::size_t)core.x, 0};
-                    CoreCoord top_core_physical = device->worker_core_from_logical_core(top_core);
-                    TT_FATAL(core.y == 0, "Expected core.y to be 0 for sender in 2D mcast setup");
-                    std::vector<uint32_t> mcast_coords = setup_mcast_args(
-                        writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
-                        top_core_physical.x,
-                        top_left_core_plus_one_physical.y,
-                        top_core_physical.x,
-                        bottom_right_core_physical.y);
-
-                    sender_rt_args.insert(sender_rt_args.end(), mcast_coords.begin(), mcast_coords.end());
+                    TT_FATAL(
+                        core.y == top_left_core.y,
+                        "Expected sender core.y to equal translated grid origin {} in 2D mcast setup",
+                        top_left_core.y);
+                    if (segmented_weight_mcast) {
+                        const auto line = output_placement->remote_mcast_line_for_worker_sender(
+                            CorePlacementMcastAxis::Column, output_shard->x, core);
+                        TT_FATAL(!line.segments.empty(), "Segmented weight multicast sender {} has no receivers", core);
+                        uint32_t remote_destination_count = 0;
+                        for (const auto& segment : line.segments) {
+                            TT_FATAL(
+                                !segment.contains_sender && !segment.workers.contains(core),
+                                "Segmented weight multicast rectangles must exclude sender {}",
+                                core);
+                            remote_destination_count += segment.destination_count;
+                        }
+                        TT_FATAL(
+                            remote_destination_count == num_cores_y - 1,
+                            "Segmented weight multicast sender {} expects {} remote destinations, got {}",
+                            core,
+                            num_cores_y - 1,
+                            remote_destination_count);
+                        const auto mcast_segments = serialize_mcast_segments(
+                            line,
+                            writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
+                            [&](CoreCoord worker) { return device->worker_core_from_logical_core(worker); });
+                        sender_rt_args.insert(sender_rt_args.end(), mcast_segments.begin(), mcast_segments.end());
+                    } else {
+                        CoreCoord top_core = {(std::size_t)core.x, top_left_core.y};
+                        CoreCoord top_core_physical = device->worker_core_from_logical_core(top_core);
+                        std::vector<uint32_t> mcast_coords = setup_mcast_args(
+                            writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
+                            top_core_physical.x,
+                            top_left_core_plus_one_physical.y,
+                            top_core_physical.x,
+                            bottom_right_core_physical.y);
+                        sender_rt_args.insert(sender_rt_args.end(), mcast_coords.begin(), mcast_coords.end());
+                    }
                     sender_rt_args.insert(
                         sender_rt_args.end(),
                         {
@@ -1192,14 +1344,32 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                 }
             } else {
                 // 1D multicast setup
-                std::vector<uint32_t> mcast_coords = setup_mcast_args(
-                    writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
-                    top_left_core_physical.x,
-                    top_left_core_physical.y,
-                    bottom_right_core_physical.x,
-                    bottom_right_core_physical.y);
-
-                sender_rt_args.insert(sender_rt_args.end(), mcast_coords.begin(), mcast_coords.end());
+                if (segmented_height_weight_mcast) {
+                    const auto line = make_remote_rectangle_mcast_line_for_core_set(
+                        mcast_receiver_cores, core, worker_grid_size);
+                    uint32_t remote_destination_count = 0;
+                    for (const auto& segment : line.segments) {
+                        remote_destination_count += segment.destination_count;
+                    }
+                    TT_FATAL(
+                        remote_destination_count == total_active_num_cores - 1,
+                        "Segmented HEIGHT_SHARDED weight multicast expects {} remote destinations, got {}",
+                        total_active_num_cores - 1,
+                        remote_destination_count);
+                    const auto mcast_segments = serialize_mcast_segments(
+                        line,
+                        writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
+                        [&](CoreCoord worker) { return device->worker_core_from_logical_core(worker); });
+                    sender_rt_args.insert(sender_rt_args.end(), mcast_segments.begin(), mcast_segments.end());
+                } else {
+                    std::vector<uint32_t> mcast_coords = setup_mcast_args(
+                        writer_mcast_noc == tt::tt_metal::NOC::NOC_0,
+                        top_left_core_physical.x,
+                        top_left_core_physical.y,
+                        bottom_right_core_physical.x,
+                        bottom_right_core_physical.y);
+                    sender_rt_args.insert(sender_rt_args.end(), mcast_coords.begin(), mcast_coords.end());
+                }
                 sender_rt_args.insert(
                     sender_rt_args.end(),
                     {total_active_num_cores - 1,
@@ -1223,7 +1393,6 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         }
     }
 
-    log_debug(tt::LogOp, "@@ : {}", mcast_receiver_cores.str());
     // Setup receiver args second
     for (const CoreRange& core_range : mcast_receiver_cores.ranges()) {
         // Helper lambda to create receiver runtime args
@@ -1232,25 +1401,21 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
                 sender_noc_x, sender_noc_y, weights_mcast_sender_semaphore_id, weights_mcast_receiver_semaphore_id};
         };
 
-        log_debug(tt::LogOp, "core_range : {}", core_range.str());
         for (const CoreCoord& core : core_range) {
-            log_debug(tt::LogOp, "core : {}", core.str());
             std::vector<uint32_t> receiver_args;
             if (block_sharded) {
                 if (transpose_mcast) {
-                    CoreCoord right_core = {(std::size_t)num_cores_x - 1, (std::size_t)core.y};
+                    CoreCoord right_core = {output_core_box.end_coord.x, (std::size_t)core.y};
                     CoreCoord right_core_physical = device->worker_core_from_logical_core(right_core);
                     receiver_args = create_receiver_args(top_left_core_physical.x, right_core_physical.y);
                 } else {
-                    log_debug(tt::LogOp, "core2 : {}", core.str());
-                    CoreCoord top_core = {(std::size_t)core.x, 0};
+                    CoreCoord top_core = {(std::size_t)core.x, top_left_core.y};
                     CoreCoord top_core_physical = device->worker_core_from_logical_core(top_core);
                     receiver_args = create_receiver_args(top_core_physical.x, top_left_core_physical.y);
                 }
                 const bool is_sender_core = input_cores.contains(core);
                 receiver_args.push_back(static_cast<uint32_t>(is_sender_core));
 
-                log_debug(tt::LogOp, "DONE");
             } else {
                 bool is_no_op_core = !input_cores.contains(core);
                 receiver_args = std::vector<uint32_t>{
@@ -1276,21 +1441,16 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
         }
     }
 
-    log_debug(tt::LogOp, "ZZZ");
     if (input_cores != output_cores) {
-        CoreCoord bottom_right_core_out = output_cores.bounding_box().end_coord;
-        uint32_t end_coord_x = bottom_right_core_out.x;
-        uint32_t end_coord_y = bottom_right_core_out.y;
         for (const CoreRange range : all_cores.ranges()) {
             for (const CoreCoord core : range) {
-                bool skip_compute = transpose_mcast ? core.y > end_coord_y : core.x > end_coord_x;
+                const bool skip_compute = !output_cores.contains(core);
                 SetRuntimeArgs(
                     program, compute_kernel_id, core, std::vector<uint32_t>{static_cast<uint32_t>(skip_compute)});
             }
         }
     }
 
-    log_debug(tt::LogOp, "KKK");
     std::vector<CoreCoord> mcast_sender_cores_vec;
     for (const CoreRange& core_range : mcast_sender_cores.ranges()) {
         std::vector<CoreCoord> core_range_vec = grid_to_cores(core_range.start_coord, core_range.end_coord, true);
@@ -1339,7 +1499,6 @@ tt::tt_metal::operation::ProgramWithCallbacks multi_core_conv2d_sharded(
             }
         };
 
-    log_debug(tt::LogOp, "LL");
     return {.program = std::move(program), .override_runtime_arguments_callback = override_runtime_arguments_callback};
 }
 

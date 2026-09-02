@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 #include "ttnn/operations/sliding_window/halo/device/untilize_with_halo_program_factory.hpp"
-#include "ttnn/operations/conv/conv2d/conv2d_utils.hpp"
 #include "ttnn/tensor/shape/shape.hpp"
 #include "ttnn/operations/sliding_window/halo/device/halo_device_operation.hpp"
 #include <array>
@@ -110,16 +109,13 @@ operation::ProgramWithCallbacks HaloDeviceOperation::create_program(
     const uint32_t input_shard_height = input_tensor.memory_config().shard_spec()->shape[0];
     auto tensor_metadata = sliding_window::generate_tensor_metadata(pad_metadata, config_, input_shard_height);
 
-    uint32_t num_cores_x = input_tensor.memory_config().shard_spec()->grid.bounding_box().grid_size().x;
-
     auto kernel_config = sliding_window::generate_halo_kernel_config_tensors(
         tensor_metadata,
         shard_boundaries,
         is_block_sharded,
-        transpose_mcast_,
         remote_read_,
         device,
-        num_cores_x,
+        parallel_config_,
         is_in_tiled,
         UNTILIZE_BLOCK_SIZE);
 

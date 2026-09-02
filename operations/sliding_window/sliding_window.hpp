@@ -135,10 +135,9 @@ HaloGatherKernelConfig generate_halo_kernel_config_tensors(
     const std::vector<PixelMetadata>& tensor_metadata,
     const std::vector<ShardBoundary>& shard_boundaries,
     bool is_block_sharded,
-    bool transpose_mcast,
     bool remote_read,
     tt::tt_metal::IDevice* device,
-    uint32_t num_cores_x,
+    const ParallelConfig& parallel_config,
     bool is_in_tiled,
     int block_size);
 
@@ -155,6 +154,9 @@ std::vector<std::vector<uint16_t>> generate_sliding_window_op_config(
 std::vector<uint16_t> flatten(const std::vector<std::vector<uint16_t>>& input, uint32_t extend_with_zeroes = 0);
 
 uint32_t get_repeat_factor_for_replicating_nhw_config_across_grid(const ParallelConfig& p_config);
+
+tt::tt_metal::CoreCoord get_block_sharded_worker_core_for_nhw_core(
+    const ParallelConfig& parallel_config, uint32_t logical_nhw_core_id);
 
 std::vector<uint16_t> replicate_config(const std::vector<uint16_t>& config_vector, int factor);
 
