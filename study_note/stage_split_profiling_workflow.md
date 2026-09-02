@@ -1,7 +1,7 @@
 # Stage-split Profiling Workflow (Compute + NoC 분리 수집)
 
 > 목적: `resnet50_jbpark/` fork 를 활용해 ResNet50 을 layer 단위로 분할 프로파일링하되, tt-metal ↔ tt-npe 툴체인의 미숙성으로 인해 **compute pass 와 NoC pass 를 별도 실행**하고 오프라인에서 조인하는 실행 흐름.
-> 관련: `PROGRESS.md`, `bos_model_copy/resnet50_jbpark/CHANGES.md`, `tutorials/guide/tt-npe_intro.md`.
+> 관련: `../README.md`, `bos_model_copy/resnet50_jbpark/CHANGES.md`, `tutorials/guide/tt-npe_intro.md`.
 
 날짜: 2026-07-13 정리
 
@@ -202,7 +202,7 @@ Fork 는 원본과 4곳에서 divergence 생김. 조인 후 후처리에서 대�
 
 **로컬 파싱은 정적 aggregate, tt-npe 는 동적 timeline sim** — 완전 대체 불가.
 
-- Roofline 재검증 (`PROGRESS.md` 활성 debt): BW ceiling estimate 근거로 tt-npe 시뮬 결과 필요.
+- Roofline 재검증 (최상위 `README.md` 연구 범위): BW ceiling estimate 근거로 tt-npe 시뮬 결과 필요.
 - Big1 (예측 성능 모델) 방향성: NoC congestion 이 latency 에 어떻게 기여하는지 정량화하려면 tt-npe 급 시뮬이 학습/검증 데이터.
 
 **결론**: tt-npe 커버되는 op 는 tt-npe 로, 크래시하는 multicast op 는 로컬 파싱으로 공백 최소화. 논문에서는 "op N% 는 tt-npe 실측, 나머지는 aggregate proxy" 로 정직하게 명시.

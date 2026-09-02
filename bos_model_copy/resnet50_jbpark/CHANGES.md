@@ -15,7 +15,7 @@ tt-npe 는 per-run op count 실링(~65)이 있어 ResNet50 전체(123 ops @ batc
 - **STAGE=0**: stem 만 실행 후 조기 반환
 - **STAGE=1..4**: fake tensor 를 합성해서 layerN 진입점에 주입, 해당 layer 만 실행
 
-관련 문서: `tutorials/guide/tt-npe_intro.md`, `PROGRESS.md`.
+관련 문서: `tutorials/guide/tt-npe_intro.md`, `../../README.md`.
 
 ---
 

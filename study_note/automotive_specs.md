@@ -1,7 +1,7 @@
 # 차량용 인식 파이프라인 스펙 리서치
 
 > 목적: NPU Challenge 12 core 구성이 낸 FPS/latency가 자율주행/ADAS의 요구치를 만족하는지 검증할 정량 기준 확보.
-> 관련: `PROGRESS.md`, memory `project-automotive-validation`.
+> 관련: `../README.md`, memory `project-automotive-validation`.
 
 날짜: 2026-07-12 시작
 
